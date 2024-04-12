@@ -1,6 +1,6 @@
 ﻿namespace University.Models
 {
-    public class Statement
+    public interface ITeacher
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace University.Models
 {
-    public class Teacher
+    public interface IStatement
     {
     }
 }

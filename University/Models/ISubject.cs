@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public class Subject
+    public interface ISubject
     {
 
     }
