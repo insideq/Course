@@ -1,6 +1,6 @@
 ﻿namespace University.DataModels.Models
 {
-    public interface ITeacher : IId
+    public interface ITeacherModel : IId
     {
         int StorekeeperId { get; }
         string Name { get; }

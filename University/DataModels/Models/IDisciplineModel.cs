@@ -1,6 +1,6 @@
 ﻿namespace University.DataModels.Models
 {
-    public interface IDiscipline : IId
+    public interface IDisciplineModel : IId
     {
         int TeacherId { get; }
         string Name { get; set; }

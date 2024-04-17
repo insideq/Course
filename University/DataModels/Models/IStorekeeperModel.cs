@@ -1,6 +1,6 @@
 ﻿namespace University.DataModels.Models
 {
-    public interface IStorekeeper : IPerson
+    public interface IStorekeeperModel : IPerson
     {
     }
 }
