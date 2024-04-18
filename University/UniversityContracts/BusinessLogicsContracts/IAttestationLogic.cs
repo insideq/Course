@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UniversityContracts.BindingModel;
+using UniversityContracts.SearchModels;
+using UniversityContracts.ViewModels;
+
+namespace UniversityContracts.BusinessLogicsContracts
+{
+    internal interface IAttestationLogic
+    {
+        List<AttestationViewModel>? ReadList(AttestationSearchModel? model);
+        AttestationViewModel? ReadElement(AttestationSearchModel model);
+        bool Create(AttestationBindingModel model);
+        bool Update(AttestationBindingModel model);
+        bool Delete(AttestationBindingModel model);
+    }
+}

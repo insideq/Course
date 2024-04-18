@@ -1,4 +1,4 @@
-﻿using University.DataModels.Models;
+﻿using UniversityDataModels.Models;
 
 namespace UniversityContracts.SearchModels
 {
