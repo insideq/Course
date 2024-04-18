@@ -1,4 +1,4 @@
-﻿namespace University.DataModels.Models
+﻿namespace UniversityDataModels.Models
 {
     public interface IPlanOfStudyModel : IId
     {
