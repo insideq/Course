@@ -1,4 +1,4 @@
-﻿using UniversityContracts.BindingModel;
+﻿using UniversityContracts.BindingModels;
 using UniversityContracts.SearchModels;
 using UniversityContracts.ViewModels;
 

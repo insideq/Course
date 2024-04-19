@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,56 +11,59 @@ using UniversityDataModels.Models;
 
 namespace UniversityDatabaseImplement.Models
 {
-    public class Student : IStudentModel
+    public class Discipline : IDisciplineModel
     {
         public int Id { get; private set; }
-        public int PlanOfStudyId { get; private set; }
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public int TeacherId { get; private set; }
         [Required]
-        public string PhoneNumber { get; private set; } = string.Empty;
-        [ForeignKey("StudentId")]
+        public string Name { get; private set; } = string.Empty;
+        [Required]
+        public string Description { get; private set; } = string.Empty;
+        public virtual Teacher Teacher { get; set; } = new();
+        [ForeignKey("DisciplineId")]
         public virtual List<StudentDiscipline> StudentDiscipline { get; set; } = new();
-        public static Student? Create(StudentBindingModel model)
+        public static Discipline? Create(DisciplineBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            return new Student()
+            return new Discipline()
             {
                 Id = model.Id,
-                PlanOfStudyId = model.PlanOfStudyId,
+                TeacherId = model.TeacherId,
                 Name = model.Name,
-                PhoneNumber = model.PhoneNumber
+                Description = model.Description,
             };
         }
-        public static Student Create(StudentViewModel model)
+        public static Discipline Create(DisciplineViewModel model)
         {
-            return new Student
+            return new Discipline()
             {
                 Id = model.Id,
-                PlanOfStudyId = model.PlanOfStudyId,
+                TeacherId = model.TeacherId,
                 Name = model.Name,
-                PhoneNumber = model.PhoneNumber
+                Description = model.Description,
             };
         }
-        public void Update(StudentBindingModel model)
+        public void Update(DisciplineBindingModel model)
         {
             if (model == null)
             {
                 return;
             }
-            PhoneNumber = model.PhoneNumber;
+            Id = model.Id;
+            TeacherId = model.TeacherId;
             Name = model.Name;
-            PlanOfStudyId = model.PlanOfStudyId;
+            Description = model.Description;
         }
-        public StudentViewModel GetViewModel => new()
+        public DisciplineViewModel GetViewModel => new()
         {
             Id = Id,
-            PlanOfStudyId = PlanOfStudyId,
+            TeacherId = TeacherId,
             Name = Name,
-            PhoneNumber = PhoneNumber
+            Description = Description,
         };
     }
 }

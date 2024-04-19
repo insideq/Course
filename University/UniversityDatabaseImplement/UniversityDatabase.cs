@@ -11,7 +11,8 @@ namespace UniversityDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=PlumbingRepairDatabaseFull;Username=postgres;Password=postgres");
+                //Возможно понадобится писать вместо (localdb) название пк, вот пк Егора:  DESKTOP-N8BRIPR
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\SQLEXPRESS;Initial Catalog=UniversityDatabaseFull;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }
@@ -19,6 +20,9 @@ namespace UniversityDatabaseImplement
         public virtual DbSet<PlanOfStudy> PlansOfStudy { set; get; }
         public virtual DbSet<Attestation> Attestations { set; get; }
         // public virtual DbSet<Worker> Workers { set; get; }
-        // public virtual DbSet<Storekeeper> Storekeepers { set; get; }
+        public virtual DbSet<Storekeeper> Storekeepers { set; get; }
+        public virtual DbSet<Teacher> Teachers { set; get; }
+        public virtual DbSet<Discipline> Disciplines { set; get; }
+        public virtual DbSet<Statement> Statements { set; get; }
     }
 }

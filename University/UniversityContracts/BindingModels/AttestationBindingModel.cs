@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniversityDataModels.Models;
 
-namespace UniversityContracts.BindingModel
+namespace UniversityContracts.BindingModels
 {
     public class AttestationBindingModel : IAttestationModel
     {

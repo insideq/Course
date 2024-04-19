@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UniversityContracts.BindingModel;
+using UniversityContracts.BindingModels;
 using UniversityContracts.SearchModels;
 using UniversityContracts.ViewModels;
 

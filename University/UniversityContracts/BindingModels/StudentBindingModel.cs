@@ -1,6 +1,6 @@
 ﻿using UniversityDataModels.Models;
 
-namespace UniversityContracts.BindingModel
+namespace UniversityContracts.BindingModels
 {
     public class StudentBindingModel : IStudentModel
     {
