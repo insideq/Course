@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "University", "University\University.csproj", "{300EBC23-D9F1-49E6-A1B0-A7A9D9AAABB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "University", "University\University.csproj", "{300EBC23-D9F1-49E6-A1B0-A7A9D9AAABB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityDataModels", "UniversityDataModels\UniversityDataModels.csproj", "{48B8AA21-264D-457C-81E0-C7412970FD37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDataModels", "UniversityDataModels\UniversityDataModels.csproj", "{48B8AA21-264D-457C-81E0-C7412970FD37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityContracts", "UniversityContracts\UniversityContracts.csproj", "{9510FE77-96E8-4ED9-B8D7-18FE309B98C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityContracts", "UniversityContracts\UniversityContracts.csproj", "{9510FE77-96E8-4ED9-B8D7-18FE309B98C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityDatabaseImplement", "UniversityDatabaseImplement\UniversityDatabaseImplement.csproj", "{A8D828DA-DC23-4D25-9B71-4169F5A55FC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDatabaseImplement", "UniversityDatabaseImplement\UniversityDatabaseImplement.csproj", "{A8D828DA-DC23-4D25-9B71-4169F5A55FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityBusinessLogic", "UniversityBusinessLogic\UniversityBusinessLogic.csproj", "{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A8D828DA-DC23-4D25-9B71-4169F5A55FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8D828DA-DC23-4D25-9B71-4169F5A55FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8D828DA-DC23-4D25-9B71-4169F5A55FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
