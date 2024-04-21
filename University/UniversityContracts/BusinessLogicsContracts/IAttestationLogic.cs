@@ -9,7 +9,7 @@ using UniversityContracts.ViewModels;
 
 namespace UniversityContracts.BusinessLogicsContracts
 {
-    internal interface IAttestationLogic
+    public interface IAttestationLogic
     {
         List<AttestationViewModel>? ReadList(AttestationSearchModel? model);
         AttestationViewModel? ReadElement(AttestationSearchModel model);

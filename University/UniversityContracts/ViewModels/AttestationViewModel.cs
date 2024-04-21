@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
 
 namespace UniversityContracts.ViewModels
@@ -15,6 +16,6 @@ namespace UniversityContracts.ViewModels
         [DisplayName("Форма оценивания")]
         public string FormOfEvaluation { get; set; } = string.Empty;
         [DisplayName("Оценка")]
-        public string Score { get; set; } = string.Empty;
+        public AttestationScore Score { get; set; } = AttestationScore.Неявка;
     }
 }

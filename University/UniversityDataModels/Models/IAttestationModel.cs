@@ -1,9 +1,11 @@
-﻿namespace UniversityDataModels.Models
+﻿using UniversityDataModels.Enums;
+
+namespace UniversityDataModels.Models
 {
     public interface IAttestationModel : IId
     {
         string FormOfEvaluation { get; }
-        string Score { get; }
+        AttestationScore Score { get; }
         int StudentId { get; }
     }
 }

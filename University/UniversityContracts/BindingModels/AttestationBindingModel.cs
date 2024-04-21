@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
 
 namespace UniversityContracts.BindingModels
@@ -11,7 +12,7 @@ namespace UniversityContracts.BindingModels
     {
         public int Id { get; set; }
         public string FormOfEvaluation { get; set; } = string.Empty;
-        public string Score { get; set; } = string.Empty;
+        public AttestationScore Score { get; set; } = AttestationScore.Неявка;
         public int StudentId { get; set; }
     }
 }

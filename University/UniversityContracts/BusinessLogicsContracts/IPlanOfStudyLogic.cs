@@ -9,7 +9,7 @@ using UniversityContracts.ViewModels;
 
 namespace UniversityContracts.BusinessLogicsContracts
 {
-    internal interface IPlanOfStudyLogic
+    public interface IPlanOfStudyLogic
     {
         List<PlanOfStudyViewModel>? ReadList(PlanOfStudySearchModel? model);
         PlanOfStudyViewModel? ReadElement(PlanOfStudySearchModel model);

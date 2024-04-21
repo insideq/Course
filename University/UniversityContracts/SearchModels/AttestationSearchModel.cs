@@ -10,6 +10,5 @@ namespace UniversityContracts.SearchModels
     {
         public int? Id { get; set; }
         public string? FormOfEvaluation { get; set; }
-        public string? Score { get; set; }
     }
 }

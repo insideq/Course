@@ -107,7 +107,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new InvalidOperationException("Student с таким названием уже есть");
+                throw new InvalidOperationException("Данный студент уже существует");
             }
         }
     }
