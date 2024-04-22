@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
 using UniversityDatabaseImplement.Models;
-// TODO
+
 namespace UniversityDatabaseImplement.Implements
 {
     public class TeacherStorage: ITeacherStorage
@@ -22,26 +23,29 @@ namespace UniversityDatabaseImplement.Implements
         }
         public List<TeacherViewModel> GetFilteredList(TeacherSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Name))
+            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.AcademicDegree) || string.IsNullOrEmpty(model.Position))
             {
                 return new();
             }
             using var context = new UniversityDatabase();
             return context.Teachers
             .Where(x => x.Name.Contains(model.Name))
+            .Where(x => x.Position.Contains(model.Position))
+            .Where(x => x.AcademicDegree.Contains(model.AcademicDegree))
+            .Include(x => x.Storekeeper)
            .Select(x => x.GetViewModel)
            .ToList();
         }
         public TeacherViewModel? GetElement(TeacherSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Name) && !model.Id.HasValue)
+            if (string.IsNullOrEmpty(model.Name) && string.IsNullOrEmpty(model.AcademicDegree) && string.IsNullOrEmpty(model.Position) && !model.Id.HasValue)
             {
                 return null;
             }
             using var context = new UniversityDatabase();
             return context.Teachers
-            .FirstOrDefault(x =>
-           (!string.IsNullOrEmpty(model.Name) && x.Name == model.Name) || (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
+            // стоит ли проверять по Position и Degree?
+            .FirstOrDefault(x => (!string.IsNullOrEmpty(model.Name) && x.Name == model.Name) ||  (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
         }
         public TeacherViewModel? Insert(TeacherBindingModel model)
         {

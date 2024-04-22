@@ -22,7 +22,7 @@ namespace UniversityDatabaseImplement.Models
         public string Description { get; private set; } = string.Empty;
         public virtual Teacher Teacher { get; set; } = new();
         [ForeignKey("DisciplineId")]
-        public virtual List<StudentDiscipline> StudentDiscipline { get; set; } = new();
+        public virtual List<StudentDiscipline> StudentDisciplines { get; set; } = new();
         public static Discipline? Create(DisciplineBindingModel model)
         {
             if (model == null)

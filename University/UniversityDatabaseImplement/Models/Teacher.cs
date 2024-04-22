@@ -25,9 +25,9 @@ namespace UniversityDatabaseImplement.Models
         public string Position { get; private set; } = string.Empty;
         public virtual Storekeeper Storekeeper { get;  set; } = new ();
         [ForeignKey("TeacherId")]
-        public virtual List<Statement> Statement { get; set; } = new();
+        public virtual List<Statement> Statements { get; set; } = new();
         [ForeignKey("TeacherId")]
-        public virtual List<Discipline> Discipline { get; set; } = new();
+        public virtual List<Discipline> Disciplines { get; set; } = new();
         public static Teacher? Create(TeacherBindingModel model)
         {
             if (model == null)
