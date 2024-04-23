@@ -21,23 +21,23 @@ namespace UniversityDatabaseImplement.Models
         [Required]
         public string Description { get; private set; } = string.Empty;
         public virtual Teacher Teacher { get; set; } = new();
-        [ForeignKey("DisciplineId")]
-        public virtual List<StudentDiscipline> StudentDisciplines { get; set; } = new();
-        public static Discipline? Create(DisciplineBindingModel model)
+        private Dictionary<int, IStudentModel>? _studentDisciplines = null;
+        [NotMapped]
+        public Dictionary<int, IStudentModel> StudentDisciplines
         {
-            if (model == null)
+            get
             {
-                return null;
+                if (_studentDisciplines == null)
+                {
+                    _studentDisciplines = Students
+                    .ToDictionary(recPC => recPC.StudentId, recPC => recPC.Student as IStudentModel);
+                }
+                return _studentDisciplines;
             }
-            return new Discipline()
-            {
-                Id = model.Id,
-                TeacherId = model.TeacherId,
-                Name = model.Name,
-                Description = model.Description,
-            };
         }
-        public static Discipline Create(DisciplineViewModel model)
+        [ForeignKey("DisciplineId")]
+        public virtual List<StudentDiscipline> Students { get; set; } = new();
+        public static Discipline Create(UniversityDatabase context, DisciplineBindingModel model)
         {
             return new Discipline()
             {
@@ -45,6 +45,11 @@ namespace UniversityDatabaseImplement.Models
                 TeacherId = model.TeacherId,
                 Name = model.Name,
                 Description = model.Description,
+                Students = model.StudentDisciplines.Select(x => new
+               StudentDiscipline
+                {
+                    Student = context.Students.First(y => y.Id == x.Key)
+                }).ToList()
             };
         }
         public void Update(DisciplineBindingModel model)
@@ -58,12 +63,41 @@ namespace UniversityDatabaseImplement.Models
             Name = model.Name;
             Description = model.Description;
         }
+        public void UpdateStudents(UniversityDatabase context,
+      DisciplineBindingModel model)
+        {
+            var studentDisciplines = context.StudentDisciplines.Where(rec => rec.DisciplineId == model.Id).ToList();
+            if (studentDisciplines != null && studentDisciplines.Count > 0)
+            { // удалили те, которых нет в модели
+                context.StudentDisciplines.RemoveRange(studentDisciplines.Where(rec
+               => !model.StudentDisciplines.ContainsKey(rec.StudentId)));
+                context.SaveChanges();
+                // обновили количество у существующих записей
+                foreach (var updateStudent in studentDisciplines)
+                {
+                    model.StudentDisciplines.Remove(updateStudent.StudentId);
+                }
+                context.SaveChanges();
+            }
+            var discipline = context.Disciplines.First(x => x.Id == Id);
+            foreach (var pc in model.StudentDisciplines)
+            {
+                context.StudentDisciplines.Add(new StudentDiscipline
+                {
+                    Discipline = discipline,
+                    Student = context.Students.First(x => x.Id == pc.Key)
+                });
+                context.SaveChanges();
+            }
+            _studentDisciplines = null;
+        }
         public DisciplineViewModel GetViewModel => new()
         {
             Id = Id,
             TeacherId = TeacherId,
             Name = Name,
             Description = Description,
+            StudentDisciplines = StudentDisciplines,
         };
     }
 }

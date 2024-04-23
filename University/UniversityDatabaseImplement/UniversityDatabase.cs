@@ -24,5 +24,6 @@ namespace UniversityDatabaseImplement
         public virtual DbSet<Teacher> Teachers { set; get; }
         public virtual DbSet<Discipline> Disciplines { set; get; }
         public virtual DbSet<Statement> Statements { set; get; }
+        public virtual DbSet<StudentDiscipline> StudentDisciplines { set; get; }
     }
 }

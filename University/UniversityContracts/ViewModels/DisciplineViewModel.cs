@@ -16,5 +16,10 @@ namespace UniversityContracts.ViewModels
         public string Name { get; set; } = string.Empty;
         [DisplayName("Описание дисциплины")]
         public string Description { get; set; } = string.Empty;
+        public Dictionary<int, IStudentModel> StudentDisciplines
+        {
+            get;
+            set;
+        } = new();
     }
 }

@@ -18,7 +18,7 @@ namespace UniversityDatabaseImplement.Implements
         public DisciplineViewModel? Delete(DisciplineBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var element = context.Disciplines.FirstOrDefault(rec => rec.Id == model.Id);
+            var element = context.Disciplines.Include(x => x.Students).FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
                 context.Disciplines.Remove(element);
@@ -35,7 +35,7 @@ namespace UniversityDatabaseImplement.Implements
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.Disciplines
+            return context.Disciplines.Include(x => x.Students).ThenInclude(x => x.Student)
             .Include(x => x.Teacher)
             .FirstOrDefault(x =>
            (!string.IsNullOrEmpty(model.Name) && x.Name == model.Name) || (model.Id.HasValue && x.Id == model.Id)) ?.GetViewModel;
@@ -50,6 +50,8 @@ namespace UniversityDatabaseImplement.Implements
             }
             using var context = new UniversityDatabase();
             return context.Disciplines
+            .Include(x => x.Students)
+            .ThenInclude(x => x.Student)
             .Where(x => x.Name.Contains(model.Name) || x.Description.Contains(model.Description)  || x.Id == model.Id || x.TeacherId == model.TeacherId)
             .Include(x => x.Teacher)
            .Select(x => x.GetViewModel)
@@ -60,6 +62,9 @@ namespace UniversityDatabaseImplement.Implements
         {
             using var context = new UniversityDatabase();
             return context.Disciplines
+            .Include(x => x.Students)
+            .ThenInclude(x => x.Student)
+            .ToList()
             .Select(x => x.GetViewModel)
            .ToList();
         }
@@ -67,7 +72,7 @@ namespace UniversityDatabaseImplement.Implements
         public DisciplineViewModel? Insert(DisciplineBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var newDiscipline = Discipline.Create(model);
+            var newDiscipline = Discipline.Create(context, model);
             if (newDiscipline == null)
             {
                 return null;
@@ -80,14 +85,25 @@ namespace UniversityDatabaseImplement.Implements
         public DisciplineViewModel? Update(DisciplineBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var discipline = context.Disciplines.FirstOrDefault(x => x.Id == model.Id);
-            if (discipline == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                return null;
+                    var discipline = context.Disciplines.FirstOrDefault(x => x.Id == model.Id);
+                if (discipline == null)
+                {
+                    return null;
+                }
+                discipline.Update(model);
+                context.SaveChanges();
+                discipline.UpdateStudents(context, model);
+                transaction.Commit();
+                return discipline.GetViewModel;
             }
-            discipline.Update(model);
-            context.SaveChanges();
-            return discipline.GetViewModel;
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
     }
 }
