@@ -14,7 +14,7 @@ namespace UniversityDatabaseImplement.Models
         public int PlanOfStudyId { get; set; }
         [Required]
         public int TeacherId { get; set; }
-        public virtual PlanOfStudy PlanOfStudy { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual PlanOfStudy PlanOfStudy { get; set; } = new();
+        public virtual Teacher Teacher { get; set; } = new();
     }
 }

@@ -9,6 +9,6 @@ namespace UniversityContracts.SearchModels
     public class AttestationSearchModel
     {
         public int? Id { get; set; }
-        public string? FormOfEvaluation { get; set; }
+        public int? StudentId { get; set; }
     }
 }

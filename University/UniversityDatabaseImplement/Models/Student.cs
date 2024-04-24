@@ -22,6 +22,7 @@ namespace UniversityDatabaseImplement.Models
         public string PhoneNumber { get; private set; } = string.Empty;
         [ForeignKey("StudentId")]
         public virtual List<StudentDiscipline> StudentDiscipline { get; set; } = new();
+        public virtual PlanOfStudy PlanOfStudy { get; set; } = new();
         public static Student? Create(StudentBindingModel model)
         {
             if (model == null)

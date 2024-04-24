@@ -6,58 +6,61 @@ using System.Text;
 using System.Threading.Tasks;
 using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
+using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace UniversityDatabaseImplement.Models
 {
     public class Attestation : IAttestationModel
     {
-        public int Id { get; set; }
-        public int StudentId { get; set; }
+        public int Id { get; private set; }
+        public int StudentId { get; private set; }
         [Required]
         public string FormOfEvaluation { get; private set; } = string.Empty;
         [Required]
-        public string Score { get; private set; } = string.Empty;
-    }
-    public static Student? Create(StudentBindingModel model)
-    {
-        if (model == null)
+        public AttestationScore Score { get; private set; } = AttestationScore.Неявка;
+        public virtual Student Student { get; set; } = new();
+        public static Attestation? Create(AttestationBindingModel model)
         {
-            return null;
+            if (model == null)
+            {
+                return null;
+            }
+            return new Attestation()
+            {
+                Id = model.Id,
+                StudentId = model.StudentId,
+                FormOfEvaluation = model.FormOfEvaluation,
+                Score = model.Score
+            };
         }
-        return new Student()
+        public static Attestation Create(AttestationViewModel model)
         {
-            Id = model.Id,
-            PlanOfStudyId = model.PlanOfStudyId,
-            Name = model.Name,
-            PhoneNumber = model.PhoneNumber
+            return new Attestation
+            {
+                Id = model.Id,
+                StudentId = model.StudentId,
+                FormOfEvaluation = model.FormOfEvaluation,
+                Score = model.Score
+            };
+        }
+        public void Update(AttestationBindingModel model)
+        {
+            if (model == null)
+            {
+                return;
+            }
+            StudentId = model.StudentId;
+            FormOfEvaluation = model.FormOfEvaluation;
+            Score = model.Score;
+        }
+        public AttestationViewModel GetViewModel => new()
+        {
+            Id = Id,
+            StudentId = StudentId,
+            FormOfEvaluation = FormOfEvaluation,
+            Score = Score
         };
     }
-    public static Student Create(StudentViewModel model)
-    {
-        return new Student
-        {
-            Id = model.Id,
-            PlanOfStudyId = model.PlanOfStudyId,
-            Name = model.Name,
-            PhoneNumber = model.PhoneNumber
-        };
-    }
-    public void Update(StudentBindingModel model)
-    {
-        if (model == null)
-        {
-            return;
-        }
-        PhoneNumber = model.PhoneNumber;
-        Name = model.Name;
-        PlanOfStudyId = model.PlanOfStudyId;
-    }
-    public StudentViewModel GetViewModel => new()
-    {
-        Id = Id,
-        PlanOfStudyId = PlanOfStudyId,
-        Name = Name,
-        PhoneNumber = PhoneNumber
-    };
 }
