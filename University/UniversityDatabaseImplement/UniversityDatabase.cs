@@ -11,13 +11,13 @@ namespace UniversityDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                //Возможно понадобится писать вместо (localdb) название пк, вот пк Егора:  DESKTOP-N8BRIPR
+                //Возможно понадобится писать вместо (localdb) название пк, вот пк Егора:  DESKTOP-N8BRIPR; other-name: LAPTOP-DYCTATOR
                 optionsBuilder.UseSqlServer(@"Data Source=(localdb)\SQLEXPRESS;Initial Catalog=UniversityDatabaseFull;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }
         public virtual DbSet<Student> Students { set; get; }
-        public virtual DbSet<PlanOfStudy> PlansOfStudy { set; get; }
+        public virtual DbSet<PlanOfStudy> PlanOfStudys { set; get; }
         public virtual DbSet<Attestation> Attestations { set; get; }
         // public virtual DbSet<Worker> Workers { set; get; }
         public virtual DbSet<Storekeeper> Storekeepers { set; get; }
@@ -25,5 +25,6 @@ namespace UniversityDatabaseImplement
         public virtual DbSet<Discipline> Disciplines { set; get; }
         public virtual DbSet<Statement> Statements { set; get; }
         public virtual DbSet<StudentDiscipline> StudentDisciplines { set; get; }
+        public virtual DbSet<PlanOfStudyTeacher> PlanOfStudyTeachers { set; get; }
     }
 }

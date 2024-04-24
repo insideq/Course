@@ -13,5 +13,6 @@ namespace UniversityContracts.BindingModels
         public string Profile { get; set; } = string.Empty;
         public string FormOfStudy { get; set; } = string.Empty;
         public int WorkerId { get; set; }
+        public Dictionary<int, ITeacherModel> PlanOfStudyTeachers { get; set; } = new();
     }
 }

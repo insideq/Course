@@ -16,5 +16,10 @@ namespace UniversityContracts.ViewModels
         public string Profile { get; set; } = string.Empty;
         [DisplayName("Форма обучения")]
         public string FormOfStudy { get; set; } = string.Empty;
+        public Dictionary<int, ITeacherModel> PlanOfStudyTeachers
+        {
+            get;
+            set;
+        } = new();
     }
 }

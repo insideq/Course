@@ -14,6 +14,6 @@ namespace UniversityContracts.BindingModels
         public int TeacherId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public Dictionary<int, (IStudentModel, int)> StudentDisciplines { get; set; } = new();
+        public Dictionary<int, IStudentModel> StudentDisciplines { get; set; } = new();
     }
 }
