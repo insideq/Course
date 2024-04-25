@@ -28,6 +28,7 @@ namespace UniversityDatabaseImplement.Models
         public virtual List<Statement> Statements { get; set; } = new();
         [ForeignKey("TeacherId")]
         public virtual List<Discipline> Disciplines { get; set; } = new();
+        [ForeignKey("TeacherId")]
         public virtual List<PlanOfStudyTeacher> PlanOfStudyTeachers { get; set; } = new();
         public static Teacher? Create(TeacherBindingModel model)
         {

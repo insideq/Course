@@ -35,6 +35,8 @@ namespace UniversityDatabaseImplement.Models
         }
         [ForeignKey("PlanOfStudyId")]
         public virtual List<PlanOfStudyTeacher> Teachers { get; set; } = new();
+        [ForeignKey("PlanOfStudyId")]
+        public virtual List<Student> Students { get; set; } = new();
         public virtual Worker Worker { get; set; } = new();
         public static PlanOfStudy Create(UniversityDatabase context, PlanOfStudyBindingModel model)
         {

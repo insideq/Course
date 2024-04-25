@@ -12,7 +12,7 @@ using UniversityContracts.ViewModels;
 using UniversityDataModels.Enums;
 
 namespace UniversityBusinessLogic.BusinessLogics
-{/*
+{
     public class AttestationLogic : IAttestationLogic
     {
         private readonly ILogger _logger;
@@ -25,8 +25,8 @@ namespace UniversityBusinessLogic.BusinessLogics
         }
         public List<AttestationViewModel>? ReadList(AttestationSearchModel? model)
         {
-            _logger.LogInformation("ReadList. FormOfEvaluation: {FormOfEvaluation}.Id:{Id} ",
-                model?.FormOfEvaluation, model?.Id);
+            _logger.LogInformation("ReadList.AttestationId:{Id} ",
+               model?.Id);
             var list = model == null ? _attestationStorage.GetFullList() :
                     _attestationStorage.GetFilteredList(model);
             if (list == null)
@@ -43,8 +43,8 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException(nameof(model));
             }
-            _logger.LogInformation("ReadElement. FormOfEvaluation:{FormOfEvaluation}.Id:{Id}",
-                model.FormOfEvaluation, model.Id);
+            _logger.LogInformation("ReadElement.Id:{Id}",
+                model.Id);
             var element = _attestationStorage.GetElement(model);
             if (element == null)
             {
@@ -54,7 +54,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             _logger.LogInformation("ReadElement find. Id:{Id}", element.Id);
             return element;
         }
-        public bool Create(AttestationBindingModel model)
+        public bool CreateAttestation(AttestationBindingModel model)
         {
             CheckModel(model);
 
@@ -68,7 +68,7 @@ namespace UniversityBusinessLogic.BusinessLogics
 
             return true;
         }
-        public bool StatusUpdate(AttestationBindingModel model, AttestationScore newScore)
+        public bool ScoreUpdate(AttestationBindingModel model, AttestationScore newScore)
         {
             CheckModel(model);
             if (model.Score + 1 != newScore)
@@ -132,5 +132,5 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             _logger.LogInformation("Order. OrderId:{Id}.Sum:{ Sum}. WorkId: { WorkId}", model.Id, model.Sum, model.WorkId);
         }
-    }*/
+    }
 }

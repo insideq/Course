@@ -19,7 +19,7 @@ namespace UniversityDatabaseImplement
         public virtual DbSet<Student> Students { set; get; }
         public virtual DbSet<PlanOfStudy> PlanOfStudys { set; get; }
         public virtual DbSet<Attestation> Attestations { set; get; }
-        // public virtual DbSet<Worker> Workers { set; get; }
+        public virtual DbSet<Worker> Workers { set; get; }
         public virtual DbSet<Storekeeper> Storekeepers { set; get; }
         public virtual DbSet<Teacher> Teachers { set; get; }
         public virtual DbSet<Discipline> Disciplines { set; get; }
