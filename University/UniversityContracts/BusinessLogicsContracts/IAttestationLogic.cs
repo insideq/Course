@@ -15,10 +15,10 @@ namespace UniversityContracts.BusinessLogicsContracts
         bool CreateAttestation(AttestationBindingModel model);
         bool SetPass(AttestationBindingModel model);
         bool SetNotPass(AttestationBindingModel model);
-        bool Set(AttestationBindingModel model);
-        bool Set(AttestationBindingModel model);
-        bool Set(AttestationBindingModel model);
-        bool SetNotCredit(AttestationBindingModel model);
+        bool SetTwo(AttestationBindingModel model);
+        bool SetThree(AttestationBindingModel model);
+        bool SetFour(AttestationBindingModel model);
+        bool SetFive(AttestationBindingModel model);
 
     }
 }

@@ -65,48 +65,55 @@ namespace UniversityBusinessLogic.BusinessLogics
                 _logger.LogWarning("Insert operation failed");
                 return false;
             }
-
             return true;
         }
         public bool ScoreUpdate(AttestationBindingModel model, AttestationScore newScore)
         {
             CheckModel(model);
-            if (model.Score + 1 != newScore)
+            
+            if (!Enum.IsDefined(typeof(AttestationScore), newScore))
             {
-                _logger.LogWarning("Status update to " + newScore.ToString() + " operation failed. Order status incorrect.");
+                _logger.LogWarning("Score update to " + newScore.ToString() + " operation failed. Attestation status incorrect.");
                 return false;
             }
 
-            model.Score = newScore;
-
-            if (model.Score == AttestationScore.Выдан)
-                model.DateImplement = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
-
             if (_attestationStorage.Update(model) == null)
             {
-                model.Score--;
                 _logger.LogWarning("Update operation failed");
                 return false;
             }
 
+            model.Score = newScore;
             return true;
         }
-        public bool TakeOrderInWork(OrderBindingModel model)
+        public bool SetPass(AttestationBindingModel model)
         {
-            return StatusUpdate(model, OrderStatus.Выполняется);
+            return ScoreUpdate(model, AttestationScore.Зачёт);
         }
 
-        public bool DeliveryOrder(OrderBindingModel model)
+        public bool SetNotPass(AttestationBindingModel model)
         {
-            return StatusUpdate(model, OrderStatus.Готов);
+            return ScoreUpdate(model, AttestationScore.Незачёт);
         }
 
-        public bool FinishOrder(OrderBindingModel model)
+        public bool SetTwo(AttestationBindingModel model)
         {
-            return StatusUpdate(model, OrderStatus.Выдан);
+            return ScoreUpdate(model, AttestationScore.Неудовлетворительно);
+        }
+        public bool SetThree(AttestationBindingModel model)
+        {
+            return ScoreUpdate(model, AttestationScore.Удовлетворительно);
+        }
+        public bool SetFour(AttestationBindingModel model)
+        {
+            return ScoreUpdate(model, AttestationScore.Хорошо);
+        }
+        public bool SetFive(AttestationBindingModel model)
+        {
+            return ScoreUpdate(model, AttestationScore.Отлично);
         }
 
-        private void CheckModel(OrderBindingModel model, bool withParams = true)
+        private void CheckModel(AttestationBindingModel model, bool withParams = true)
         {
             if (model == null)
             {
@@ -116,21 +123,17 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 return;
             }
-            if (model.WorkId < 0)
+            if (string.IsNullOrEmpty(model.FormOfEvaluation))
             {
-                throw new ArgumentNullException("Некорректный идентификатор изделия", nameof(model.WorkId));
+                throw new ArgumentNullException("Не выбрана форма оценивания", nameof(model.FormOfEvaluation));
             }
 
-            if (model.Count <= 0)
+            if (model.StudentId <= 0)
             {
-                throw new ArgumentNullException("Количество изделий в заказе должно быть больше 0", nameof(model.Count));
+                throw new ArgumentNullException("Некорректный идентификатор студента", nameof(model.StudentId));
             }
-
-            if (model.Sum <= 0)
-            {
-                throw new ArgumentNullException("Сумма заказа должна быть больше 0", nameof(model.Sum));
-            }
-            _logger.LogInformation("Order. OrderId:{Id}.Sum:{ Sum}. WorkId: { WorkId}", model.Id, model.Sum, model.WorkId);
+            _logger.LogInformation("Attestation. AttestationId:{Id}.FormOfEvaluation:{FormOfEvaluation}. StudentId: { StudentId}", 
+                model.Id, model.FormOfEvaluation, model.StudentId);
         }
     }
 }
