@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using UniversityDatabaseImplement.Models;
 
 namespace UniversityDatabaseImplement
@@ -12,7 +11,7 @@ namespace UniversityDatabaseImplement
             if (optionsBuilder.IsConfigured == false)
             {
                 //Возможно понадобится писать вместо (localdb) название пк, вот пк Егора:  DESKTOP-N8BRIPR; other-name: LAPTOP-DYCTATOR
-                optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-DYCTATOR\SQLEXPRESS;Initial Catalog=UniversityDatabaseFull;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\SQLEXPRESS;Initial Catalog=UniversityDatabaseFull;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }

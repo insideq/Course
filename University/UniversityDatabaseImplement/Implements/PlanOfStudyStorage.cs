@@ -27,20 +27,11 @@ namespace UniversityDatabaseImplement.Implements
             if (model.Id.HasValue)
             {
                 return context.PlanOfStudys
-                    .Include(x => x.Student)
+                    .Include(x => x.Students)
                     .Where(x => x.Id == model.Id)
                     .Select(x => x.GetViewModel)
                     .ToList();
             }
-            else if (model.StudentId.HasValue)
-            {
-                return context.Attestations
-                    .Include(x => x.Student)
-                    .Where(x => x.StudentId == model.StudentId)
-                    .Select(x => x.GetViewModel)
-                    .ToList();
-            }
-
             return new();
         }
 
@@ -51,21 +42,20 @@ namespace UniversityDatabaseImplement.Implements
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.Attestations.Include(x => x.Student).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
+            return context.PlanOfStudys.Include(x => x.Profile).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
         }
 
         public PlanOfStudyViewModel? Insert(PlanOfStudyBindingModel model)
         {
-            var newAttestation = Attestation.Create(model);
+            using var context = new UniversityDatabase();
+            var newAttestation = PlanOfStudy.Create(context, model);
 
             if (newAttestation == null)
             {
                 return null;
             }
 
-            using var context = new UniversityDatabase();
-
-            context.Attestations.Add(newAttestation);
+            context.PlanOfStudys.Add(newAttestation);
             context.SaveChanges();
 
             return newAttestation.GetViewModel;
@@ -74,22 +64,22 @@ namespace UniversityDatabaseImplement.Implements
         public PlanOfStudyViewModel? Update(PlanOfStudyBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var order = context.Attestations.FirstOrDefault(x => x.Id == model.Id);
+            var order = context.PlanOfStudys.FirstOrDefault(x => x.Id == model.Id);
             if (order == null)
             {
                 return null;
             }
             order.Update(model);
             context.SaveChanges();
-            return context.Attestations.Include(x => x.Student).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
+            return context.PlanOfStudys.Include(x => x.Profile).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
         }
         public PlanOfStudyViewModel? Delete(PlanOfStudyBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
+            var element = context.PlanOfStudys.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)
             {
-                context.Attestations.Remove(element);
+                context.PlanOfStudys.Remove(element);
                 context.SaveChanges();
                 return element.GetViewModel;
             }
