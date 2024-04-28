@@ -5,24 +5,23 @@ using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
 
-
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class StudentLogic : IStudentLogic
+    partial class DisciplineLogic: IDisciplineLogic
     {
         private readonly ILogger _logger;
-        private readonly IStudentStorage _studentStorage;
-        public StudentLogic(ILogger<StudentLogic> logger, IStudentStorage studentStorage)
+        private readonly IDisciplineStorage _disciplineStorage;
+        public DisciplineLogic(ILogger<DisciplineLogic> logger, IDisciplineStorage disciplineStorage)
         {
             _logger = logger;
-            _studentStorage = studentStorage;
+            _disciplineStorage = disciplineStorage;
         }
-        public List<StudentViewModel>? ReadList(StudentSearchModel? model)
+        public List<DisciplineViewModel>? ReadList(DisciplineSearchModel? model)
         {
             _logger.LogInformation("ReadList. Name: {Name}.Id:{Id} ",
                 model?.Name, model?.Id);
-            var list = model == null ? _studentStorage.GetFullList() :
-                _studentStorage.GetFilteredList(model);
+            var list = model == null ? _disciplineStorage.GetFullList() :
+                _disciplineStorage.GetFilteredList(model);
             if (list == null)
             {
                 _logger.LogWarning("ReadList return null list");
@@ -31,7 +30,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             _logger.LogInformation("ReadList. Count:{Count}", list.Count);
             return list;
         }
-        public StudentViewModel? ReadElement(StudentSearchModel model)
+        public DisciplineViewModel? ReadElement(DisciplineSearchModel model)
         {
             if (model == null)
             {
@@ -39,7 +38,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             _logger.LogInformation("ReadElement. Name:{Name}.Id:{Id}",
                 model.Name, model.Id);
-            var element = _studentStorage.GetElement(model);
+            var element = _disciplineStorage.GetElement(model);
             if (element == null)
             {
                 _logger.LogWarning("ReadElement element not found");
@@ -48,38 +47,38 @@ namespace UniversityBusinessLogic.BusinessLogics
             _logger.LogInformation("ReadElement find. Id:{Id}", element.Id);
             return element;
         }
-        public bool Create(StudentBindingModel model)
+        public bool Create(DisciplineBindingModel model)
         {
             CheckModel(model);
-            if (_studentStorage.Insert(model) == null)
+            if (_disciplineStorage.Insert(model) == null)
             {
                 _logger.LogWarning("Insert operation failed");
                 return false;
             }
             return true;
         }
-        public bool Update(StudentBindingModel model)
+        public bool Update(DisciplineBindingModel model)
         {
             CheckModel(model);
-            if (_studentStorage.Update(model) == null)
+            if (_disciplineStorage.Update(model) == null)
             {
                 _logger.LogWarning("Update operation failed");
                 return false;
             }
             return true;
         }
-        public bool Delete(StudentBindingModel model)
+        public bool Delete(DisciplineBindingModel model)
         {
             CheckModel(model, false);
             _logger.LogInformation("Delete. Id:{Id}", model.Id);
-            if (_studentStorage.Delete(model) == null)
+            if (_disciplineStorage.Delete(model) == null)
             {
                 _logger.LogWarning("Delete operation failed");
                 return false;
             }
             return true;
         }
-        private void CheckModel(StudentBindingModel model, bool withParams = true)
+        private void CheckModel(DisciplineBindingModel model, bool withParams = true)
         {
             if (model == null)
             {
@@ -91,22 +90,22 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             if (string.IsNullOrEmpty(model.Name))
             {
-                throw new ArgumentNullException("Нет имени студента",
+                throw new ArgumentNullException("Нет названия дисциплины",
                nameof(model.Name));
             }
-            if (string.IsNullOrEmpty(model.PhoneNumber))
+            if (string.IsNullOrEmpty(model.Description))
             {
-                throw new ArgumentNullException("Должен быть номер телефона", nameof(model.PhoneNumber));
+                throw new ArgumentNullException("Должна быть дисциплина", nameof(model.Description));
             }
-            _logger.LogInformation("Student. Name:{Name}.PhoneNumber:{PhoneNumber}. Id: {Id}",
-                model.Name, model.PhoneNumber, model.Id);
-            var element = _studentStorage.GetElement(new StudentSearchModel
+            _logger.LogInformation("Discipline. Name:{Name}.Description:{Description}. Id: {Id}",
+                model.Name, model.Description, model.Id);
+            var element = _disciplineStorage.GetElement(new DisciplineSearchModel
             {
                 Name = model.Name
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new InvalidOperationException("Данный студент уже существует");
+                throw new InvalidOperationException("Данная дисциплина уже существует");
             }
         }
     }

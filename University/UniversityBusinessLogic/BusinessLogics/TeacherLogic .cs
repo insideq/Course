@@ -1,28 +1,33 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
 
-
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class StudentLogic : IStudentLogic
+    public class TeacherLogic : ITeacherLogic
     {
         private readonly ILogger _logger;
-        private readonly IStudentStorage _studentStorage;
-        public StudentLogic(ILogger<StudentLogic> logger, IStudentStorage studentStorage)
+        private readonly ITeacherStorage _teacherStorage;
+        public TeacherLogic(ILogger<StudentLogic> logger, ITeacherStorage
+            teacherStorage)
         {
             _logger = logger;
-            _studentStorage = studentStorage;
+            _teacherStorage = teacherStorage;
         }
-        public List<StudentViewModel>? ReadList(StudentSearchModel? model)
+        public List<TeacherViewModel>? ReadList(TeacherSearchModel? model)
         {
             _logger.LogInformation("ReadList. Name: {Name}.Id:{Id} ",
                 model?.Name, model?.Id);
-            var list = model == null ? _studentStorage.GetFullList() :
-                _studentStorage.GetFilteredList(model);
+            var list = model == null ? _teacherStorage.GetFullList() :
+                _teacherStorage.GetFilteredList(model);
             if (list == null)
             {
                 _logger.LogWarning("ReadList return null list");
@@ -31,7 +36,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             _logger.LogInformation("ReadList. Count:{Count}", list.Count);
             return list;
         }
-        public StudentViewModel? ReadElement(StudentSearchModel model)
+        public TeacherViewModel? ReadElement(TeacherSearchModel model)
         {
             if (model == null)
             {
@@ -39,7 +44,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             _logger.LogInformation("ReadElement. Name:{Name}.Id:{Id}",
                 model.Name, model.Id);
-            var element = _studentStorage.GetElement(model);
+            var element = _teacherStorage.GetElement(model);
             if (element == null)
             {
                 _logger.LogWarning("ReadElement element not found");
@@ -48,38 +53,38 @@ namespace UniversityBusinessLogic.BusinessLogics
             _logger.LogInformation("ReadElement find. Id:{Id}", element.Id);
             return element;
         }
-        public bool Create(StudentBindingModel model)
+        public bool Create(TeacherBindingModel model)
         {
             CheckModel(model);
-            if (_studentStorage.Insert(model) == null)
+            if (_teacherStorage.Insert(model) == null)
             {
                 _logger.LogWarning("Insert operation failed");
                 return false;
             }
             return true;
         }
-        public bool Update(StudentBindingModel model)
+        public bool Update(TeacherBindingModel model)
         {
             CheckModel(model);
-            if (_studentStorage.Update(model) == null)
+            if (_teacherStorage.Update(model) == null)
             {
                 _logger.LogWarning("Update operation failed");
                 return false;
             }
             return true;
         }
-        public bool Delete(StudentBindingModel model)
+        public bool Delete(TeacherBindingModel model)
         {
             CheckModel(model, false);
             _logger.LogInformation("Delete. Id:{Id}", model.Id);
-            if (_studentStorage.Delete(model) == null)
+            if (_teacherStorage.Delete(model) == null)
             {
                 _logger.LogWarning("Delete operation failed");
                 return false;
             }
             return true;
         }
-        private void CheckModel(StudentBindingModel model, bool withParams = true)
+        private void CheckModel(TeacherBindingModel model, bool withParams = true)
         {
             if (model == null)
             {
@@ -91,22 +96,27 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             if (string.IsNullOrEmpty(model.Name))
             {
-                throw new ArgumentNullException("Нет имени студента",
+                throw new ArgumentNullException("Нет названия",
                nameof(model.Name));
             }
-            if (string.IsNullOrEmpty(model.PhoneNumber))
+            if (string.IsNullOrEmpty(model.AcademicDegree))
             {
-                throw new ArgumentNullException("Должен быть номер телефона", nameof(model.PhoneNumber));
+                throw new ArgumentNullException("Не указана учёная степень", nameof(model.AcademicDegree));
             }
-            _logger.LogInformation("Student. Name:{Name}.PhoneNumber:{PhoneNumber}. Id: {Id}",
-                model.Name, model.PhoneNumber, model.Id);
-            var element = _studentStorage.GetElement(new StudentSearchModel
+            if (string.IsNullOrEmpty(model.Position))
+            {
+                throw new ArgumentNullException("Нет должности",
+               nameof(model.Position));
+            }
+            _logger.LogInformation("Teacher. Name:{Name}.AcademicDegree:{AcademicDegree}. Position:{Position}. Id: {Id}",
+                model.Name, model.AcademicDegree, model.Position, model.Id);
+            var element = _teacherStorage.GetElement(new TeacherSearchModel
             {
                 Name = model.Name
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new InvalidOperationException("Данный студент уже существует");
+                throw new InvalidOperationException("Данный преподаватель уже существует");
             }
         }
     }
