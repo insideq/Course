@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Manage Disciplines";
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+</div>
+
+
+<form method="post">
+    <div class="row">
+        <div class="col-4">Name:</div>
+        <div class="col-8">
+            <input type="text" name="name" id="name" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Description:</div>
+        <div class="col-8">
+            <textarea name="description" id="description" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Students:</div>
+        <div class="col-8">
+            <select id="students" name="students" class="form-control" multiple asp-items="ViewBag.Students"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <input type="submit" value="Create Discipline" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Students</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var discipline in Model)
+        {
+            <tr>
+                <td>@discipline.Name</td>
+                <td>@discipline.Description</td>
+                <td>
+                    @foreach (var student in discipline.Students)
+                    {
+                        <span>@student.Name</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@discipline.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@discipline.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@discipline.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        } *@
+    </tbody>
+</table>
+
+

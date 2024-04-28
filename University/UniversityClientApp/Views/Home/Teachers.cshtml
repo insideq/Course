@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Manage Teachers";
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+</div>
+
+
+<form method="post">
+    <div class="row">
+        <div class="col-4">Name:</div>
+        <div class="col-8">
+            <input type="text" name="name" id="name" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Academic Degree:</div>
+        <div class="col-8">
+            <input type="text" name="academicDegree" id="academicDegree" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Position:</div>
+        <div class="col-8">
+            <input type="text" name="position" id="position" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Disciplines:</div>
+        <div class="col-8">
+            <select id="disciplines" name="disciplines" class="form-control" multiple asp-items="ViewBag.Disciplines"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <input type="submit" value="Create Teacher" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Academic Degree</th>
+            <th>Position</th>
+            <th>Disciplines</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+	<tbody>
+		
+        @* @foreach (var teacher in Model)
+        {
+            
+            <tr>
+                <td>@teacher.Name</td>
+                <td>@teacher.AcademicDegree</td>
+                <td>@teacher.Position</td>
+                <td>
+                    @foreach (var discipline in teacher.Disciplines)
+                    {
+                        <span>@discipline.Name</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        } *@
+    </tbody>
+</table>
+
+

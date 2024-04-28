@@ -23,7 +23,36 @@ namespace UniversityClientApp.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Enter()
+		{
+			return View();
+		}
+
+        public IActionResult Disciplines()
+        {
+            return View();
+        }
+
+        public IActionResult Statements()
+        {
+            return View();
+        }
+
+		public IActionResult Teachers()
+		{
+			return View();
+		}
+
+		public IActionResult Report() { 
+            return View();
+        }
+
+		public IActionResult Register()
+		{
+			return View();
+		}
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
