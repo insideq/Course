@@ -1,0 +1,70 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using UniversityContracts.BindingModels;
+using UniversityContracts.BusinessLogicsContracts;
+using UniversityContracts.SearchModels;
+using UniversityContracts.ViewModels;
+
+namespace UniversityRestApi.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class StudentController : Controller
+    {
+        private readonly ILogger _logger;
+        private readonly IStudentLogic _logic;
+        public StudentController(IStudentLogic logic, ILogger<StudentController> logger)
+        {
+            _logic = logic;
+            _logger = logger;
+        }
+        [HttpGet]
+        public List<StudentViewModel>? GetStudents(int userId)
+        {
+            try
+            {
+                return _logic.ReadList(new StudentSearchModel { UserId = userId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка студентов пользователя id={Id}", userId);
+                throw;
+            }
+        }
+        public void CreateStudent(StudentBindingModel model)
+        {
+            try
+            {
+                _logic.Create(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания студента");
+                throw;
+            }
+        }
+        public void UpdateStudent(StudentBindingModel model)
+        {
+            try
+            {
+                _logic.Update(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка обновления студента");
+                throw;
+            }
+        }
+        public void DeleteStudent(StudentBindingModel model)
+        {
+            try
+            {
+                _logic.Delete(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка удаления студента");
+                throw;
+            }
+        }
+    }
+}

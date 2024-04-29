@@ -67,6 +67,28 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             return true;
         }
+        public bool DeleteAttestation(AttestationBindingModel model)
+        {
+            CheckModel(model, false);
+            _logger.LogInformation("Delete. Id:{Id}", model.Id);
+            if (_attestationStorage.Delete(model) == null)
+            {
+                _logger.LogWarning("Delete attestation operation failed");
+                return false;
+            }
+            return true;
+        }
+        public bool UpdateAttestation(AttestationBindingModel model)
+        {
+            CheckModel(model, false);
+            _logger.LogInformation("Update. Id:{Id}", model.Id);
+            if (_attestationStorage.Update(model) == null)
+            {
+                _logger.LogWarning("Update attestation operation failed");
+                return false;
+            }
+            return true;
+        }
         public bool ScoreUpdate(AttestationBindingModel model, AttestationScore newScore)
         {
             CheckModel(model);

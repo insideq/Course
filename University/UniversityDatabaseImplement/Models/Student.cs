@@ -16,7 +16,7 @@ namespace UniversityDatabaseImplement.Models
     {
         public int Id { get; private set; }
         public int UserId { get; private set; }
-        public int? PlanOfStudyId { get; private set; }
+        public int PlanOfStudyId { get; private set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -35,7 +35,7 @@ namespace UniversityDatabaseImplement.Models
                 UserId = model.UserId,
                 User = context.Users.First(x => x.Id == model.UserId),
                 PlanOfStudyId = model.PlanOfStudyId,
-                PlanOfStudy = model.PlanOfStudyId.HasValue ? context.PlanOfStudys.First(x => x.Id == model.PlanOfStudyId) : null,
+                PlanOfStudy = context.PlanOfStudys.First(x => x.Id == model.PlanOfStudyId),
                 Name = model.Name,
                 PhoneNumber = model.PhoneNumber
             };
@@ -54,6 +54,7 @@ namespace UniversityDatabaseImplement.Models
         {
             Id = Id,
             PlanOfStudyId = PlanOfStudyId,
+            UserId = UserId,
             Name = Name,
             PhoneNumber = PhoneNumber
         };

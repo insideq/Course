@@ -43,7 +43,8 @@ namespace UniversityDatabaseImplement.Models
             return new PlanOfStudy()
             {
                 Id = model.Id,
-                WorkerId = model.WorkerId,
+                UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 Profile = model.Profile,
                 FormOfStudy = model.FormOfStudy,
                 Teachers = model.PlanOfStudyTeachers.Select(x => new
@@ -60,7 +61,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
-            WorkerId = model.WorkerId;
+            UserId = model.UserId;
             Profile = model.Profile;
             FormOfStudy = model.FormOfStudy;
         }
@@ -96,7 +97,7 @@ namespace UniversityDatabaseImplement.Models
         public PlanOfStudyViewModel GetViewModel => new()
         {
             Id = Id,
-            WorkerId = WorkerId,
+            UserId = UserId,
             Profile = Profile,
             FormOfStudy = FormOfStudy,
             PlanOfStudyTeachers = PlanOfStudyTeachers,

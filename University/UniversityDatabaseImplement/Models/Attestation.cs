@@ -15,13 +15,15 @@ namespace UniversityDatabaseImplement.Models
     public class Attestation : IAttestationModel
     {
         public int Id { get; private set; }
+        public int UserId { get; private set; }
         public int StudentId { get; private set; }
         [Required]
         public string FormOfEvaluation { get; private set; } = string.Empty;
         [Required]
         public AttestationScore Score { get; private set; } = AttestationScore.Неявка;
         public virtual Student Student { get; set; } = new();
-        public static Attestation? Create(AttestationBindingModel model)
+        public virtual User User { get; set; } = new();
+        public static Attestation? Create(UniversityDatabase context, AttestationBindingModel model)
         {
             if (model == null)
             {
@@ -30,17 +32,10 @@ namespace UniversityDatabaseImplement.Models
             return new Attestation()
             {
                 Id = model.Id,
+                UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 StudentId = model.StudentId,
-                FormOfEvaluation = model.FormOfEvaluation,
-                Score = model.Score
-            };
-        }
-        public static Attestation Create(AttestationViewModel model)
-        {
-            return new Attestation
-            {
-                Id = model.Id,
-                StudentId = model.StudentId,
+                Student = context.Students.First(x => x.Id == model.StudentId),
                 FormOfEvaluation = model.FormOfEvaluation,
                 Score = model.Score
             };

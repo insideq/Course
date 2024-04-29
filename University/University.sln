@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDatabaseImplement
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityBusinessLogic", "UniversityBusinessLogic\UniversityBusinessLogic.csproj", "{C21D4CE2-0B08-40A5-BD7B-56F1C05FA109}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityRestApi", "UniversityRestApi\UniversityRestApi.csproj", "{4F0BB8C6-2BA8-4212-BC86-4E66C1C03816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityRestApi", "UniversityRestApi\UniversityRestApi.csproj", "{4F0BB8C6-2BA8-4212-BC86-4E66C1C03816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityClientApp", "UniversityClientApp\UniversityClientApp.csproj", "{65698622-8424-4D8E-BFC9-721BB5252F22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityClientAppStorekeeper", "UniversityClientApp\UniversityClientAppStorekeeper.csproj", "{65698622-8424-4D8E-BFC9-721BB5252F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityClientAppWorker", "UniversityClientAppWorker\UniversityClientAppWorker.csproj", "{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{65698622-8424-4D8E-BFC9-721BB5252F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65698622-8424-4D8E-BFC9-721BB5252F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65698622-8424-4D8E-BFC9-721BB5252F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -56,14 +56,14 @@ namespace UniversityDatabaseImplement.Implements
 
         public AttestationViewModel? Insert(AttestationBindingModel model)
         {
-            var newAttestation = Attestation.Create(model);
+            using var context = new UniversityDatabase();
+
+            var newAttestation = Attestation.Create(context, model);
 
             if (newAttestation == null)
             {
                 return null;
             }
-
-            using var context = new UniversityDatabase();
 
             context.Attestations.Add(newAttestation);
             context.SaveChanges();

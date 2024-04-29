@@ -48,14 +48,14 @@ namespace UniversityDatabaseImplement.Implements
 
         public StudentViewModel? Insert(StudentBindingModel model)
         {
-            var newStudent = Student.Create(model);
+            using var context = new UniversityDatabase();
+
+            var newStudent = Student.Create(context, model);
 
             if (newStudent == null)
             {
                 return null;
             }
-
-            using var context = new UniversityDatabase();
 
             context.Students.Add(newStudent);
             context.SaveChanges();

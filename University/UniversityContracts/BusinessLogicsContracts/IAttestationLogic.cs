@@ -13,6 +13,8 @@ namespace UniversityContracts.BusinessLogicsContracts
     {
         List<AttestationViewModel>? ReadList(AttestationSearchModel? model);
         bool CreateAttestation(AttestationBindingModel model);
+        bool DeleteAttestation(AttestationBindingModel model);
+        bool UpdateAttestation(AttestationBindingModel model);
         bool SetPass(AttestationBindingModel model);
         bool SetNotPass(AttestationBindingModel model);
         bool SetTwo(AttestationBindingModel model);
