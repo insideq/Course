@@ -16,14 +16,14 @@ namespace UniversityDatabaseImplement.Models
     {
         public int Id { get; private set; }
         [Required]
-        public int StorekeeperId { get; private set; }
+        public int UserId { get; private set; }
         [Required]
         public string Name { get; private set; } = string.Empty;
         [Required]
         public string AcademicDegree { get; private set; } = string.Empty;
         [Required]
         public string Position { get; private set; } = string.Empty;
-        public virtual Storekeeper Storekeeper { get;  set; } = new ();
+        public virtual User User { get;  set; } = new ();
         [ForeignKey("TeacherId")]
         public virtual List<Statement> Statements { get; set; } = new();
         [ForeignKey("TeacherId")]
@@ -39,7 +39,7 @@ namespace UniversityDatabaseImplement.Models
             return new Teacher()
             {
                 Id = model.Id,
-                StorekeeperId = model.StorekeeperId,
+                UserId = model.UserId,
                 Name = model.Name,
                 AcademicDegree = model.AcademicDegree,
                 Position = model.Position,
@@ -50,7 +50,7 @@ namespace UniversityDatabaseImplement.Models
             return new Teacher()
             {
                 Id = model.Id,
-                StorekeeperId = model.StorekeeperId,
+                UserId = model.UserId,
                 Name = model.Name,
                 AcademicDegree = model.AcademicDegree,
                 Position = model.Position,
@@ -63,7 +63,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
-            StorekeeperId = model.StorekeeperId;
+            UserId = model.UserId;
             Name = model.Name;
             AcademicDegree = model.AcademicDegree;
             Position = model.Position;
@@ -71,7 +71,7 @@ namespace UniversityDatabaseImplement.Models
         public TeacherViewModel GetViewModel => new()
         {
             Id = Id,
-            StorekeeperId = StorekeeperId,
+            UserId = UserId,
             Name = Name,
             AcademicDegree = AcademicDegree,
             Position = Position,

@@ -98,8 +98,12 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException("Должен быть номер телефона", nameof(model.PhoneNumber));
             }
-            _logger.LogInformation("Student. Name:{Name}.PhoneNumber:{PhoneNumber}. Id: {Id}",
-                model.Name, model.PhoneNumber, model.Id);
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
+            _logger.LogInformation("Student. Name:{Name}.PhoneNumber:{PhoneNumber}. UserId: {UserId}. Id: {Id}",
+                model.Name, model.PhoneNumber, model.UserId, model.Id);
             var element = _studentStorage.GetElement(new StudentSearchModel
             {
                 Name = model.Name

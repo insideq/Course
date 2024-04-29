@@ -9,12 +9,12 @@ using UniversityContracts.ViewModels;
 
 namespace UniversityContracts.BusinessLogicsContracts
 {
-    public interface IWorkerLogic
+    public interface IUserLogic
     {
-        List<WorkerViewModel>? ReadList(WorkerSearchModel? model);
-        WorkerViewModel? ReadElement(WorkerSearchModel model);
-        bool Create(WorkerBindingModel model);
-        bool Update(WorkerBindingModel model);
-        bool Delete(WorkerBindingModel model);
+        List<UserViewModel>? ReadList(UserSearchModel? model);
+        UserViewModel? ReadElement(UserSearchModel model);
+        bool Create(UserBindingModel model);
+        bool Update(UserBindingModel model);
+        bool Delete(UserBindingModel model);
     }
 }

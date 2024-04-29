@@ -2,7 +2,7 @@
 {
     public interface ITeacherModel : IId
     {
-        int StorekeeperId { get; }
+        int UserId { get; }
         string Name { get; }
         string AcademicDegree { get; }
         string Position { get; }

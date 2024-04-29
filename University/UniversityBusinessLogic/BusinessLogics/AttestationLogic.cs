@@ -127,13 +127,17 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException("Не выбрана форма оценивания", nameof(model.FormOfEvaluation));
             }
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
 
             if (model.StudentId <= 0)
             {
                 throw new ArgumentNullException("Некорректный идентификатор студента", nameof(model.StudentId));
             }
-            _logger.LogInformation("Attestation. AttestationId:{Id}.FormOfEvaluation:{FormOfEvaluation}. StudentId: { StudentId}", 
-                model.Id, model.FormOfEvaluation, model.StudentId);
+            _logger.LogInformation("Attestation. AttestationId:{Id}.FormOfEvaluation:{FormOfEvaluation}. StudentId: {StudentId}. UserId: {UserId}", 
+                model.Id, model.FormOfEvaluation, model.StudentId, model.UserId);
         }
     }
 }

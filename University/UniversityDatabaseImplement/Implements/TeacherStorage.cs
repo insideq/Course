@@ -32,7 +32,7 @@ namespace UniversityDatabaseImplement.Implements
             .Where(x => x.Name.Contains(model.Name))
             .Where(x => x.Position.Contains(model.Position))
             .Where(x => x.AcademicDegree.Contains(model.AcademicDegree))
-            .Include(x => x.Storekeeper)
+            .Include(x => x.User)
            .Select(x => x.GetViewModel)
            .ToList();
         }

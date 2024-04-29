@@ -11,6 +11,7 @@ namespace UniversityContracts.BindingModels
     public class AttestationBindingModel : IAttestationModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string FormOfEvaluation { get; set; } = string.Empty;
         public AttestationScore Score { get; set; } = AttestationScore.Неявка;
         public int StudentId { get; set; }

@@ -15,7 +15,8 @@ namespace UniversityDatabaseImplement.Models
     public class Student : IStudentModel
     {
         public int Id { get; private set; }
-        public int PlanOfStudyId { get; private set; }
+        public int UserId { get; private set; }
+        public int? PlanOfStudyId { get; private set; }
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -25,26 +26,16 @@ namespace UniversityDatabaseImplement.Models
         [ForeignKey("StudentId")]
         public virtual List<Attestation> Attestations { get; set; } = new();
         public virtual PlanOfStudy PlanOfStudy { get; set; } = new();
-        public static Student? Create(StudentBindingModel model)
+        public virtual User User { get; set; } = new();
+        public static Student? Create(UniversityDatabase context, StudentBindingModel model)
         {
-            if (model == null)
-            {
-                return null;
-            }
             return new Student()
             {
                 Id = model.Id,
+                UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 PlanOfStudyId = model.PlanOfStudyId,
-                Name = model.Name,
-                PhoneNumber = model.PhoneNumber
-            };
-        }
-        public static Student Create(StudentViewModel model)
-        {
-            return new Student
-            {
-                Id = model.Id,
-                PlanOfStudyId = model.PlanOfStudyId,
+                PlanOfStudy = model.PlanOfStudyId.HasValue ? context.PlanOfStudys.First(x => x.Id == model.PlanOfStudyId) : null,
                 Name = model.Name,
                 PhoneNumber = model.PhoneNumber
             };

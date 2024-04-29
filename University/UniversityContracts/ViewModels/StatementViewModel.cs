@@ -11,6 +11,7 @@ namespace UniversityContracts.ViewModels
     public class StatementViewModel : IStatementModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int TeacherId { get; set; }
         [DisplayName("Название ведомости")]
         public string Name { get; set; } = string.Empty;

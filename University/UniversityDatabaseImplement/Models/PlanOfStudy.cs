@@ -14,7 +14,7 @@ namespace UniversityDatabaseImplement.Models
     public class PlanOfStudy : IPlanOfStudyModel
     {
         public int Id { get; private set; }
-        public int WorkerId { get; private set; }
+        public int UserId { get; private set; }
         [Required]
         public string Profile { get; private set; } = string.Empty;
         [Required]
@@ -37,7 +37,7 @@ namespace UniversityDatabaseImplement.Models
         public virtual List<PlanOfStudyTeacher> Teachers { get; set; } = new();
         [ForeignKey("PlanOfStudyId")]
         public virtual List<Student> Students { get; set; } = new();
-        public virtual Worker Worker { get; set; } = new();
+        public virtual User User { get; set; } = new();
         public static PlanOfStudy Create(UniversityDatabase context, PlanOfStudyBindingModel model)
         {
             return new PlanOfStudy()

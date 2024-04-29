@@ -108,8 +108,12 @@ namespace UniversityBusinessLogic.BusinessLogics
                 throw new ArgumentNullException("Нет должности",
                nameof(model.Position));
             }
-            _logger.LogInformation("Teacher. Name:{Name}.AcademicDegree:{AcademicDegree}. Position:{Position}. Id: {Id}",
-                model.Name, model.AcademicDegree, model.Position, model.Id);
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
+            _logger.LogInformation("Teacher. Name:{Name}.AcademicDegree:{AcademicDegree}. Position:{Position}. UserId: {UserId}. Id: {Id}",
+                model.Name, model.AcademicDegree, model.Position, model.UserId, model.Id);
             var element = _teacherStorage.GetElement(new TeacherSearchModel
             {
                 Name = model.Name

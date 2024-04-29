@@ -11,6 +11,7 @@ namespace UniversityContracts.ViewModels
     public class DisciplineViewModel : IDisciplineModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int TeacherId { get; set; }
         [DisplayName("Название дисциплины")]
         public string Name { get; set; } = string.Empty;

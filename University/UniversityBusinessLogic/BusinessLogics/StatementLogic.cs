@@ -107,8 +107,12 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException("Некорректный идентификатор преподавателя", nameof(model.TeacherId));
             }
-            _logger.LogInformation("Statement. StatementId:{Id}.Name:{Name}. TeacherId: { TeacherId}", 
-                model.Id, model.Name, model.TeacherId);
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
+            _logger.LogInformation("Statement. StatementId:{Id}.Name:{Name}. TeacherId: {TeacherId}. UserId: {UserId}", 
+                model.Id, model.Name, model.TeacherId, model.UserId);
         }
     }
 }

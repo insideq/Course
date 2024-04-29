@@ -11,6 +11,7 @@ namespace UniversityContracts.BindingModels
     public class TeacherBindingModel : ITeacherModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int StorekeeperId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string AcademicDegree { get; set; } = string.Empty;

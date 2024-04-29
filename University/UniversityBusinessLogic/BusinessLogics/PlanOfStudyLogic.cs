@@ -103,8 +103,12 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException("Не указана форма обучения", nameof(model.FormOfStudy));
             }
-            _logger.LogInformation("Student. Profile:{Profile}.FormOfStudy:{FormOfStudy}. Id: {Id}",
-                model.Profile, model.FormOfStudy, model.Id);
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
+            _logger.LogInformation("Student. Profile:{Profile}.FormOfStudy:{FormOfStudy}. UserId: {UserId}. Id: {Id}",
+                model.Profile, model.FormOfStudy, model.UserId, model.Id);
             var element = _planOfStudyStorage.GetElement(new PlanOfStudySearchModel
             {
                 Profile = model.Profile

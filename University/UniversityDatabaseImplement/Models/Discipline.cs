@@ -46,7 +46,7 @@ namespace UniversityDatabaseImplement.Models
                 Name = model.Name,
                 Description = model.Description,
                 Students = model.StudentDisciplines.Select(x => new
-               StudentDiscipline
+                StudentDiscipline
                 {
                     Student = context.Students.First(y => y.Id == x.Key)
                 }).ToList()

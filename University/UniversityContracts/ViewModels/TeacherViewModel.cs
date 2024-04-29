@@ -11,6 +11,7 @@ namespace UniversityContracts.ViewModels
     public class TeacherViewModel : ITeacherModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int StorekeeperId { get; set; }
         [DisplayName("ФИО")]
         public string Name { get; set; } = string.Empty;

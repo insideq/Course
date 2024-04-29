@@ -10,6 +10,7 @@ namespace UniversityContracts.BindingModels
     public class PlanOfStudyBindingModel : IPlanOfStudyModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string Profile { get; set; } = string.Empty;
         public string FormOfStudy { get; set; } = string.Empty;
         public int WorkerId { get; set; }

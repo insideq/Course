@@ -12,6 +12,7 @@ namespace UniversityContracts.ViewModels
     public class AttestationViewModel : IAttestationModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int StudentId { get; set; }
         [DisplayName("Форма оценивания")]
         public string FormOfEvaluation { get; set; } = string.Empty;

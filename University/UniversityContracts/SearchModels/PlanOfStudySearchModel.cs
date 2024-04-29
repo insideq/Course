@@ -9,6 +9,7 @@ namespace UniversityContracts.SearchModels
     public class PlanOfStudySearchModel
     {
         public int? Id { get; set; }
+        public int UserId { get; set; }
         public string? Profile { get; set; }
     }
 }

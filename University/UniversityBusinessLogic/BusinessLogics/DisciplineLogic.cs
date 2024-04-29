@@ -97,8 +97,12 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new ArgumentNullException("Должна быть дисциплина", nameof(model.Description));
             }
-            _logger.LogInformation("Discipline. Name:{Name}.Description:{Description}. Id: {Id}",
-                model.Name, model.Description, model.Id);
+            if (model.UserId < 0)
+            {
+                throw new ArgumentNullException("Некорректный идентификатор пользователя", nameof(model.UserId));
+            }
+            _logger.LogInformation("Discipline. Name:{Name}.Description:{Description}. UserId: {UserId}. Id: {Id}",
+                model.Name, model.Description, model.UserId, model.Id);
             var element = _disciplineStorage.GetElement(new DisciplineSearchModel
             {
                 Name = model.Name
