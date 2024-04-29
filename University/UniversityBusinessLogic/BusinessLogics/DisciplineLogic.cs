@@ -7,7 +7,7 @@ using UniversityContracts.ViewModels;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    partial class DisciplineLogic: IDisciplineLogic
+    public class DisciplineLogic: IDisciplineLogic
     {
         private readonly ILogger _logger;
         private readonly IDisciplineStorage _disciplineStorage;

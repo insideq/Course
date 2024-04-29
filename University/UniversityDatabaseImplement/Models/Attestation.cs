@@ -15,7 +15,9 @@ namespace UniversityDatabaseImplement.Models
     public class Attestation : IAttestationModel
     {
         public int Id { get; private set; }
+        [Required]
         public int UserId { get; private set; }
+        [Required]
         public int StudentId { get; private set; }
         [Required]
         public string FormOfEvaluation { get; private set; } = string.Empty;

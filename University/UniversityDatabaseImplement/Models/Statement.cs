@@ -14,11 +14,14 @@ namespace UniversityDatabaseImplement.Models
     {
         public int Id { get; private set; }
         [Required]
+        public int UserId { get; private set; }
+        [Required]
         public int TeacherId { get; private set; }
         [Required]
         public string Name { get; private set; } = string.Empty;
         [Required]
         public DateTime Date { get; private set; }
+        public virtual User User { get; set; } = new ();
         public virtual Teacher Teacher { get; set; } = new ();
         public static Statement? Create(StatementBindingModel model)
         {
@@ -29,6 +32,7 @@ namespace UniversityDatabaseImplement.Models
             return new Statement()
             {
                 Id = model.Id,
+                UserId = model.UserId,
                 TeacherId = model.TeacherId,
                 Name = model.Name,
                 Date = model.Date,
@@ -39,6 +43,7 @@ namespace UniversityDatabaseImplement.Models
             return new Statement()
             {
                 Id = model.Id,
+                UserId = model.UserId,
                 TeacherId = model.TeacherId,
                 Name = model.Name,
                 Date = model.Date,
@@ -51,6 +56,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
+            UserId = model.UserId;
             TeacherId = model.Id;
             Name = model.Name;
             Date = model.Date;
@@ -58,6 +64,7 @@ namespace UniversityDatabaseImplement.Models
         public StatementViewModel GetViewModel => new()
         {
             Id = Id,
+            UserId = UserId,
             TeacherId = TeacherId,
             Name = Name,
             Date = Date,

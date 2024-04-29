@@ -15,7 +15,9 @@ namespace UniversityDatabaseImplement.Models
     public class Student : IStudentModel
     {
         public int Id { get; private set; }
+        [Required]
         public int UserId { get; private set; }
+        [Required]
         public int PlanOfStudyId { get; private set; }
         [Required]
         public string Name { get; set; } = string.Empty;

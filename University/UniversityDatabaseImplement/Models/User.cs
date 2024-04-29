@@ -25,6 +25,18 @@ namespace UniversityDatabaseImplement.Models
         public string Email { get; set; } = string.Empty;
         [Required]
         public UserRole Role { get; set; }
+        [ForeignKey("UserId")]
+        public virtual List<Statement> Statements { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Discipline> Disciplines { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Teacher> Teachers { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Attestation> Attestations { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<PlanOfStudy> PlanOfStudys { get; set; } = new();
+        [ForeignKey("UserId")]
+        public virtual List<Student> Students{ get; set; } = new();
         public static User Create(UserBindingModel model)
         {
             return new User

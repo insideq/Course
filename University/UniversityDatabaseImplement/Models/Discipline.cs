@@ -15,11 +15,15 @@ namespace UniversityDatabaseImplement.Models
     {
         public int Id { get; private set; }
         [Required]
+        public int UserId { get; private set; }
+
+        [Required]
         public int TeacherId { get; private set; }
         [Required]
         public string Name { get; private set; } = string.Empty;
         [Required]
         public string Description { get; private set; } = string.Empty;
+        public virtual User User { get; set; } = new();
         public virtual Teacher Teacher { get; set; } = new();
         private Dictionary<int, IStudentModel>? _studentDisciplines = null;
         [NotMapped]
@@ -42,7 +46,10 @@ namespace UniversityDatabaseImplement.Models
             return new Discipline()
             {
                 Id = model.Id,
+                UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 TeacherId = model.TeacherId,
+                Teacher = context.Teachers.First(x => x.Id == model.TeacherId),
                 Name = model.Name,
                 Description = model.Description,
                 Students = model.StudentDisciplines.Select(x => new
@@ -59,6 +66,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
+            UserId = model.UserId;
             TeacherId = model.TeacherId;
             Name = model.Name;
             Description = model.Description;
@@ -94,6 +102,7 @@ namespace UniversityDatabaseImplement.Models
         public DisciplineViewModel GetViewModel => new()
         {
             Id = Id,
+            UserId = UserId,
             TeacherId = TeacherId,
             Name = Name,
             Description = Description,
