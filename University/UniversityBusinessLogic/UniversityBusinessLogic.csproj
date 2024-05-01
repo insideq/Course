@@ -10,8 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UniversityContracts\UniversityContracts.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\UniversityContracts\UniversityContracts.csproj" />
+		<ProjectReference Include="..\UniversityDataModels\UniversityDataModels.csproj" />
+	</ItemGroup>
 
 </Project>

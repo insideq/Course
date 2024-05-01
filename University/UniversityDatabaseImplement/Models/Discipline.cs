@@ -23,6 +23,7 @@ namespace UniversityDatabaseImplement.Models
         public string Name { get; private set; } = string.Empty;
         [Required]
         public string Description { get; private set; } = string.Empty;
+        public DateOnly Date { get; private set; }
         public virtual User User { get; set; } = new();
         public virtual Teacher Teacher { get; set; } = new();
         private Dictionary<int, IStudentModel>? _studentDisciplines = null;

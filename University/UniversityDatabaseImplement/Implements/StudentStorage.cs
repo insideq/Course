@@ -9,6 +9,7 @@ using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
 using UniversityDatabaseImplement.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace UniversityDatabaseImplement.Implements
 {

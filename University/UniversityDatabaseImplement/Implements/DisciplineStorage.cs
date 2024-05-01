@@ -15,6 +15,25 @@ namespace UniversityDatabaseImplement.Implements
 {
     public class DisciplineStorage : IDisciplineStorage
     {
+        public List<StudentViewModel> GetStudentsForDiscipline(DisciplineSearchModel model)
+        {
+            using var context = new UniversityDatabase();
+
+            var discipline = context.Disciplines
+                .Include(d => d.Students)
+                .ThenInclude(sd => sd.Student)
+                .FirstOrDefault(d => d.Id == model.Id);
+
+            if (discipline == null)
+            {
+                return new List<StudentViewModel>(); // Если дисциплина не найдена, возвращаем пустой список
+            }
+
+            return discipline.Students
+                .Select(sd => sd.Student.GetViewModel)
+                .ToList();
+        }
+
         public DisciplineViewModel? Delete(DisciplineBindingModel model)
         {
             using var context = new UniversityDatabase();
@@ -42,21 +61,47 @@ namespace UniversityDatabaseImplement.Implements
 
         }
 
+
+        //ешьте котиков в них витамин с
         public List<DisciplineViewModel> GetFilteredList(DisciplineSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Description))
-            {
-                return new();
-            }
+            CheckSearchModel(model);
+
             using var context = new UniversityDatabase();
-            return context.Disciplines
-            .Include(x => x.Students)
-            .ThenInclude(x => x.Student)
-            .Where(x => x.Name.Contains(model.Name) || x.Description.Contains(model.Description)  || x.Id == model.Id || x.TeacherId == model.TeacherId)
-            .Include(x => x.Teacher)
-           .Select(x => x.GetViewModel)
-           .ToList();
+            var query = context.Disciplines
+                .Include(x => x.Students)
+                .ThenInclude(x => x.Student)
+                .Include(x => x.Teacher)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                query = query.Where(x => x.Name.Contains(model.Name));
+            }
+
+            if (!string.IsNullOrEmpty(model.Description))
+            {
+                query = query.Where(x => x.Description.Contains(model.Description));
+            }
+
+            if (model.Id.HasValue)
+            {
+                query = query.Where(x => x.Id == model.Id.Value);
+            }
+
+            if (model.TeacherId.HasValue)
+            {
+                query = query.Where(x => x.TeacherId == model.TeacherId.Value);
+            }
+
+            if (model.DateFrom.HasValue && model.DateTo.HasValue)
+            {
+                query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
+            }
+
+            return query.Select(x => x.GetViewModel).ToList();
         }
+
 
         public List<DisciplineViewModel> GetFullList()
         {
@@ -104,6 +149,14 @@ namespace UniversityDatabaseImplement.Implements
                 transaction.Rollback();
                 throw;
             }
+        }
+
+        private void CheckSearchModel(DisciplineSearchModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException("Передаваемая модель пуста", nameof(model));
+            if (model.DateFrom.HasValue != model.DateTo.HasValue)
+                throw new ArgumentException($"Не указано начало {model.DateFrom} или конец {model.DateTo} периода.");
         }
     }
 }

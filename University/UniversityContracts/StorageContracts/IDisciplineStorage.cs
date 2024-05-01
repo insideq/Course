@@ -17,5 +17,6 @@ namespace UniversityContracts.StorageContracts
         DisciplineViewModel? Insert(DisciplineBindingModel model);
         DisciplineViewModel? Update(DisciplineBindingModel model);
         DisciplineViewModel? Delete(DisciplineBindingModel model);
+        List<StudentViewModel> GetStudentsForDiscipline(DisciplineSearchModel model);
     }
 }

@@ -13,5 +13,7 @@ namespace UniversityContracts.SearchModels
         public int? TeacherId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public DateOnly? DateFrom { get; set; }
+        public DateOnly? DateTo { get; set; }
     }
 }
