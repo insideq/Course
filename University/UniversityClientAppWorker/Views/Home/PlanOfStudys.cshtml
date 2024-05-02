@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Manage PlansOfStudys";
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+</div>
+
+<form method="post">
+    <div class="row">
+        <div class="col-4">Profile:</div>
+        <div class="col-8">
+            <input type="text" name="profile" id="profile" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">FormOfStudy:</div>
+        <div class="col-8">
+            <input name="formOfStudy" id="formOfStudy" class="form-control" multiple asp-items="ViewBag.PlanOfStudys"></input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <input type="submit" value="Create Student" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>FormOfStudy</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var discipline in Model)
+        {
+        <tr>
+        <td>@discipline.Name</td>
+        <td>@discipline.Description</td>
+        <td>
+        @foreach (var student in discipline.Students)
+        {
+        <span>@student.Name</span>
+        }
+        </td>
+        <td>
+        <a asp-action="Edit" asp-route-id="@discipline.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Details" asp-route-id="@discipline.Id" class="btn btn-info">Details</a>
+        <a asp-action="Delete" asp-route-id="@discipline.Id" class="btn btn-danger">Delete</a>
+        </td>
+        </tr>
+        } *@
+    </tbody>
+</table>
+
+

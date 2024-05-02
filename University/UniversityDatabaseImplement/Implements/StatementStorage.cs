@@ -1,0 +1,85 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UniversityContracts.BindingModels;
+using UniversityContracts.SearchModels;
+using UniversityContracts.StorageContracts;
+using UniversityContracts.ViewModels;
+using UniversityDatabaseImplement.Models;
+
+namespace UniversityDatabaseImplement.Implements
+{
+    public class StatementStorage: IStatementStorage
+    {
+        public StatementViewModel? GetElement(StatementSearchModel model)
+        {
+            if (!model.Id.HasValue)
+            {
+                return null;
+            }
+            using var context = new UniversityDatabase();
+            return context.Statements.Include(x => x.Teacher).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
+        }
+
+        public List<StatementViewModel> GetFilteredList(StatementSearchModel model)
+        {
+            if (!model.Id.HasValue && !model.Date.HasValue)
+            {
+                return new();
+            }
+            using var context = new UniversityDatabase();
+            return context.Statements
+            .Where(x => x.Id == model.Id || model.Date <= x.Date)
+            .Include(x => x.Teacher)
+            .Select(x => x.GetViewModel)
+            .ToList();
+        }
+
+        public List<StatementViewModel> GetFullList()
+        {
+            using var context = new UniversityDatabase();
+            return context.Statements.Include(x => x.Teacher).Select(x => x.GetViewModel).ToList();
+        }
+
+        public StatementViewModel? Insert(StatementBindingModel model)
+        {
+            var newStatement = Statement.Create(model);
+            if (newStatement == null)
+            {
+                return null;
+            }
+            using var context = new UniversityDatabase();
+            context.Statements.Add(newStatement);
+            context.SaveChanges();
+            return context.Statements.Include(x => x.Teacher).FirstOrDefault(x => x.Id == newStatement.Id)?.GetViewModel;
+        }
+
+        public StatementViewModel? Update(StatementBindingModel model)
+        {
+            using var context = new UniversityDatabase();
+            var order = context.Statements.FirstOrDefault(x => x.Id == model.Id);
+            if (order == null)
+            {
+                return null;
+            }
+            order.Update(model);
+            context.SaveChanges();
+            return context.Statements.Include(x => x.Teacher).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
+        }
+        public StatementViewModel? Delete(StatementBindingModel model)
+        {
+            using var context = new UniversityDatabase();
+            var element = context.Statements.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element != null)
+            {
+                context.Statements.Remove(element);
+                context.SaveChanges();
+                return element.GetViewModel;
+            }
+            return null;
+        }
+    }
+}

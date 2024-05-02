@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Manage Statement Records";
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+</div>
+
+
+
+<form method="post">
+    <div class="row">
+        <div class="col-4">Title:</div>
+        <div class="col-8">
+            <input type="text" name="title" id="title" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Date:</div>
+        <div class="col-8">
+            <input type="date" name="date" id="date" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Teacher:</div>
+        <div class="col-8">
+            <select id="teacherId" name="teacherId" class="form-control" asp-items="ViewBag.Teachers"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <input type="submit" value="Create Statement Record" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Teacher</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.Title</td>
+                <td>@record.Date.ToString("d")</td>
+                <td>@record.Teacher.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@record.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@record.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@record.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        } *@
+    </tbody>
+</table>
+

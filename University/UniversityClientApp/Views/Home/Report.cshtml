@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Student List by Teacher";
+}
+
+<div class="text-center">
+    <h2 class="display-4">@ViewData["Title"]</h2>
+</div>
+
+<form method="post">
+    <div class="row">
+        <div class="col-4">Teachers:</div>
+        <div class="col-8">
+            <select id="teachers" name="teachers" class="form-control" multiple asp-items="ViewBag.Teachers"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">File Format:</div>
+        <div class="col-8">
+            <select id="fileFormat" name="fileFormat" class="form-control" asp-items="ViewBag.FileFormats"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">File Name:</div>
+        <div class="col-8">
+            <input type="text" name="fileName" id="fileName" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">File Location:</div>
+        <div class="col-8">
+            <input type="text" name="fileLocation" id="fileLocation" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4">
+            <input type="submit" value="Get Student List" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
