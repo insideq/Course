@@ -17,6 +17,8 @@ namespace UniversityContracts.ViewModels
         public string Name { get; set; } = string.Empty;
         [DisplayName("Описание дисциплины")]
         public string Description { get; set; } = string.Empty;
+        [DisplayName("Дата cоздания")]
+        public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public Dictionary<int, IStudentModel> StudentDisciplines
         {
             get;
