@@ -18,6 +18,7 @@ namespace UniversityDatabaseImplement.Models
         public int UserId { get; private set; }
         [Required]
         public string Profile { get; private set; } = string.Empty;
+        public DateOnly Date { get; private set; }
         [Required]
         public string FormOfStudy { get; private set; } = string.Empty;
         private Dictionary<int, ITeacherModel>? _planOfStudyTeachers = null;

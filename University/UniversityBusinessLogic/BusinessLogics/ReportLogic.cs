@@ -1,10 +1,11 @@
-﻿using AbstractLawFirmContracts.ViewModels;
-using System.Reflection;
+﻿using System.Reflection;
+using University.ViewModels;
 using UniversityBusinessLogics.OfficePackage;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
+using UniversityContracts.ViewModels;
 
 namespace UniversityBusinessLogics.BusinessLogics;
 
@@ -125,7 +126,71 @@ private readonly AbstractSaveToPdf _saveToPdf;*/
         return reportDisciplineViewModels;
     }
 
+    public List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines()
+    {
+        var planOfStudies = _planOfStudyStorage.GetFullList();
+        var reportPlanOfStudyViewModels = new List<ReportPlanOfStudyViewModel>();
+
+        foreach (var planOfStudy in planOfStudies)
+        {
+            // Получаем список дисциплин для текущего плана обучения
+            var disciplines = _planOfStudyStorage.GetDisciplineFromStudentsFromPlanOfStudys(new PlanOfStudySearchModel { Id = planOfStudy.Id });
+
+            // Создаем ReportPlanOfStudyViewModel и добавляем его в список
+            reportPlanOfStudyViewModels.Add(new ReportPlanOfStudyViewModel
+            {
+                PlanOfStudyName = planOfStudy.Profile,
+                Disciplines = disciplines.Select(d => d.Name).ToList() // Получаем только имена дисциплин
+            });
+        }
+
+        return reportPlanOfStudyViewModels;
+    }
+
+    public List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model)
+    {
+        var planOfStudies = _planOfStudyStorage.GetFullList();
+        var reportPlanOfStudyAndStudentViewModels = new List<ReportPlanOfStudyAndStudentViewModel>();
+
+        foreach (var planOfStudy in planOfStudies)
+        {
+            // Получаем список студентов для текущего плана обучения
+            var students = _studentStorage.GetFilteredList(new StudentSearchModel { Id = planOfStudy.Id });
+
+            var studentsAndDisciplines = new List<(string Student, string Discipline)>();
+
+            foreach (var student in students)
+            {
+                // Получаем список дисциплин для текущего студента
+                var disciplines = _disciplineStorage.GetFilteredList(new DisciplineSearchModel { Id = student.Id });
+
+                foreach (var discipline in disciplines)
+                {
+                    studentsAndDisciplines.Add((student.Name, discipline.Name));
+                }
+            }
+
+            // Создаем ReportPlanOfStudyAndStudentViewModel и добавляем его в список
+            reportPlanOfStudyAndStudentViewModels.Add(new ReportPlanOfStudyAndStudentViewModel
+            {
+                PlanOfStudyName = planOfStudy.Profile,
+                StudentsAndDisciplines = studentsAndDisciplines
+            });
+        }
+
+        return reportPlanOfStudyAndStudentViewModels;
+    }
+
     public void SaveTeachersToExcel(ReportBindingModel option)
+    {
+        throw new NotImplementedException();
+    }
+    public void SavePlanOfStudyToExcel(ReportBindingModel option)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SavePlanOfStudyToWord(ReportBindingModel option)
     {
         throw new NotImplementedException();
     }
@@ -136,6 +201,11 @@ private readonly AbstractSaveToPdf _saveToPdf;*/
     }
 
     public void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email)
     {
         throw new NotImplementedException();
     }

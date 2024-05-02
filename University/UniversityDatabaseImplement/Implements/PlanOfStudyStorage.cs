@@ -21,16 +21,46 @@ namespace UniversityDatabaseImplement.Implements
             return context.PlanOfStudys.Select(x => x.GetViewModel).ToList();
         }
 
+        public List<DisciplineViewModel> GetDisciplineFromStudentsFromPlanOfStudys(PlanOfStudySearchModel model)
+        {
+            using var context = new UniversityDatabase();
+
+            var students = context.Students
+                .Where(s => s.PlanOfStudyId == model.Id)
+                .Include(s => s.StudentDiscipline)
+                .ToList();
+
+            if(students == null)
+            {
+                return new List<DisciplineViewModel>();
+            }
+
+            // Получаем список дисциплин, которые соответствуют условиям поиска в модели PlanOfStudySearchModel
+            var disciplines = students
+                .SelectMany(s => s.StudentDiscipline)
+                .Distinct()
+                .ToList();
+
+            if (disciplines == null)
+            {
+                return new List<DisciplineViewModel>();
+            }
+
+            // Преобразуем список дисциплин в список DisciplineViewModel и возвращаем его
+            return disciplines
+                .Select(d => d.Discipline.GetViewModel).ToList();
+        }
+
         public List<PlanOfStudyViewModel> GetFilteredList(PlanOfStudySearchModel model)
         {
             using var context = new UniversityDatabase();
-            if (model.Id.HasValue)
+            var query = context.PlanOfStudys
+                .Include(x => x.Students)
+                .Where(x => x.Id == model.Id)
+                .AsQueryable();
+            if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
-                return context.PlanOfStudys
-                    .Include(x => x.Students)
-                    .Where(x => x.Id == model.Id)
-                    .Select(x => x.GetViewModel)
-                    .ToList();
+                query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
             }
             return new();
         }
