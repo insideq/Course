@@ -30,6 +30,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpPost]
         public void CreateTeacher(TeacherBindingModel model)
         {
             try
@@ -42,6 +43,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpPut]
         public void UpdateTeacher(TeacherBindingModel model)
         {
             try
@@ -54,6 +56,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpDelete]
         public void DeleteTeacher(TeacherBindingModel model)
         {
             try
