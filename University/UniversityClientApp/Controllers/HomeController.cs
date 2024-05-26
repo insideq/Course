@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using UniversityClientApp.Models;
 using UniversityClientAppStorekeeper;
 using UniversityContracts.BindingModels;
@@ -81,15 +82,41 @@ namespace UniversityClientApp.Controllers
 
         public IActionResult Statements()
         {
-            return View();
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIStorekeeper.GetRequest<List<StatementViewModel>>($"api/statement/getstatements?teacherId={0}"));
         }
 
-		public IActionResult Teachers()
+        [HttpGet]
+        public IActionResult Teachers()
 		{
-			return View();
-		}
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            //ViewBag.Documents = APIStorekeeper.GetRequest<List<DisciplineViewModel>>("api/main/getdiscipline");
+            return View(APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}"));
+        }
+        [HttpPost]
+        public void Teachers(string name, string position, string academicDegree)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                Redirect("~/Home/Enter");
+            }
+            APIStorekeeper.PostRequest("api/teacher/createteacher", new TeacherBindingModel
+            {
+                UserId = APIStorekeeper.Client.Id,
+                Name = name,
+                Position = position,
+                AcademicDegree = academicDegree
+            });
+            Response.Redirect("Index");
+        }
 
-		public IActionResult Report() { 
+        public IActionResult Report() { 
             return View();
         }
 

@@ -25,6 +25,10 @@ namespace UniversityRestApi.Controllers
         {
             try
             {
+                if (teacherId == 0)
+                {
+                    return _logic.ReadList(null);
+                }
                 return _logic.ReadList(new StatementSearchModel { TeacherId = teacherId });
             }
             catch (Exception ex)
@@ -33,6 +37,8 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+
+
         [HttpPost]
         public void CreateStatement(StatementBindingModel model)
         {

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using UniversityContracts.ViewModels
+@model List<TeacherViewModel>
+@{
     ViewData["Title"] = "Manage Teachers";
 }
 
@@ -43,35 +45,36 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Academic Degree</th>
             <th>Position</th>
             <th>Disciplines</th>
-            <th>Actions</th>
         </tr>
     </thead>
-	<tbody>
-		
-        @* @foreach (var teacher in Model)
+    <tbody>
+        @foreach (var item in Model)
         {
-            
             <tr>
-                <td>@teacher.Name</td>
-                <td>@teacher.AcademicDegree</td>
-                <td>@teacher.Position</td>
                 <td>
-                    @foreach (var discipline in teacher.Disciplines)
-                    {
-                        <span>@discipline.Name</span>
-                    }
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@teacher.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcademicDegree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    
+
+
                 </td>
             </tr>
-        } *@
+        }
     </tbody>
 </table>
 

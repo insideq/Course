@@ -23,18 +23,23 @@ namespace UniversityDatabaseImplement.Implements
         }
         public List<TeacherViewModel> GetFilteredList(TeacherSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.AcademicDegree) || string.IsNullOrEmpty(model.Position))
-            {
-                return new();
-            }
             using var context = new UniversityDatabase();
-            return context.Teachers
+            if (!string.IsNullOrEmpty(model.Name) || !string.IsNullOrEmpty(model.AcademicDegree) || !string.IsNullOrEmpty(model.Position))
+            {
+                return context.Teachers
             .Where(x => x.Name.Contains(model.Name))
             .Where(x => x.Position.Contains(model.Position))
             .Where(x => x.AcademicDegree.Contains(model.AcademicDegree))
             .Include(x => x.User)
            .Select(x => x.GetViewModel)
            .ToList();
+            }
+            else { return context.Teachers.Include(x => x.User).Select(x => x.GetViewModel)
+           .ToList();
+            }
+
+            return new();
+
         }
         public TeacherViewModel? GetElement(TeacherSearchModel model)
         {
