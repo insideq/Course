@@ -19,8 +19,13 @@ namespace UniversityClientApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
+			if (APIStorekeeper.Client == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+			//return View(APIStorekeeper.GetRequest<List<OrderViewModel>>($"api/main/getorders?clientId={APIClient.Client.Id}"));
+			return View();
+		}
 
         public IActionResult Privacy()
         {

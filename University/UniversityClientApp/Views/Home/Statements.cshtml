@@ -1,4 +1,6 @@
-﻿@{
+﻿@using UniversityContracts.ViewModels
+@model List<StatementViewModel>
+@{
     ViewData["Title"] = "Manage Statement Records";
 }
 
@@ -38,26 +40,29 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Title</th>
             <th>Date</th>
             <th>Teacher</th>
-            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        @* @foreach (var record in Model)
+    <tbody>@foreach (var item in Model)
         {
-            <tr>
-                <td>@record.Title</td>
-                <td>@record.Date.ToString("d")</td>
-                <td>@record.Teacher.Name</td>
+        <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@record.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@record.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@record.Id" class="btn btn-danger">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
-            </tr>
-        } *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherId)
+                </td>
+        </tr>
+        }
     </tbody>
 </table>
 
