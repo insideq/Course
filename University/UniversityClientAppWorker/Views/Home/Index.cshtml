@@ -32,6 +32,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Profile</th>
             <th>FormOfStudy</th>
             <th>Actions</th>
@@ -44,13 +45,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => planOfStudy.Id)
                     </td>
-                    <td>@planOfStudy.FormOfStudy</td>
+                <td>
+                    @Html.DisplayFor(modelItem => planOfStudy.Profile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => planOfStudy.FormOfStudy)
+                </td>
                 <td>
                 </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@planOfStudy.Id" class="btn btn-warning">Edit</a>
-                        <a asp-action="Details" asp-route-id="@planOfStudy.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Delete" asp-route-id="@planOfStudy.Id" class="btn btn-danger">Delete</a>
+
                     </td>
                 </tr>
             
