@@ -12,7 +12,6 @@ namespace UniversityContracts.ViewModels
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int WorkerId { get; set; }
         [DisplayName("Профиль")]
         public string Profile { get; set; } = string.Empty;
         [DisplayName("Форма обучения")]

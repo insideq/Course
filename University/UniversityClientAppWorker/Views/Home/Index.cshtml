@@ -1,15 +1,59 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using UniversityContracts.ViewModels
+@model List<PlanOfStudyViewModel>
+@{
+    ViewData["Title"] = "Управление планами обучений";
 }
 
 <div class="text-center">
-
-    <div class="menu">
-        <a href="/Home/Students">Студенты</a>
-        <a href="/Home/PlanOfStudys">Планы обучения</a>
-        <a href="/Home/Attestations">Аттестации</a>
-    </div>
-    <div class="header">
-        <img src="" alt="Logo" class="logo">
-    </div>
+    <h2 class="display-4">@ViewData["Title"]</h2>
 </div>
+
+<form asp-action="CreatePlanOfStudy" method="post">
+    <div class="row">
+        <div class="col-4">Профиль:</div>
+        <div class="col-8">
+            <input type="text" name="profile" id="profile" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Форма обучения:</div>
+        <div class="col-8">
+            <input name="formOfStudy" id="formOfStudy" class="form-control" multiple asp-items="ViewBag.PlanOfStudys"></input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4 mt-2">
+            <input type="submit" value="Создать план обучения" class="btn btn-danger" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>FormOfStudy</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var planOfStudy in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => planOfStudy.Id)
+                    </td>
+                    <td>@planOfStudy.FormOfStudy</td>
+                <td>
+                </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@planOfStudy.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@planOfStudy.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Delete" asp-route-id="@planOfStudy.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            
+        }
+    </tbody>
+</table>

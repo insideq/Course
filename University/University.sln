@@ -15,7 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityRestApi", "Univer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityClientAppStorekeeper", "UniversityClientApp\UniversityClientAppStorekeeper.csproj", "{65698622-8424-4D8E-BFC9-721BB5252F22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityClientAppWorker", "UniversityClientAppWorker\UniversityClientAppWorker.csproj", "{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityClientAppWorker", "UniversityClientAppWorker\UniversityClientAppWorker.csproj", "{11E2609A-BD4A-4D03-8B71-4EC0DF1CDC88}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4F0BB8C6-2BA8-4212-BC86-4E66C1C03816} = {4F0BB8C6-2BA8-4212-BC86-4E66C1C03816}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

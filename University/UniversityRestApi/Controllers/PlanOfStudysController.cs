@@ -22,7 +22,7 @@ namespace UniversityRestApi.Controllers
         {
             try
             {
-                return _logic.ReadList(new PlanOfStudySearchModel { UserId = userId });
+                return _logic.ReadList(new PlanOfStudySearchModel {  });
             }
             catch (Exception ex)
             {
