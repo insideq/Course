@@ -30,16 +30,18 @@ namespace UniversityDatabaseImplement.Implements
         }
         public UserViewModel? GetElement(UserSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Login) && string.IsNullOrEmpty(model.Email) && !model.Id.HasValue)
+            if (string.IsNullOrEmpty(model.Login) && string.IsNullOrEmpty(model.Password))
             {
                 return null;
             }
             using var context = new UniversityDatabase();
 
-            //Поиск пользователя при входе в систему по логину, паролю и его роли (чтобы не могли войти в аккаунты другой роли) 
+            //Поиск пользователя при входе в систему по логину, паролю и его роли (чтобы не могли войти в аккаунты другой роли)
+            // UPD По роли не ищется
             if (!string.IsNullOrEmpty(model.Login) && !string.IsNullOrEmpty(model.Password) && model.Role.HasValue)
             {
-                return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password && x.Role == model.Role)?.GetViewModel;
+
+				return context.Users.FirstOrDefault(x => x.Login == model.Login && x.Password == model.Password)?.GetViewModel;
             }
             //Получение по логину (пользователей с таким логином будет 1 или 0)
             if (!string.IsNullOrEmpty(model.Login))

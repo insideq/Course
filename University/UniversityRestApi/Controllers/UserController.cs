@@ -45,7 +45,17 @@ namespace UniversityRestApi.Controllers
         {
             try
             {
-                return _logic.ReadElement(new UserSearchModel
+
+                //
+                var x = _logic.ReadElement(new UserSearchModel
+				{
+					Login = login,
+					Password = password,
+					Role = UserRole.Кладовщик
+				});
+                //
+               
+				return _logic.ReadElement(new UserSearchModel
                 {
                     Login = login,
                     Password = password,

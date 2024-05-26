@@ -3,7 +3,17 @@
 }
 
 <div class="text-center">
-    
+	@{
+		if (Model == null)
+		{
+			<h3 class="display-4">Log in</h3>
+			<a href="/Home/Enter">Enter</a>
+			<a href="/Home/Register">Register</a>
+			return;
+		}
+	}
+
+
     <div class="menu">
         <a href="/Home/Disciplines">Disciplines</a>
         <a href="/Home/Teachers">Teachers</a>
@@ -13,4 +23,6 @@
     <div class="header">
 		<img src="" alt="Logo" class="logo">
 	</div>
+
+    
 </div>
