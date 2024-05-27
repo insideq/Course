@@ -53,16 +53,24 @@ namespace UniversityDatabaseImplement.Implements
 
         public List<PlanOfStudyViewModel> GetFilteredList(PlanOfStudySearchModel model)
         {
+            if(model == null)
+            {
+                return new();
+            }
             using var context = new UniversityDatabase();
             var query = context.PlanOfStudys
                 .Include(x => x.Students)
-                .Where(x => x.Id == model.Id)
+                .Include(x => x.User)
                 .AsQueryable();
+            if (model.Id.HasValue)
+            {
+                query = query.Where(x => x.Id == model.Id.Value);
+            }
             if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
                 query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
-            }
-            return new();
+            };
+            return query.Select(x => x.GetViewModel).ToList();
         }
 
         public PlanOfStudyViewModel? GetElement(PlanOfStudySearchModel model)

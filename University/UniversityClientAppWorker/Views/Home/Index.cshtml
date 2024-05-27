@@ -45,19 +45,20 @@
                     <td>
                         @Html.DisplayFor(modelItem => planOfStudy.Id)
                     </td>
-                <td>
-                    @Html.DisplayFor(modelItem => planOfStudy.Profile)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => planOfStudy.FormOfStudy)
-                </td>
-                <td>
-                </td>
                     <td>
-
+                        @Html.DisplayFor(modelItem => planOfStudy.Profile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => planOfStudy.FormOfStudy)
+                    </td>
+                    <td>
+                        <a asp-controller="Home" asp-action="InfoPlanOfStudy" asp-route-id="@planOfStudy.Id" class="btn btn-warning">Изменить</a>
+                        <form asp-controller="Home" asp-action="DeletePlanOfStudy" method="post">
+                            <input type="hidden" name="id" value="@planOfStudy.Id" />
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
                     </td>
                 </tr>
-            
-        }
+            }
     </tbody>
 </table>

@@ -44,7 +44,33 @@ namespace UniversityClientAppWorker.Controllers
             });
             Response.Redirect("Index");
         }
-		[HttpGet]
+        [HttpPost]
+        public void DeletePlanOfStudy(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIClient.PostRequest("api/planofstudys/deleteplanofstudy", new PlanOfStudyBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Index");
+        }
+        [HttpPost]
+        public void UpdatePlanOfStudy(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIClient.PostRequest("api/planofstudys/updateplanofstudy", new PlanOfStudyBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Index");
+        }
+        [HttpGet]
 		public IActionResult Privacy()
         {
 			if (APIClient.User == null)
@@ -94,7 +120,7 @@ namespace UniversityClientAppWorker.Controllers
 			{
 				return Redirect("~/Home/Enter");
 			}
-			return View();
+            return View(APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}"));
         }
 		[HttpGet]
 		public IActionResult Enter()
