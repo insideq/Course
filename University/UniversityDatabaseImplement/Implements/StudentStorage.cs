@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -31,7 +32,12 @@ namespace UniversityDatabaseImplement.Implements
 
             using var context = new UniversityDatabase();
 
-            return context.Students.Where(x => x.Name.Contains(model.Name)).Select(x => x.GetViewModel).ToList();
+            return context.Students
+                .Include(x => x.User)
+                .Where(x => x.Name
+                .Contains(model.Name))
+                .Select(x => x.GetViewModel)
+                .ToList();
         }
 
         public StudentViewModel? GetElement(StudentSearchModel model)
