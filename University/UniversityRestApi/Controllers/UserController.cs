@@ -68,6 +68,19 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public List<UserViewModel>? GetAll()
+        {
+            try
+            {
+                return _logic.ReadList(null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка");
+                throw;
+            }
+        }
         [HttpPost]
         public void RegisterWorker(UserBindingModel model)
         {
