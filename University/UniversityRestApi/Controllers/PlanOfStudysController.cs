@@ -43,7 +43,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdatePlanOfStudy(PlanOfStudyBindingModel model)
         {
             try
@@ -56,7 +56,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeletePlanOfStudy(PlanOfStudyBindingModel model)
         {
             try

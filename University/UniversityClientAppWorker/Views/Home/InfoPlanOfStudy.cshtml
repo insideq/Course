@@ -1,0 +1,30 @@
+﻿@using UniversityContracts.ViewModels
+@model PlanOfStudyViewModel
+@{
+	ViewData["Title"] = "План обучения";
+}
+<div class="text-center">
+	<h2 class="display-4">План обучения</h2>
+</div>
+<form method="post">
+	<div class="row">
+		<div class="col-4">Профиль:</div>
+		<div class="col-8"><input type="text" name="profile" value="@Model.Profile" /></div>
+	</div>
+	<div class="row">
+		<div class="col-4">Форма обучения:</div>
+		<div class="col-8"><input type="text" name="formOfStudy" value="@Model.FormOfStudy" /></div>
+	</div>
+	<div class="row">
+		<div class="col-8"></div>
+		<div class="col-4"><input type="submit" value="Сохранить" class="btn btn-danger" /></div>
+	</div>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>name</th>
+			<th>academic degree</th>
+			<th>position</th>
+		</tr>
+	</thead>
+</form>

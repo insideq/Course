@@ -1,4 +1,6 @@
-﻿@{
+﻿@using UniversityContracts.ViewModels
+@model List<StudentViewModel>
+@{
     ViewData["Title"] = "Manage Students";
 }
 
@@ -36,6 +38,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Plan of study</th>
             <th>Phone number</th>
@@ -43,24 +46,30 @@
         </tr>
     </thead>
     <tbody>
-        @* @foreach (var discipline in Model)
+        @foreach (var student in Model)
         {
             <tr>
-                <td>@discipline.Name</td>
-                <td>@discipline.Description</td>
                 <td>
-                    @foreach (var student in discipline.Students)
-                    {
-                        <span>@student.Name</span>
-                    }
+                    @Html.DisplayFor(modelItem => student.Id)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@discipline.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@discipline.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@discipline.Id" class="btn btn-danger">Delete</a>
+                    @Html.DisplayFor(modelItem => student.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.PlanOfStudyId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => student.PhoneNumber)
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="" asp-route-id="@student.Id" class="btn btn-warning">Изменить</a>
+                    <form asp-controller="Home" asp-action="DeletePlanOfStudy" method="post">
+                        <input type="hidden" name="id" value="@student.Id" />
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
                 </td>
             </tr>
-        } *@
+        }
     </tbody>
 </table>
 
