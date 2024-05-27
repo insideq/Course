@@ -23,7 +23,7 @@ namespace UniversityDatabaseImplement.Models
         public DateTime Date { get; private set; }
         public virtual User User { get; set; } = new ();
         public virtual Teacher Teacher { get; set; } = new ();
-        public static Statement? Create(StatementBindingModel model)
+        public static Statement? Create(UniversityDatabase context, StatementBindingModel model)
         {
             if (model == null)
             {
@@ -33,7 +33,9 @@ namespace UniversityDatabaseImplement.Models
             {
                 Id = model.Id,
                 UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 TeacherId = model.TeacherId,
+                Teacher = context.Teachers.First(x => x.Id == model.TeacherId),
                 Name = model.Name,
                 Date = model.Date,
             };

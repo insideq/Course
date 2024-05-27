@@ -46,12 +46,12 @@ namespace UniversityDatabaseImplement.Implements
 
         public StatementViewModel? Insert(StatementBindingModel model)
         {
-            var newStatement = Statement.Create(model);
+            using var context = new UniversityDatabase();
+            var newStatement = Statement.Create(context, model);
             if (newStatement == null)
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
             context.Statements.Add(newStatement);
             context.SaveChanges();
             return context.Statements.Include(x => x.Teacher).FirstOrDefault(x => x.Id == newStatement.Id)?.GetViewModel;
