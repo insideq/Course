@@ -14,6 +14,6 @@ namespace UniversityContracts.BindingModels
         public int UserId { get; set; }
         public int TeacherId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public DateTime Date { get; }
+        public DateTime Date { get; set;  }
     }
 }

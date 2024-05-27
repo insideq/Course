@@ -80,13 +80,31 @@ namespace UniversityClientApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Statements()
         {
             if (APIStorekeeper.Client == null)
             {
                 return Redirect("~/Home/Enter");
             }
+            ViewBag.Teachers = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
             return View(APIStorekeeper.GetRequest<List<StatementViewModel>>($"api/statement/getstatements?teacherId={0}"));
+        }
+        [HttpPost]
+        public void Statements(string name, DateTime date, int teacher)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                Redirect("~/Home/Enter");
+            }
+            APIStorekeeper.PostRequest("api/statement/createstatement", new StatementBindingModel
+            {
+                UserId = APIStorekeeper.Client.Id,
+                Name = name,
+                Date = date,
+                TeacherId = teacher,
+            });
+            Response.Redirect("Statements");
         }
 
         [HttpGet]
@@ -113,7 +131,7 @@ namespace UniversityClientApp.Controllers
                 Position = position,
                 AcademicDegree = academicDegree
             });
-            Response.Redirect("Index");
+            Response.Redirect("Teachers");
         }
 
         public IActionResult Report() { 
