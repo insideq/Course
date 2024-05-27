@@ -21,7 +21,7 @@ namespace UniversityRestApi.Controllers
         }
 
         [HttpGet]
-        public List<StatementViewModel>? GetStatements(int teacherId)
+        public List<StatementViewModel>? GetStatements(int teacherId, int userId)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace UniversityRestApi.Controllers
                 {
                     return _logic.ReadList(null);
                 }
-                return _logic.ReadList(new StatementSearchModel { TeacherId = teacherId });
+                return _logic.ReadList(new StatementSearchModel { TeacherId = teacherId, UserId = userId });
             }
             catch (Exception ex)
             {
@@ -37,7 +37,6 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-
 
         [HttpPost]
         public void CreateStatement(StatementBindingModel model)
