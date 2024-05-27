@@ -23,25 +23,18 @@ namespace UniversityDatabaseImplement.Implements
 
         public List<AttestationViewModel> GetFilteredList(AttestationSearchModel model)
         {
-            using var context = new UniversityDatabase();
-            if (model.Id.HasValue)
+            if (model == null)
             {
-                return context.Attestations
-                    .Include(x => x.Student)
-                    .Where(x => x.Id == model.Id)
-                    .Select(x => x.GetViewModel)
-                    .ToList();
-            }
-            else if (model.StudentId.HasValue)
-            {
-                return context.Attestations
-                    .Include(x => x.Student)
-                    .Where(x => x.StudentId == model.StudentId)
-                    .Select(x => x.GetViewModel)
-                    .ToList();
+                return new();
             }
 
-            return new();
+            using var context = new UniversityDatabase();
+
+            return context.Attestations
+                .Include(x => x.Student)
+                .Include(x => x.User)
+                .Select(x => x.GetViewModel)
+                .ToList();
         }
 
         public AttestationViewModel? GetElement(AttestationSearchModel model)

@@ -20,15 +20,15 @@ namespace UniversityRestApi.Controllers
         }
 
         [HttpGet]
-        public List<AttestationViewModel>? GetAttestations(int studentId)
+        public List<AttestationViewModel>? GetAttestations(int userId)
         {
             try
             {
-                return _logic.ReadList(new AttestationSearchModel { StudentId = studentId });
+                return _logic.ReadList(new AttestationSearchModel { UserId = userId });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка получения аттестаций студента id={Id}", studentId);
+                _logger.LogError(ex, "Ошибка получения аттестаций пользователя id={Id}", userId);
                 throw;
             }
         }

@@ -18,6 +18,7 @@ namespace UniversityDatabaseImplement.Models
         public int UserId { get; private set; }
         [Required]
         public int StudentId { get; private set; }
+        public string StudentName { get; private set; } = string.Empty;
         [Required]
         public string FormOfEvaluation { get; private set; } = string.Empty;
         [Required]
@@ -37,6 +38,7 @@ namespace UniversityDatabaseImplement.Models
                 User = context.Users.First(x => x.Id == model.UserId),
                 StudentId = model.StudentId,
                 Student = context.Students.First(x => x.Id == model.StudentId),
+                StudentName = model.StudentName,
                 FormOfEvaluation = model.FormOfEvaluation,
                 Score = model.Score
             };
@@ -48,6 +50,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             StudentId = model.StudentId;
+            StudentName = model.StudentName;
             FormOfEvaluation = model.FormOfEvaluation;
             Score = model.Score;
         }
@@ -55,6 +58,7 @@ namespace UniversityDatabaseImplement.Models
         {
             Id = Id,
             StudentId = StudentId,
+            StudentName = StudentName,
             FormOfEvaluation = FormOfEvaluation,
             Score = Score
         };

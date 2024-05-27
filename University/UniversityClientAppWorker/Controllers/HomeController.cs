@@ -110,10 +110,31 @@ namespace UniversityClientAppWorker.Controllers
 			{
 				return Redirect("~/Home/Enter");
 			}
-			ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
-            return View();
+            ViewBag.Students = APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}");
+            ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
+            return View(APIClient.GetRequest<List<AttestationViewModel>>($"api/attestation/getattestations?userId={APIClient.User.Id}"));
         }
-		[HttpGet]
+        [HttpPost]
+        public void CreateAttestation(string formOfEvaluation, int student, AttestationScore score)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("¬ход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(formOfEvaluation) || student == 0)
+            {
+                throw new Exception("¬ведите форму оценивани€ и выберите студента");
+            }
+            APIClient.PostRequest("api/attestation/createattestation", new AttestationBindingModel
+            {
+                UserId = APIClient.User.Id,
+                FormOfEvaluation = formOfEvaluation,
+                StudentId = student,
+                Score = score
+            });
+            Response.Redirect("Attestations");
+        }
+        [HttpGet]
 		public IActionResult Students()
         {
 			if (APIClient.User == null)

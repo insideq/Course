@@ -1,34 +1,40 @@
-﻿@{
-    ViewData["Title"] = "Manage Attestations";
+﻿@using UniversityContracts.ViewModels
+@model List<AttestationViewModel>
+@{
+    ViewData["Title"] = "Управление аттестациями";
 }
 
 <div class="text-center">
     <h2 class="display-4">@ViewData["Title"]</h2>
 </div>
 
-<form method="post">
+<form asp-action="CreateAttestation" method="post">
     <div class="row">
-        <div class="col-4">Form Of Evaluation:</div>
+        <div class="col-4">Форма оценивания:</div>
         <div class="col-8">
-            <input type="text" name="formOfEvaluation" id="formOfEvaluation" class="form-control" />
+            <select name="formOfEvaluation" id="formOfEvaluation" class="form-control">
+                <option value="Зачёт">Зачёт</option>
+                <option value="Экзамен">Экзамен</option>
+                <option value="Дифферинцируемый зачёт">Дифферинцируемый зачёт</option>
+            </select>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Student:</div>
+        <div class="col-4">Студент:</div>
         <div class="col-8">
-            <select name="student" id="student" class="form-control" multiple asp-items="ViewBag.Students"></select>
+            <select name="student" id="student" class="form-control" asp-items="@(new SelectList(ViewBag.Students, "Id", "Name"))"></select>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Score:</div>
+        <div class="col-4">Оценка:</div>
         <div class="col-8">
             <select id="score" name="score" class="form-control" asp-items="@(new SelectList(ViewBag.AttestationScore, "Score"))"></select>
         </div>
     </div>
     <div class="row">
         <div class="col-8"></div>
-        <div class="col-4">
-            <input type="submit" value="Create Attestation" class="btn btn-primary" />
+        <div class="col-4 mt-2">
+            <input type="submit" value="Добавить аттестацию" class="btn btn-primary" />
         </div>
     </div>
 </form>
@@ -36,31 +42,40 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Form Of Evaluation</th>
-            <th>Student</th>
-            <th>Score</th>
-            <th>Actions</th>
+            <th>Id</th>
+            <th>Форма оценивания</th>
+            <th>Студент</th>
+            <th>Оценка</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
-        @* @foreach (var discipline in Model)
+        @foreach (var attestation in Model)
         {
-        <tr>
-        <td>@discipline.Name</td>
-        <td>@discipline.Description</td>
-        <td>
-        @foreach (var student in discipline.Students)
-        {
-        <span>@student.Name</span>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => attestation.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => attestation.FormOfEvaluation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => attestation.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => attestation.Score)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a asp-controller="Home" asp-action="" asp-route-id="@attestation.Id" class="btn btn-warning">Изменить</a>
+                        <form asp-controller="Home" asp-action="DeleteAttestation" method="post">
+                            <input type="hidden" name="id" value="@attestation.Id" />
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
         }
-        </td>
-        <td>
-        <a asp-action="Edit" asp-route-id="@discipline.Id" class="btn btn-warning">Edit</a>
-        <a asp-action="Details" asp-route-id="@discipline.Id" class="btn btn-info">Details</a>
-        <a asp-action="Delete" asp-route-id="@discipline.Id" class="btn btn-danger">Delete</a>
-        </td>
-        </tr>
-        } *@
     </tbody>
 </table>
 

@@ -58,8 +58,6 @@ namespace UniversityBusinessLogic.BusinessLogics
         {
             CheckModel(model);
 
-            model.Score = AttestationScore.Неявка;
-
             if (_attestationStorage.Insert(model) == null)
             {
                 _logger.LogWarning("Insert operation failed");
@@ -88,51 +86,6 @@ namespace UniversityBusinessLogic.BusinessLogics
                 return false;
             }
             return true;
-        }
-        public bool ScoreUpdate(AttestationBindingModel model, AttestationScore newScore)
-        {
-            CheckModel(model);
-            
-            if (!Enum.IsDefined(typeof(AttestationScore), newScore))
-            {
-                _logger.LogWarning("Score update to " + newScore.ToString() + " operation failed. Attestation status incorrect.");
-                return false;
-            }
-
-            if (_attestationStorage.Update(model) == null)
-            {
-                _logger.LogWarning("Update operation failed");
-                return false;
-            }
-
-            model.Score = newScore;
-            return true;
-        }
-        public bool SetPass(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Зачёт);
-        }
-
-        public bool SetNotPass(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Незачёт);
-        }
-
-        public bool SetTwo(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Неудовлетворительно);
-        }
-        public bool SetThree(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Удовлетворительно);
-        }
-        public bool SetFour(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Хорошо);
-        }
-        public bool SetFive(AttestationBindingModel model)
-        {
-            return ScoreUpdate(model, AttestationScore.Отлично);
         }
 
         private void CheckModel(AttestationBindingModel model, bool withParams = true)

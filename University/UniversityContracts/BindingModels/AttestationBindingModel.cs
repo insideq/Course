@@ -15,5 +15,6 @@ namespace UniversityContracts.BindingModels
         public string FormOfEvaluation { get; set; } = string.Empty;
         public AttestationScore Score { get; set; } = AttestationScore.Неявка;
         public int StudentId { get; set; }
+        public string StudentName { get; set; } = string.Empty;
     }
 }

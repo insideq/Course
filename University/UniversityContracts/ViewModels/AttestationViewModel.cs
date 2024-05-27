@@ -14,6 +14,8 @@ namespace UniversityContracts.ViewModels
         public int Id { get; set; }
         public int UserId { get; set; }
         public int StudentId { get; set; }
+        [DisplayName("ФИО студента")]
+        public string StudentName { get; set; } = string.Empty;
         [DisplayName("Форма оценивания")]
         public string FormOfEvaluation { get; set; } = string.Empty;
         [DisplayName("Оценка")]
