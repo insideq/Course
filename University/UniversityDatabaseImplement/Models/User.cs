@@ -44,7 +44,8 @@ namespace UniversityDatabaseImplement.Models
                 Id = model.Id,
                 Login = model.Login,
                 Password = model.Password,
-                Email = model.Email
+                Email = model.Email,
+                Role = model.Role
             };
         }
 

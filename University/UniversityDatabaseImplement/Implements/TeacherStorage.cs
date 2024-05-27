@@ -54,12 +54,14 @@ namespace UniversityDatabaseImplement.Implements
         }
         public TeacherViewModel? Insert(TeacherBindingModel model)
         {
-            var newTeacher = Teacher.Create(model);
+            using var context = new UniversityDatabase();
+            var newTeacher = Teacher.Create(context, model);
+
             if (newTeacher == null)
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
+            
             context.Teachers.Add(newTeacher);
             context.SaveChanges();
             return newTeacher.GetViewModel;

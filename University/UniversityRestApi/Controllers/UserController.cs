@@ -123,14 +123,5 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        public List<UserViewModel> GetAll(UserSearchModel? model)
-        {
-            try
-            {
-                return _logic.ReadList(model);
-            }
-            catch (Exception ex) { throw new Exception(); }
-        }
     }
 }

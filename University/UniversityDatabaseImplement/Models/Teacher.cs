@@ -30,7 +30,7 @@ namespace UniversityDatabaseImplement.Models
         public virtual List<Discipline> Disciplines { get; set; } = new();
         [ForeignKey("TeacherId")]
         public virtual List<PlanOfStudyTeacher> PlanOfStudyTeachers { get; set; } = new();
-        public static Teacher? Create(TeacherBindingModel model)
+        public static Teacher? Create(UniversityDatabase context, TeacherBindingModel model)
         {
             if (model == null)
             {
@@ -40,6 +40,7 @@ namespace UniversityDatabaseImplement.Models
             {
                 Id = model.Id,
                 UserId = model.UserId,
+                User = context.Users.First(x => x.Id == model.UserId),
                 Name = model.Name,
                 AcademicDegree = model.AcademicDegree,
                 Position = model.Position,
