@@ -1,4 +1,6 @@
-﻿@{
+﻿@using UniversityContracts.ViewModels
+@model List<DisciplineViewModel>
+@{
     ViewData["Title"] = "Manage Disciplines";
 }
 
@@ -20,12 +22,20 @@
             <textarea name="description" id="description" class="form-control"></textarea>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-4">Students:</div>
+        <div class="col-4">Date:</div>
         <div class="col-8">
-            <select id="students" name="students" class="form-control" multiple asp-items="ViewBag.Students"></select>
+            <input type="date" name="date" id="date" class="form-control" />
         </div>
     </div>
+    <div class="row">
+        <div class="col-4">Teacher:</div>
+        <div class="col-8">
+            <select id="teacher" name="teacher" class="form-control" asp-items="@(new SelectList(@ViewBag.Teachers,"Id", "Name"))"></select>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-8"></div>
         <div class="col-4">
@@ -39,29 +49,29 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Students</th>
+            <th>Date</th>
+            <th>Teacher Name</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @* @foreach (var discipline in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@discipline.Name</td>
-                <td>@discipline.Description</td>
                 <td>
-                    @foreach (var student in discipline.Students)
-                    {
-                        <span>@student.Name</span>
-                    }
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@discipline.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@discipline.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@discipline.Id" class="btn btn-danger">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherName)
                 </td>
             </tr>
-        } *@
+        }
     </tbody>
 </table>
 

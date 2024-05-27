@@ -105,6 +105,7 @@ namespace UniversityDatabaseImplement.Models
             Id = Id,
             UserId = UserId,
             TeacherId = TeacherId,
+            TeacherName = Teacher.Name,
             Name = Name,
             Description = Description,
             StudentDisciplines = StudentDisciplines,

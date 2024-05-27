@@ -75,9 +75,32 @@ namespace UniversityClientApp.Controllers
 			return;
 		}
 
-		public IActionResult Disciplines()
+        [HttpGet]
+        public IActionResult Disciplines()
         {
-            return View();
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Teachers = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
+            return View(APIStorekeeper.GetRequest<List<DisciplineViewModel>>($"api/discipline/getdisciplines?teacherId={0}"));
+        }
+        [HttpPost]
+        public void Disciplines(string name, string description, DateOnly date, int teacher)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                Redirect("~/Home/Enter");
+            }
+            APIStorekeeper.PostRequest("api/discipline/creatediscipline", new DisciplineBindingModel
+            {
+                UserId = APIStorekeeper.Client.Id,
+                Name = name,
+                Description = description,
+                Date = date,
+                TeacherId = teacher,
+            });
+            Response.Redirect("Disciplines");
         }
 
         [HttpGet]

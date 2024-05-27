@@ -8,11 +8,11 @@ namespace UniversityRestApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DisciplinesController : Controller
+    public class DisciplineController : Controller
     {
         private readonly ILogger _logger;
         private readonly IDisciplineLogic _logic;
-        public DisciplinesController(IDisciplineLogic logic, ILogger<DisciplinesController> logger)
+        public DisciplineController(IDisciplineLogic logic, ILogger<DisciplineController> logger)
         {
             _logic = logic;
             _logger = logger;

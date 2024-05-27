@@ -29,12 +29,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Disciplines:</div>
-        <div class="col-8">
-            <select id="disciplines" name="disciplines" class="form-control" multiple asp-items="ViewBag.Disciplines"></select>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-8"></div>
         <div class="col-4">
             <input type="submit" value="Create Teacher" class="btn btn-primary" />
@@ -49,7 +43,6 @@
             <th>Name</th>
             <th>Academic Degree</th>
             <th>Position</th>
-            <th>Disciplines</th>
         </tr>
     </thead>
     <tbody>
@@ -67,11 +60,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Position)
-                </td>
-                <td>
-                    
-
-
                 </td>
             </tr>
         }

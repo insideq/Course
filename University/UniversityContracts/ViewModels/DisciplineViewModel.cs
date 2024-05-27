@@ -13,6 +13,7 @@ namespace UniversityContracts.ViewModels
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TeacherId { get; set; }
+        public string TeacherName { get; set; } = string.Empty;
         [DisplayName("Название дисциплины")]
         public string Name { get; set; } = string.Empty;
         [DisplayName("Описание дисциплины")]
