@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-8"></div>
         <div class="col-4 mt-2">
-            <input type="submit" value="Создать план обучения" class="btn btn-danger" />
+            <input type="submit" value="Создать план обучения" class="btn btn-primary" />
         </div>
     </div>
 </form>
@@ -52,11 +52,13 @@
                         @Html.DisplayFor(modelItem => planOfStudy.FormOfStudy)
                     </td>
                     <td>
-                        <a asp-controller="Home" asp-action="InfoPlanOfStudy" asp-route-id="@planOfStudy.Id" class="btn btn-warning">Изменить</a>
-                        <form asp-controller="Home" asp-action="DeletePlanOfStudy" method="post">
-                            <input type="hidden" name="id" value="@planOfStudy.Id" />
-                            <button type="submit" class="btn btn-danger">Удалить</button>
-                        </form>
+                        <div class="btn-group">
+                            <a asp-controller="Home" asp-action="InfoPlanOfStudy" asp-route-id="@planOfStudy.Id" class="btn btn-warning">Изменить</a>
+                            <form asp-controller="Home" asp-action="DeletePlanOfStudy" method="post">
+                                <input type="hidden" name="id" value="@planOfStudy.Id" />
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             }

@@ -120,9 +120,32 @@ namespace UniversityClientAppWorker.Controllers
 			{
 				return Redirect("~/Home/Enter");
 			}
+            ViewBag.PlanOfStudys = APIClient.GetRequest<List<PlanOfStudyViewModel>>
+                ($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}");
             return View(APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}"));
         }
-		[HttpGet]
+        [HttpPost]
+        public void CreateStudent(string name, int planOfStudy, string phoneNumber)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(name) || planOfStudy == 0 || string.IsNullOrEmpty(phoneNumber))
+            {
+                throw new Exception("Введите ФИО, план обучения и телефон");
+            }
+            APIClient.PostRequest("api/student/createstudent", new StudentBindingModel
+            {
+                UserId = APIClient.User.Id,
+                Name = name,
+                PlanOfStudyId = planOfStudy,
+                PhoneNumber = phoneNumber,
+                
+            });
+            Response.Redirect("Students");
+        }
+        [HttpGet]
 		public IActionResult Enter()
         {
             return View();

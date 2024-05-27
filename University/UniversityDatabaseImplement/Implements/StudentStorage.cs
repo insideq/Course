@@ -25,7 +25,7 @@ namespace UniversityDatabaseImplement.Implements
 
         public List<StudentViewModel> GetFilteredList(StudentSearchModel model)
         {
-            if (string.IsNullOrEmpty(model.Name))
+            if (model == null)
             {
                 return new();
             }
@@ -34,8 +34,7 @@ namespace UniversityDatabaseImplement.Implements
 
             return context.Students
                 .Include(x => x.User)
-                .Where(x => x.Name
-                .Contains(model.Name))
+                .Include(x => x.PlanOfStudy)
                 .Select(x => x.GetViewModel)
                 .ToList();
         }

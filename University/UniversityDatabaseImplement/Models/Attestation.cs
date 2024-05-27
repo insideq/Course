@@ -8,7 +8,6 @@ using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
 using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace UniversityDatabaseImplement.Models
 {

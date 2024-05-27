@@ -20,7 +20,6 @@ namespace UniversityRestApi.Controllers
             _logger = logger;
         }
 
-
         [HttpGet]
         public UserViewModel? LoginWorker(string login, string password)
         {
@@ -123,6 +122,15 @@ namespace UniversityRestApi.Controllers
                 _logger.LogError(ex, "Ошибка обновления данных");
                 throw;
             }
+        }
+        [HttpGet]
+        public List<UserViewModel> GetAll(UserSearchModel? model)
+        {
+            try
+            {
+                return _logic.ReadList(model);
+            }
+            catch (Exception ex) { throw new Exception(); }
         }
     }
 }
