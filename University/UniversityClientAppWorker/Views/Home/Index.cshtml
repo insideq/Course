@@ -22,6 +22,20 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-4">Преподаватели:</div>
+        <div class="col-8">
+            @foreach (var teacher in ViewBag.Teachers)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="teacherIds" value="@teacher.Id" id="student-@teacher.Id">
+                    <label class="form-check-label" for="teacher-@teacher.Id">
+                        @teacher.Name
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
         <div class="col-8"></div>
         <div class="col-4 mt-2">
             <input type="submit" value="Создать план обучения" class="btn btn-primary" />

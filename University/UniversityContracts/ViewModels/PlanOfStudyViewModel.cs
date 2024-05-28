@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using UniversityDataModels.Models;
 
@@ -21,5 +22,13 @@ namespace UniversityContracts.ViewModels
             get;
             set;
         } = new();
+
+        public PlanOfStudyViewModel() { }
+
+        [JsonConstructor]
+        public PlanOfStudyViewModel(Dictionary<int, TeacherViewModel> planOfStudyTeachers)
+        {
+            this.PlanOfStudyTeachers = planOfStudyTeachers.ToDictionary(x => x.Key, x => x.Value as ITeacherModel);
+        }
     }
 }

@@ -17,17 +17,43 @@ namespace UniversityClientAppWorker.Controllers
         {
             _logger = logger;
         }
-		[HttpGet]
+        /*[HttpGet]
 		public IActionResult Index()
         {
             if (APIClient.User == null)
             {
                 return Redirect("~/Home/Enter");
             }
+            ViewBag.Teachers = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
             return View(APIClient.GetRequest<List<PlanOfStudyViewModel>>($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}"));
+        }*/
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Teachers = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
+            var planOfStudys = await APIClient.GetRequestPlanOfStudyAsync<List<PlanOfStudyViewModel>>($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}");
+
+            return View(planOfStudys);
         }
-        [HttpPost]
-        public void CreatePlanOfStudy(string profile, string formOfStudy)
+		[HttpGet]
+		public async Task<IActionResult> InfoPlanOfStudy(int id)
+		{
+			if (APIClient.User == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+            var obj1 = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
+			ViewBag.Teachers = obj1;
+
+			var obj = await APIClient.GetRequestPlanOfStudyAsync<PlanOfStudyViewModel>($"api/planofstudys/getplanofstudy?id={id}&userId={APIClient.User.Id}");
+			return View(obj);
+		}
+		[HttpPost]
+        public void CreatePlanOfStudy(string profile, string formOfStudy, List<int> teacherIds)
         {
             if (APIClient.User == null)
             {
@@ -41,8 +67,9 @@ namespace UniversityClientAppWorker.Controllers
             {
                 Profile = profile,
                 FormOfStudy = formOfStudy,
-                UserId = APIClient.User.Id
-            });
+                UserId = APIClient.User.Id,
+				PlanOfStudyTeachers = teacherIds.ToDictionary(id => id, id => (ITeacherModel)null)
+			});
             Response.Redirect("Index");
         }
         [HttpPost]
@@ -58,18 +85,8 @@ namespace UniversityClientAppWorker.Controllers
             });
             Response.Redirect("Index");
         }
-		[HttpGet]
-		public IActionResult InfoPlanOfStudy(int id)
-		{
-			if (APIClient.User == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-            ViewBag.Teachers = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
-			return View(APIClient.GetRequest<PlanOfStudyViewModel>($"api/planofstudys/getplanofstudy?id={id}&userId={APIClient.User.Id}"));
-		}
 		[HttpPost]
-        public void UpdatePlanOfStudy(int id, string profile, string formOfStudy)
+        public void UpdatePlanOfStudy(int id, string profile, string formOfStudy, List<int> teacherIds)
         {
             if (id == 0)
             {
@@ -79,7 +96,8 @@ namespace UniversityClientAppWorker.Controllers
             {
                 Id = id,
                 Profile = profile,
-                FormOfStudy = formOfStudy
+                FormOfStudy = formOfStudy,
+                PlanOfStudyTeachers = teacherIds.ToDictionary(id => id, id => (ITeacherModel)null)
 			});
             Response.Redirect("Index");
         }

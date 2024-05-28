@@ -100,7 +100,7 @@ namespace UniversityDatabaseImplement.Models
             UserId = UserId,
             Profile = Profile,
             FormOfStudy = FormOfStudy,
-            PlanOfStudyTeachers = PlanOfStudyTeachers,
+            PlanOfStudyTeachers = PlanOfStudyTeachers
         };
     }
 }

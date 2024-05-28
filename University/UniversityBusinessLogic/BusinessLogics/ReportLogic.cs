@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using University.ViewModels;
-using UniversityBusinessLogics.OfficePackage;
+using UniversityBusinessLogic.OfficePackage;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;

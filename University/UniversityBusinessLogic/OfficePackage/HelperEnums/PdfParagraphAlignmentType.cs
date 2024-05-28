@@ -3,7 +3,9 @@
     public enum PdfParagraphAlignmentType
     {
         Center,
+
         Left,
-        Rigth
+
+        Right
     }
 }

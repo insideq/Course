@@ -18,7 +18,12 @@ namespace UniversityDatabaseImplement.Implements
         {
             using var context = new UniversityDatabase();
 
-            return context.PlanOfStudys.Select(x => x.GetViewModel).ToList();
+            return context.PlanOfStudys
+                .Include(x => x.Teachers)
+                .ThenInclude(t => t.Teacher)
+                .ToList()
+                .Select(x => x.GetViewModel)
+                .ToList();
         }
 
         public List<DisciplineViewModel> GetDisciplineFromStudentsFromPlanOfStudys(PlanOfStudySearchModel model)
@@ -59,6 +64,8 @@ namespace UniversityDatabaseImplement.Implements
             }
             using var context = new UniversityDatabase();
             var query = context.PlanOfStudys
+                .Include(x => x.Teachers)
+                .ThenInclude(x => x.Teacher)
                 .Include(x => x.Students)
                 .Include(x => x.User)
                 .AsQueryable();
@@ -80,7 +87,12 @@ namespace UniversityDatabaseImplement.Implements
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.PlanOfStudys.Include(x => x.User).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
+            return context.PlanOfStudys
+                .Include(x => x.User)
+				.Include(x => x.Teachers)
+				.ThenInclude(x => x.Teacher)
+				.FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?
+                .GetViewModel;
         }
 
         public PlanOfStudyViewModel? Insert(PlanOfStudyBindingModel model)

@@ -2,6 +2,9 @@
 using UniversityContracts.ViewModels;
 using System.Net.Http.Headers;
 using System.Text;
+using Azure.Core;
+using UniversityDataModels.Models;
+using UniversityDatabaseImplement.Models;
 
 namespace PlumbingRepairClientApp
 {
@@ -28,7 +31,24 @@ namespace PlumbingRepairClientApp
                     throw new Exception(result);
                 }
             }
-            public static void PostRequest<T>(string requestUrl, T model)
+        public static async Task<T?> GetRequestPlanOfStudyAsync<T>(string requestUrl)
+        {
+            var response = await _client.GetAsync(requestUrl);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    Converters = new List<JsonConverter> { new TeacherConverter() }
+                };
+                return JsonConvert.DeserializeObject<T>(result, settings);
+            }
+            else
+            {
+                throw new Exception(result);
+            }
+        }
+        public static void PostRequest<T>(string requestUrl, T model)
             {
                 var json = JsonConvert.SerializeObject(model);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -41,5 +61,39 @@ namespace PlumbingRepairClientApp
                     throw new Exception(result);
                 }
             }
+    }
+    public class TeacherConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(ITeacherModel);
+            //return true;
         }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null)
+                return null;
+
+            // Пропускаем десериализацию, если уже есть экземпляр Teacher
+            if (existingValue is Teacher teacher)
+                return teacher;
+
+            var teach = new Teacher();
+            serializer.Populate(reader, teach);
+            return teach;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            if (value == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            var teacher = (Teacher)value;
+            serializer.Serialize(writer, teacher);
+        }
+    }
 }
