@@ -29,13 +29,13 @@ public class ReportLogic : IReportLogic
 
     private readonly AbstractSaveToExcelWorker _saveToExcelWorker;
     private readonly AbstractSaveToWordWorker _saveToWordWorker;
-    private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
+    //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
 
     private readonly AbstractSaveToWordStorekeeper _saveToWordStorekeeper;
     public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
-        IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker,
-       AbstractSaveToPdfWorker saveToPdfWorker)
+        IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker
+       /* , AbstractSaveToPdfWorker saveToPdfWorker */)
         {
 		_teacherStorage = teacherStorage;
 		_disciplineStorage = disciplineStorage;
@@ -45,7 +45,7 @@ public class ReportLogic : IReportLogic
 
 		_saveToExcelWorker = saveToExcelWorker;
         _saveToWordWorker = saveToWordWorker;
-        _saveToPdfWorker = saveToPdfWorker;
+        // _saveToPdfWorker = saveToPdfWorker;
         }
     public List<ReportTeacherViewModel> GetTeachers()
     {

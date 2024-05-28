@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversityBusinessLogic.OfficePackage.HelperModels;
-using UniversityBusinessLogic.OfficePackage.HelperEnums;
+using UniversityBusinessLogics.OfficePackage.HelperEnums;
 
 namespace UniversityBusinessLogic.OfficePackage
 {
