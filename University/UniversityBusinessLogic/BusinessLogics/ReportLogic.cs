@@ -86,6 +86,7 @@ public class ReportLogic : IReportLogic
             // Добавляем учителя и его студентов в результат
             result.Add(new ReportTeacherViewModel
             {
+                TeacherId = teacher.Id,
                 TeacherName = teacher.Name,
                 Students = students.Distinct().ToList() // Убираем дубликаты, если они есть
             });

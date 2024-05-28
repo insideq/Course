@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using University.ViewModels;
 using UniversityContracts.BindingModels;
+using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.ViewModels;
@@ -12,10 +14,12 @@ namespace UniversityRestApi.Controllers
     {
         private readonly ILogger _logger;
         private readonly ITeacherLogic _logic;
-        public TeacherController(ITeacherLogic logic, ILogger<TeacherController> logger)
+        private readonly IReportLogic _reportLogic;
+        public TeacherController(ITeacherLogic logic, ILogger<TeacherController> logger, IReportLogic reportLogic)
         {
             _logic = logic;
             _logger = logger;
+            _reportLogic = reportLogic;
         }
         [HttpGet]
         public List<TeacherViewModel>? GetTeachers(int userId)
@@ -79,6 +83,20 @@ namespace UniversityRestApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка удаления преподавателя");
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public List<ReportTeacherViewModel>? GetDisciplinesReport()
+        {
+            try
+            {
+                return _reportLogic.GetTeachers();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка планов обучения");
                 throw;
             }
         }
