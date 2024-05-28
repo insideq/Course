@@ -33,6 +33,7 @@ namespace UniversityDatabaseImplement.Implements
             var students = context.Students
                 .Where(s => s.PlanOfStudyId == model.Id)
                 .Include(s => s.StudentDiscipline)
+                .ThenInclude(sd => sd.Discipline)
                 .ToList();
 
             if(students == null)
