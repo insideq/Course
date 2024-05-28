@@ -210,12 +210,20 @@ public class ReportLogic : IReportLogic
     }
     public void SavePlanOfStudyToExcel(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        /*_saveToExcelWorker.CreateReport(new ExcelInfoWorker
+        {
+
+        });*/
     }
 
     public void SavePlanOfStudyToWord(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        _saveToWordWorker.CreateDoc(new WordInfoWorker
+        {
+            FileName = option.FileName,
+            Title = "Список планов обучения",
+            PlanOfStudys = GetPlanOfStudyAndDisciplines()
+        });
     }
 
     public void SaveTeachersToWord(ReportBindingModel option)
@@ -235,6 +243,9 @@ public class ReportLogic : IReportLogic
 
     public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email)
     {
-        throw new NotImplementedException();
+        /*_saveToPdfWorker.CreateDoc(new PdfInfoWorker
+        {
+
+        });*/
     }
 }

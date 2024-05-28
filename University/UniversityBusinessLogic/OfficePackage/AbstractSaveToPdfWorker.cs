@@ -5,7 +5,7 @@ namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToPdfWorker
     {
-        public void CreateDoc(PdfInfo info)
+        /*public void CreateDoc(PdfInfoWorker info)
         {
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle", ParagraphAlignment = PdfParagraphAlignmentType.Center });
@@ -32,13 +32,13 @@ namespace UniversityBusinessLogic.OfficePackage
             CreateParagraph(new PdfParagraph { Text = $"Итого: {info.Orders.Sum(x => x.Sum)}\t", Style = "Normal", ParagraphAlignment = PdfParagraphAlignmentType.Right });
 
             SavePdf(info);
-        }
+        }*/
 
         /// <summary>
 		/// Создание doc-файла
 		/// </summary>
 		/// <param name="info"></param>
-        protected abstract void CreatePdf(PdfInfo info);
+        protected abstract void CreatePdf(PdfInfoWorker info);
 
         /// <summary>
         /// Создание параграфа с текстом
@@ -64,6 +64,6 @@ namespace UniversityBusinessLogic.OfficePackage
 		/// Сохранение файла
 		/// </summary>
 		/// <param name="info"></param>
-        protected abstract void SavePdf(PdfInfo info);
+        protected abstract void SavePdf(PdfInfoWorker info);
     }
 }

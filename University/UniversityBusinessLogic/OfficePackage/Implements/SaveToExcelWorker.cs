@@ -211,7 +211,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
                 _ => 0U,
             };
         }
-        protected override void CreateExcel(ExcelInfo info)
+        protected override void CreateExcel(ExcelInfoWorker info)
         {
             _spreadsheetDocument = SpreadsheetDocument.Create(info.FileName,
            SpreadsheetDocumentType.Workbook);
@@ -343,7 +343,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
             };
             mergeCells.Append(mergeCell);
         }
-        protected override void SaveExcel(ExcelInfo info)
+        protected override void SaveExcel(ExcelInfoWorker info)
         {
             if (_spreadsheetDocument == null)
             {

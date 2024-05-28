@@ -17,16 +17,6 @@ namespace UniversityClientAppWorker.Controllers
         {
             _logger = logger;
         }
-        /*[HttpGet]
-		public IActionResult Index()
-        {
-            if (APIClient.User == null)
-            {
-                return Redirect("~/Home/Enter");
-            }
-            ViewBag.Teachers = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
-            return View(APIClient.GetRequest<List<PlanOfStudyViewModel>>($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}"));
-        }*/
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -243,5 +233,14 @@ namespace UniversityClientAppWorker.Controllers
 			Response.Redirect("Enter");
 			return;
 		}
-	}
+        [HttpGet]
+        public IActionResult ReportPlanOfStudyViewModel()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<ReportPlanOfStudyViewModel>>($"api/planofstudys/GetPlanOfStudyAndDisciplines"));
+        }
+    }
 }
