@@ -5,7 +5,10 @@ using UniversityClientApp.Models;
 using UniversityClientAppStorekeeper;
 using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
+using UniversityDatabaseImplement.Models;
+using UniversityDatabaseImplement;
 using UniversityDataModels.Enums;
+using UniversityDataModels.Models;
 
 namespace UniversityClientApp.Controllers
 {
@@ -83,25 +86,77 @@ namespace UniversityClientApp.Controllers
                 return Redirect("~/Home/Enter");
             }
             ViewBag.Teachers = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
+            ViewBag.Students = APIStorekeeper.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIStorekeeper.Client.Id}");
             return View(APIStorekeeper.GetRequest<List<DisciplineViewModel>>($"api/discipline/getdisciplines?teacherId={0}"));
         }
         [HttpPost]
-        public void Disciplines(string name, string description, DateOnly date, int teacher)
+        public void Disciplines(string name, string description, DateOnly date, int teacher, List<int> studentIds)
         {
             if (APIStorekeeper.Client == null)
             {
                 Redirect("~/Home/Enter");
             }
-            APIStorekeeper.PostRequest("api/discipline/creatediscipline", new DisciplineBindingModel
+
+            var disciplineModel = new DisciplineBindingModel
             {
                 UserId = APIStorekeeper.Client.Id,
                 Name = name,
                 Description = description,
                 Date = date,
                 TeacherId = teacher,
-            });
+                StudentDisciplines = studentIds.ToDictionary(id => id, id => (IStudentModel)null)
+                // не правильно
+            };
+
+            APIStorekeeper.PostRequest("api/discipline/creatediscipline", disciplineModel);
+
             Response.Redirect("Disciplines");
         }
+        /*public IActionResult Disciplines(string name, string description, DateOnly date, int teacher, List<int> studentIds)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                return RedirectToAction("Enter", "Home");
+            }
+
+            // Предполагаем, что у вас есть доступ к контексту базы данных UniversityDatabase
+            using (var context = new UniversityDatabase())
+            {
+                // Создаем словарь для хранения студентов
+                var studentDisciplines = new Dictionary<int, IStudentModel>();
+
+                // Итерируем по списку идентификаторов студентов
+                foreach (var studentId in studentIds)
+                {
+                    // Получаем студента из базы данных или создаем новый экземпляр Student
+                    // Вам нужно будет заполнить необходимые свойства, такие как UserId, PlanOfStudyId, Name и PhoneNumber
+                    var student = context.Students.Find(studentId);
+                    
+                    // Добавляем студента в словарь
+                    studentDisciplines.Add(studentId, student);
+                }
+
+                var disciplineModel = new DisciplineBindingModel
+                {
+                    UserId = APIStorekeeper.Client.Id,
+                    Name = name,
+                    Description = description,
+                    Date = date,
+                    TeacherId = teacher,
+                    StudentDisciplines = studentDisciplines
+                };
+
+                APIStorekeeper.PostRequest("api/discipline/creatediscipline", disciplineModel);
+
+                return RedirectToAction("Disciplines");
+            }
+        }*/
+
+
+
+
+
+
 
         [HttpGet]
         public IActionResult Statements()
