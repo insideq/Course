@@ -4,7 +4,7 @@ using UniversityContracts.ViewModels;
 
 namespace UniversityBusinessLogic.OfficePackage.HelperModels
 {
-    public class WordInfo
+    public class WordInfoWorker
     {
         public string? FileName { get; set; }
         public Stream? Stream { get; set; }

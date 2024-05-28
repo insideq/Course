@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using PlumbingRepairBusinessLogic.OfficePackage;
+using System.Reflection;
 using University.ViewModels;
 using UniversityBusinessLogic.OfficePackage;
 using UniversityContracts.BindingModels;
@@ -25,6 +26,25 @@ public class ReportLogic : IReportLogic
     private readonly IStudentStorage _studentStorage;
     private readonly IStatementStorage _statementStorage;
     private readonly IPlanOfStudyStorage _planOfStudyStorage;
+
+    private readonly AbstractSaveToExcelWorker _saveToExcelWorker;
+    private readonly AbstractSaveToWordWorker _saveToWordWorker;
+    private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
+	public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
+	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
+        IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker,
+       AbstractSaveToPdfWorker saveToPdfWorker)
+        {
+		_teacherStorage = teacherStorage;
+		_disciplineStorage = disciplineStorage;
+        _studentStorage = studentStorage;
+        _statementStorage = statementStorage;
+        _planOfStudyStorage = planOfStudyStorage;
+
+		_saveToExcelWorker = saveToExcelWorker;
+        _saveToWordWorker = saveToWordWorker;
+        _saveToPdfWorker = saveToPdfWorker;
+        }
     public List<ReportTeacherViewModel> GetTeachers()
     {
         var teachers = _teacherStorage.GetFullList();
