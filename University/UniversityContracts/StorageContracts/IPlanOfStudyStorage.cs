@@ -18,5 +18,5 @@ namespace UniversityContracts.StorageContracts
         PlanOfStudyViewModel? Update(PlanOfStudyBindingModel model);
         PlanOfStudyViewModel? Delete(PlanOfStudyBindingModel model);
         List<DisciplineViewModel> GetDisciplineFromStudentsFromPlanOfStudys(PlanOfStudySearchModel model);
-    }
+	}
 }

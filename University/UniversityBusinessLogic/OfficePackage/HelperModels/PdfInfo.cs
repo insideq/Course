@@ -1,4 +1,4 @@
-﻿namespace UniversityBusinessLogics.OfficePackage.HelperModels
+﻿namespace UniversityBusinessLogic.OfficePackage.HelperModels
 {
     public class PdfInfo
     {

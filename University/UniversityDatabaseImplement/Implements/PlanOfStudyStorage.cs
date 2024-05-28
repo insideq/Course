@@ -80,7 +80,7 @@ namespace UniversityDatabaseImplement.Implements
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.PlanOfStudys.Include(x => x.Profile).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
+            return context.PlanOfStudys.Include(x => x.User).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
         }
 
         public PlanOfStudyViewModel? Insert(PlanOfStudyBindingModel model)
@@ -109,9 +109,9 @@ namespace UniversityDatabaseImplement.Implements
             }
             order.Update(model);
             context.SaveChanges();
-            return context.PlanOfStudys.Include(x => x.Profile).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
+            return context.PlanOfStudys.Include(x => x.User).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
         }
-        public PlanOfStudyViewModel? Delete(PlanOfStudyBindingModel model)
+		public PlanOfStudyViewModel? Delete(PlanOfStudyBindingModel model)
         {
             using var context = new UniversityDatabase();
             var element = context.PlanOfStudys.FirstOrDefault(rec => rec.Id == model.Id);

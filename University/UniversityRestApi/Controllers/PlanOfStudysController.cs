@@ -3,6 +3,7 @@ using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.ViewModels;
+using UniversityDatabaseImplement.Models;
 
 namespace UniversityRestApi.Controllers
 {
@@ -30,7 +31,20 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPost]
+		[HttpGet]
+		public PlanOfStudyViewModel? GetPlanOfStudy(int id, int userId)
+		{
+			try
+			{
+				return _logic.ReadElement(new PlanOfStudySearchModel { Id = id, UserId = userId });
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка получения списка планов обучения");
+				throw;
+			}
+		}
+		[HttpPost]
         public void CreatePlanOfStudy(PlanOfStudyBindingModel model)
         {
             try
@@ -69,5 +83,18 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-    }
+		[HttpPost]
+		public void LinkTeacherToPlanOfStudy(int planOfStudyId, int teacherId)
+		{
+			try
+			{
+
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка при связывании преподавателя с планом обучения");
+				throw;
+			}
+		}
+	}
 }

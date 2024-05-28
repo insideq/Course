@@ -30,7 +30,20 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPost]
+		[HttpGet]
+		public List<TeacherViewModel>? GetAllTeachers()
+		{
+			try
+			{
+				return _logic.ReadList(null);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка получения списка преподавателей");
+				throw;
+			}
+		}
+		[HttpPost]
         public void CreateTeacher(TeacherBindingModel model)
         {
             try

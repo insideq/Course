@@ -1,4 +1,4 @@
-﻿namespace UniversityBusinessLogics.OfficePackage.HelperEnums
+﻿namespace UniversityBusinessLogic.OfficePackage.HelperEnums
 {
     public enum PdfParagraphAlignmentType
     {

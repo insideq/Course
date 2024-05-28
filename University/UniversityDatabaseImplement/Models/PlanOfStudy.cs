@@ -62,8 +62,6 @@ namespace UniversityDatabaseImplement.Models
             {
                 return;
             }
-            Id = model.Id;
-            UserId = model.UserId;
             Profile = model.Profile;
             FormOfStudy = model.FormOfStudy;
         }

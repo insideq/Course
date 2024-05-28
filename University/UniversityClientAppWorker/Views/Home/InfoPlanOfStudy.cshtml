@@ -6,7 +6,7 @@
 <div class="text-center">
 	<h2 class="display-4">План обучения</h2>
 </div>
-<form method="post">
+<form asp-action="UpdatePlanOfStudy" method="post">
 	<div class="row">
 		<div class="col-4">Профиль:</div>
 		<div class="col-8"><input type="text" name="profile" value="@Model.Profile" /></div>
@@ -16,15 +16,21 @@
 		<div class="col-8"><input type="text" name="formOfStudy" value="@Model.FormOfStudy" /></div>
 	</div>
 	<div class="row">
-		<div class="col-8"></div>
-		<div class="col-4"><input type="submit" value="Сохранить" class="btn btn-danger" /></div>
+		<div class="col-4">Преподаватели:</div>
+		<div class="col-8">
+			<select multiple name="selectedTeachers">
+				@foreach (var teacher in ViewBag.Teachers)
+				{
+					<option value="@teacher.Id" selected="@(Model.PlanOfStudyTeachers?.ContainsKey(teacher.Id) ?? false)">@teacher.Name</option>
+				}
+			</select>
+		</div>
 	</div>
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>name</th>
-			<th>academic degree</th>
-			<th>position</th>
-		</tr>
-	</thead>
+	<div class="row">
+		<div class="col-8"></div>
+		<div class="col-4">
+			<input type="hidden" name="id" value="@Model.Id" />
+			<input type="submit" value="Сохранить" class="btn btn-danger" />
+		</div>
+	</div>
 </form>

@@ -5,6 +5,7 @@ using UniversityClientAppWorker.Models;
 using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
 using UniversityDataModels.Enums;
+using UniversityDataModels.Models;
 
 namespace UniversityClientAppWorker.Controllers
 {
@@ -57,8 +58,18 @@ namespace UniversityClientAppWorker.Controllers
             });
             Response.Redirect("Index");
         }
-        [HttpPost]
-        public void UpdatePlanOfStudy(int id)
+		[HttpGet]
+		public IActionResult InfoPlanOfStudy(int id)
+		{
+			if (APIClient.User == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+            ViewBag.Teachers = APIClient.GetRequest<List<TeacherViewModel>>($"api/teacher/getallteachers");
+			return View(APIClient.GetRequest<PlanOfStudyViewModel>($"api/planofstudys/getplanofstudy?id={id}&userId={APIClient.User.Id}"));
+		}
+		[HttpPost]
+        public void UpdatePlanOfStudy(int id, string profile, string formOfStudy)
         {
             if (id == 0)
             {
@@ -66,11 +77,13 @@ namespace UniversityClientAppWorker.Controllers
             }
             APIClient.PostRequest("api/planofstudys/updateplanofstudy", new PlanOfStudyBindingModel
             {
-                Id = id
-            });
+                Id = id,
+                Profile = profile,
+                FormOfStudy = formOfStudy
+			});
             Response.Redirect("Index");
         }
-        [HttpGet]
+		[HttpGet]
 		public IActionResult Privacy()
         {
 			if (APIClient.User == null)

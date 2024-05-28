@@ -84,7 +84,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             return true;
         }
-        private void CheckModel(PlanOfStudyBindingModel model, bool withParams = true)
+		private void CheckModel(PlanOfStudyBindingModel model, bool withParams = true)
         {
             if (model == null)
             {

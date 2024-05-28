@@ -1,6 +1,6 @@
-﻿using UniversityBusinessLogics.OfficePackage.HelperEnums;
+﻿using UniversityBusinessLogic.OfficePackage.HelperEnums;
 
-namespace UniversityBusinessLogics.OfficePackage.HelperModels
+namespace UniversityBusinessLogic.OfficePackage.HelperModels
 {
     public class WordTextProperties
     {

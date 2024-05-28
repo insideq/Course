@@ -17,8 +17,8 @@ public class ReportLogic : IReportLogic
     }
 
     /*private readonly AbstractSaveToWord _saveToWord;
-private readonly AbstractSaveToExcel _saveToExcel;
-private readonly AbstractSaveToPdf _saveToPdf;*/
+    private readonly AbstractSaveToExcel _saveToExcel;
+    private readonly AbstractSaveToPdf _saveToPdf;*/
 
     private readonly ITeacherStorage _teacherStorage;
     private readonly IDisciplineStorage _disciplineStorage;
