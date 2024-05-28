@@ -79,15 +79,21 @@ namespace UniversityClientApp.Controllers
 		}
 
         [HttpGet]
-        public IActionResult Disciplines()
+        public async Task<IActionResult> Disciplines()
         {
             if (APIStorekeeper.Client == null)
             {
                 return Redirect("~/Home/Enter");
             }
+
             ViewBag.Teachers = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
             ViewBag.Students = APIStorekeeper.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIStorekeeper.Client.Id}");
-            return View(APIStorekeeper.GetRequest<List<DisciplineViewModel>>($"api/discipline/getdisciplines?teacherId={0}"));
+
+            // Ожидаем завершения асинхронной операции
+            var disciplines = await APIStorekeeper.GetRequestDisciplineAsync<List<DisciplineViewModel>>($"api/discipline/getdisciplines?teacherId={0}");
+
+            // Теперь мы можем передать результат в представление
+            return View(disciplines);
         }
         [HttpPost]
         public void Disciplines(string name, string description, DateOnly date, int teacher, List<int> studentIds)
@@ -112,49 +118,6 @@ namespace UniversityClientApp.Controllers
 
             Response.Redirect("Disciplines");
         }
-        /*public IActionResult Disciplines(string name, string description, DateOnly date, int teacher, List<int> studentIds)
-        {
-            if (APIStorekeeper.Client == null)
-            {
-                return RedirectToAction("Enter", "Home");
-            }
-
-            // Предполагаем, что у вас есть доступ к контексту базы данных UniversityDatabase
-            using (var context = new UniversityDatabase())
-            {
-                // Создаем словарь для хранения студентов
-                var studentDisciplines = new Dictionary<int, IStudentModel>();
-
-                // Итерируем по списку идентификаторов студентов
-                foreach (var studentId in studentIds)
-                {
-                    // Получаем студента из базы данных или создаем новый экземпляр Student
-                    // Вам нужно будет заполнить необходимые свойства, такие как UserId, PlanOfStudyId, Name и PhoneNumber
-                    var student = context.Students.Find(studentId);
-                    
-                    // Добавляем студента в словарь
-                    studentDisciplines.Add(studentId, student);
-                }
-
-                var disciplineModel = new DisciplineBindingModel
-                {
-                    UserId = APIStorekeeper.Client.Id,
-                    Name = name,
-                    Description = description,
-                    Date = date,
-                    TeacherId = teacher,
-                    StudentDisciplines = studentDisciplines
-                };
-
-                APIStorekeeper.PostRequest("api/discipline/creatediscipline", disciplineModel);
-
-                return RedirectToAction("Disciplines");
-            }
-        }*/
-
-
-
-
 
 
 
