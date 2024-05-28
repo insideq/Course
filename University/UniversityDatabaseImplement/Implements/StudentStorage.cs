@@ -27,16 +27,29 @@ namespace UniversityDatabaseImplement.Implements
         {
             if (model == null)
             {
-                return new();
+                return new List<StudentViewModel>();
             }
 
             using var context = new UniversityDatabase();
 
-            return context.Students
+            // Начальный запрос без фильтрации
+            var query = context.Students
                 .Include(x => x.User)
                 .Include(x => x.PlanOfStudy)
+                .AsQueryable();
+
+            // Если в модели поиска указан Id, добавляем условие фильтрации
+            if (model.Id.HasValue)
+            {
+                query = query.Where(x => x.Id == model.Id.Value);
+            }
+
+            // Выполняем запрос и получаем результаты
+            var results = query
                 .Select(x => x.GetViewModel)
                 .ToList();
+
+            return results;
         }
 
         public StudentViewModel? GetElement(StudentSearchModel model)
