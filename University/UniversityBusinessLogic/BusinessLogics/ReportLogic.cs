@@ -149,7 +149,7 @@ public class ReportLogic : IReportLogic
         return reportDisciplineViewModels;
     }
 
-    public List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines()
+    public List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines(int userId)
     {
         var planOfStudies = _planOfStudyStorage.GetFullList();
         var reportPlanOfStudyViewModels = new List<ReportPlanOfStudyViewModel>();
@@ -157,11 +157,12 @@ public class ReportLogic : IReportLogic
         foreach (var planOfStudy in planOfStudies)
         {
             // Получаем список дисциплин для текущего плана обучения
-            var disciplines = _planOfStudyStorage.GetDisciplineFromStudentsFromPlanOfStudys(new PlanOfStudySearchModel { Id = planOfStudy.Id });
+            var disciplines = _planOfStudyStorage.GetDisciplineFromStudentsFromPlanOfStudys(new PlanOfStudySearchModel { Id = planOfStudy.Id, UserId = userId });
 
             // Создаем ReportPlanOfStudyViewModel и добавляем его в список
             reportPlanOfStudyViewModels.Add(new ReportPlanOfStudyViewModel
             {
+                Id = planOfStudy.Id,
                 PlanOfStudyName = planOfStudy.Profile,
 				FormOfStudy = planOfStudy.FormOfStudy,
                 Disciplines = disciplines.Select(d => d.Name).ToList() // Получаем только имена дисциплин
@@ -211,10 +212,12 @@ public class ReportLogic : IReportLogic
     }
     public void SavePlanOfStudyToExcel(ReportBindingModel option)
     {
-        /*_saveToExcelWorker.CreateReport(new ExcelInfoWorker
+        _saveToExcelWorker.CreateReport(new ExcelInfoWorker
         {
-
-        });*/
+            FileName = option.FileName,
+            Title = "Список дисциплин и планов обучения",
+            PlanOfStudys = GetPlanOfStudyAndDisciplines(0)
+        });
     }
 
     public void SavePlanOfStudyToWord(ReportBindingModel option)
@@ -222,8 +225,8 @@ public class ReportLogic : IReportLogic
         _saveToWordWorker.CreateDoc(new WordInfoWorker
         {
             FileName = option.FileName,
-            Title = "Список планов обучения",
-            PlanOfStudys = GetPlanOfStudyAndDisciplines()
+            Title = "Список дисциплин и планов обучения",
+            PlanOfStudys = GetPlanOfStudyAndDisciplines(0)
         });
     }
 

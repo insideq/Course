@@ -10,7 +10,7 @@ namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToExcelWorker
     {
-        /*public void CreateReport(ExcelInfoWorker info)
+        public void CreateReport(ExcelInfoWorker info)
         {
             CreateExcel(info);
             InsertCellInWorksheet(new ExcelCellParameters
@@ -26,23 +26,23 @@ namespace UniversityBusinessLogic.OfficePackage
                 CellToName = "C1"
             });
             uint rowIndex = 2;
-            foreach (var wk in info.WorkComponents)
+            foreach (var ps in info.PlanOfStudys)
             {
                 InsertCellInWorksheet(new ExcelCellParameters
                 {
                     ColumnName = "A",
                     RowIndex = rowIndex,
-                    Text = wk.WorkName,
+                    Text = ps.PlanOfStudyName,
                     StyleInfo = ExcelStyleInfoType.Text
-                });
+                }); ;
                 rowIndex++;
-                foreach (var (Component, Count) in wk.Components)
+                foreach (var discipline in ps.Disciplines)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         ColumnName = "B",
                         RowIndex = rowIndex,
-                        Text = Component,
+                        Text = ps.FormOfStudy,
                         StyleInfo =
                     ExcelStyleInfoType.TextWithBroder
                     });
@@ -50,30 +50,16 @@ namespace UniversityBusinessLogic.OfficePackage
                     {
                         ColumnName = "C",
                         RowIndex = rowIndex,
-                        Text = Count.ToString(),
+                        Text = discipline,
                         StyleInfo =
                     ExcelStyleInfoType.TextWithBroder
                     });
                     rowIndex++;
                 }
-                InsertCellInWorksheet(new ExcelCellParameters
-                {
-                    ColumnName = "A",
-                    RowIndex = rowIndex,
-                    Text = "Итого",
-                    StyleInfo = ExcelStyleInfoType.Text
-                });
-                InsertCellInWorksheet(new ExcelCellParameters
-                {
-                    ColumnName = "C",
-                    RowIndex = rowIndex,
-                    Text = wk.TotalCount.ToString(),
-                    StyleInfo = ExcelStyleInfoType.Text
-                });
                 rowIndex++;
             }
             SaveExcel(info);
-        }*/
+        }
         protected abstract void CreateExcel(ExcelInfoWorker info);
         protected abstract void InsertCellInWorksheet(ExcelCellParameters excelParams);
         protected abstract void MergeCells(ExcelMergeParameters excelParams);

@@ -15,7 +15,7 @@ namespace PlumbingRepairClientApp
             public static void Connect(IConfiguration configuration)
             {
                 _client.BaseAddress = new Uri(configuration["IPAddress"]);
-            _client.DefaultRequestHeaders.Accept.Clear();
+                _client.DefaultRequestHeaders.Accept.Clear();
                 _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             }
             public static T? GetRequest<T>(string requestUrl)
@@ -42,6 +42,20 @@ namespace PlumbingRepairClientApp
                     Converters = new List<JsonConverter> { new TeacherConverter() }
                 };
                 return JsonConvert.DeserializeObject<T>(result, settings);
+            }
+            else
+            {
+                throw new Exception(result);
+            }
+        }
+
+        public static async Task<T?> GetRequestAsync<T>(string requestUrl)
+        {
+            var response = await _client.GetAsync(requestUrl);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<T>(result);
             }
             else
             {

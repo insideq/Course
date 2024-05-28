@@ -48,15 +48,41 @@ namespace UniversityRestApi.Controllers
 			}
 		}
         [HttpGet]
-        public List<ReportPlanOfStudyViewModel>? GetPlanOfStudyAndDisciplines()
+        public List<ReportPlanOfStudyViewModel>? GetPlanOfStudyAndDisciplines(int userId)
         {
             try
             {
-                return _reportLogic.GetPlanOfStudyAndDisciplines();
+                return _reportLogic.GetPlanOfStudyAndDisciplines(userId);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка получения списка планов обучения");
+                throw;
+            }
+        }
+        [HttpPost]
+        public void LoadReportToWord(ReportBindingModel model)
+        {
+            try
+            {
+                _reportLogic.SavePlanOfStudyToWord(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания отчета");
+                throw;
+            }
+        }
+        [HttpPost]
+        public void LoadReportToExcel(ReportBindingModel model)
+        {
+            try
+            {
+                _reportLogic.SavePlanOfStudyToExcel(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания отчета");
                 throw;
             }
         }

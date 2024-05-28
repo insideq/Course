@@ -115,14 +115,20 @@ namespace UniversityDatabaseImplement.Implements
         public PlanOfStudyViewModel? Update(PlanOfStudyBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var order = context.PlanOfStudys.FirstOrDefault(x => x.Id == model.Id);
-            if (order == null)
+            var planOfStudy = context.PlanOfStudys.FirstOrDefault(x => x.Id == model.Id);
+            if (planOfStudy == null)
             {
                 return null;
             }
-            order.Update(model);
+            planOfStudy.Update(model);
+            planOfStudy.UpdateTeachers(context, model);
             context.SaveChanges();
-            return context.PlanOfStudys.Include(x => x.User).FirstOrDefault(x => x.Id == model.Id)?.GetViewModel;
+            return context.PlanOfStudys
+                .Include(x => x.User)
+                .Include(x => x.Teachers)
+                .ThenInclude(x => x.Teacher)
+                .FirstOrDefault(x => x.Id == model.Id)?
+                .GetViewModel;
         }
 		public PlanOfStudyViewModel? Delete(PlanOfStudyBindingModel model)
         {

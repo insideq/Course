@@ -18,7 +18,7 @@ namespace UniversityContracts.BusinessLogicContracts
         /// <returns></returns>
         List<ReportTeacherViewModel> GetTeachers();
         List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model);
-        List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines();
+        List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines(int userId);
         List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model);
 
 		void SaveTeachersToWord(ReportBindingModel option);

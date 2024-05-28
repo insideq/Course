@@ -82,13 +82,14 @@ namespace UniversityClientAppWorker.Controllers
             {
                 throw new Exception("id не может быть равен 0");
             }
+            var planOfStudyTeachers = teacherIds.ToDictionary(id => id, id => (ITeacherModel)null);
             APIClient.PostRequest("api/planofstudys/updateplanofstudy", new PlanOfStudyBindingModel
             {
                 Id = id,
                 Profile = profile,
                 FormOfStudy = formOfStudy,
-                PlanOfStudyTeachers = teacherIds.ToDictionary(id => id, id => (ITeacherModel)null)
-			});
+                PlanOfStudyTeachers = planOfStudyTeachers
+            });
             Response.Redirect("Index");
         }
 		[HttpGet]
@@ -133,7 +134,8 @@ namespace UniversityClientAppWorker.Controllers
 			}
             ViewBag.Students = APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}");
             ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
-            return View(APIClient.GetRequest<List<AttestationViewModel>>($"api/attestation/getattestations?userId={APIClient.User.Id}"));
+            var obj = APIClient.GetRequest<List<AttestationViewModel>>($"api/attestation/getattestations?userId={APIClient.User.Id}");
+            return View(obj);
         }
         [HttpPost]
         public void CreateAttestation(string formOfEvaluation, int student, AttestationScore score)
@@ -156,14 +158,15 @@ namespace UniversityClientAppWorker.Controllers
             Response.Redirect("Attestations");
         }
         [HttpGet]
-		public IActionResult Students()
+		public async Task<IActionResult> Students()
         {
 			if (APIClient.User == null)
 			{
 				return Redirect("~/Home/Enter");
 			}
-            ViewBag.PlanOfStudys = APIClient.GetRequest<List<PlanOfStudyViewModel>>
+            var planOfStudys = await APIClient.GetRequestPlanOfStudyAsync<List<PlanOfStudyViewModel>>
                 ($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}");
+            ViewBag.PlanOfStudys = planOfStudys;
             return View(APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}"));
         }
         [HttpPost]
@@ -234,13 +237,47 @@ namespace UniversityClientAppWorker.Controllers
 			return;
 		}
         [HttpGet]
-        public IActionResult ReportPlanOfStudyViewModel()
+        public IActionResult ReportPlanOfStudys()
         {
             if (APIClient.User == null)
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIClient.GetRequest<List<ReportPlanOfStudyViewModel>>($"api/planofstudys/GetPlanOfStudyAndDisciplines"));
+            return View("ReportPlanOfStudys", APIClient.GetRequest<List<ReportPlanOfStudyViewModel>>($"api/planofstudys/getplanofstudyanddisciplines?userId={APIClient.User.Id}"));
+        }
+        [HttpPost]
+        public void ReportPlanOfStudys(string type)
+        {
+            if (APIClient.User == null)
+            {
+                Redirect("~/Home/Enter");
+                throw new Exception("Вход только авторизованным");
+            }
+
+            if (string.IsNullOrEmpty(type))
+            {
+                throw new Exception("Неверный тип отчета");
+            }
+
+            if (type == "docx")
+            {
+                APIClient.PostRequest("api/planofstudys/loadreporttoword", new ReportBindingModel
+                {
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.docx"
+                });
+                Response.Redirect("Index");
+                return;
+            }
+
+            if (type == "xlsx")
+            {
+                APIClient.PostRequest("api/planofstudys/loadreporttoexcel", new ReportBindingModel
+                {
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.xlsx"
+                });
+                Response.Redirect("Index");
+                return;
+            }
         }
     }
 }

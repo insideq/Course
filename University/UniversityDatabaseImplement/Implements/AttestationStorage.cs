@@ -30,11 +30,18 @@ namespace UniversityDatabaseImplement.Implements
 
             using var context = new UniversityDatabase();
 
-            return context.Attestations
-                .Include(x => x.Student)
-                .Include(x => x.User)
-                .Select(x => x.GetViewModel)
-                .ToList();
+            var query = context.Attestations
+            .Include(x => x.Student)
+            .ThenInclude(s => s.User) // Загружаем данные пользователя студента
+            .Include(x => x.User)
+            .AsQueryable();
+
+            if (model.UserId.HasValue)
+            {
+                query = query.Where(x => x.UserId == model.UserId.Value);
+            }
+
+            return query.Select(x => x.GetViewModel).ToList();
         }
 
         public AttestationViewModel? GetElement(AttestationSearchModel model)

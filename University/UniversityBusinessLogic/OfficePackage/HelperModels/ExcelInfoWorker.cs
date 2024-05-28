@@ -1,4 +1,6 @@
-﻿namespace UniversityBusinessLogic.OfficePackage.HelperModels
+﻿using UniversityContracts.ViewModels;
+
+namespace UniversityBusinessLogic.OfficePackage.HelperModels
 {
     public class ExcelInfoWorker
     {
@@ -12,7 +14,7 @@
             get;
             set;
         } = new();
-
+        public List<ReportPlanOfStudyViewModel> PlanOfStudys { get; set; } = new();
         public List<string> Headers { get; set; } = new();
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace UniversityBusinessLogic.OfficePackage
 {
@@ -28,14 +29,29 @@ namespace UniversityBusinessLogic.OfficePackage
                 CreateParagraph(new WordParagraph
                 {
                     Texts = new List<(string, WordTextProperties)> {
-                    (planOfStudys.PlanOfStudyName + " - ", new WordTextProperties { Size = "24", Bold = true, }), 
-                        (planOfStudys.FormOfStudy, new WordTextProperties { Size = "24", }) },
+                    (planOfStudys.PlanOfStudyName + " :", new WordTextProperties { Size = "24", Bold = true, }), 
+                    },
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",
                         JustificationType = WordJustificationType.Both
                     }
                 });
+                foreach(var discipline in planOfStudys.Disciplines)
+                {
+                    CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<(string, WordTextProperties)> {
+                        (planOfStudys.FormOfStudy + " : ", new WordTextProperties { Size = "24", }),
+                        (discipline, new WordTextProperties { Size = "24", }),
+                    },
+                        TextProperties = new WordTextProperties
+                        {
+                            Size = "24",
+                            JustificationType = WordJustificationType.Both
+                        }
+                    });
+                }
             }
             SaveWord(info);
         }

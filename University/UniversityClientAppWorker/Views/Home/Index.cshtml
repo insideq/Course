@@ -24,6 +24,7 @@
     <div class="row">
         <div class="col-4">Преподаватели:</div>
         <div class="col-8">
+            <div class="scrollable-list">
             @foreach (var teacher in ViewBag.Teachers)
             {
                 <div class="form-check">
@@ -33,6 +34,7 @@
                     </label>
                 </div>
             }
+            </div>
         </div>
     </div>
     <div class="row">
