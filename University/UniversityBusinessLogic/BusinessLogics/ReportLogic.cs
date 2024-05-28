@@ -5,6 +5,7 @@ using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
+using UniversityBusinessLogic.OfficePackage.HelperModels;
 
 namespace UniversityBusinessLogics.BusinessLogics;
 
@@ -206,17 +207,25 @@ public class ReportLogic : IReportLogic
     }
     public void SavePlanOfStudyToExcel(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        /*_saveToExcelWorker.CreateReport(new ExcelInfoWorker
+        {
+
+        });*/
     }
 
     public void SavePlanOfStudyToWord(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        _saveToWordWorker.CreateDoc(new WordInfoWorker
+        {
+            FileName = option.FileName,
+            Title = "Список планов обучения",
+            PlanOfStudys = GetPlanOfStudyAndDisciplines()
+        });
     }
 
     public void SaveTeachersToWord(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email)
@@ -226,6 +235,9 @@ public class ReportLogic : IReportLogic
 
     public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email)
     {
-        throw new NotImplementedException();
+        /*_saveToPdfWorker.CreateDoc(new PdfInfoWorker
+        {
+
+        });*/
     }
 }

@@ -10,7 +10,7 @@ namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToExcelWorker
     {
-        public void CreateReport(ExcelInfo info)
+        /*public void CreateReport(ExcelInfoWorker info)
         {
             CreateExcel(info);
             InsertCellInWorksheet(new ExcelCellParameters
@@ -73,10 +73,10 @@ namespace UniversityBusinessLogic.OfficePackage
                 rowIndex++;
             }
             SaveExcel(info);
-        }
-        protected abstract void CreateExcel(ExcelInfo info);
+        }*/
+        protected abstract void CreateExcel(ExcelInfoWorker info);
         protected abstract void InsertCellInWorksheet(ExcelCellParameters excelParams);
         protected abstract void MergeCells(ExcelMergeParameters excelParams);
-        protected abstract void SaveExcel(ExcelInfo info);
+        protected abstract void SaveExcel(ExcelInfoWorker info);
     }
 }

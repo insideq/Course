@@ -1,18 +1,13 @@
 ﻿namespace UniversityBusinessLogic.OfficePackage.HelperModels
 {
-    public class ExcelInfo
+    public class PdfInfoWorker
     {
         public string? FileName { get; set; }
-
         public Stream? Stream { get; set; }
 
         public string Title { get; set; } = string.Empty;
-        public List<object> ReportObjects
-        {
-            get;
-            set;
-        } = new();
-
-        public List<string> Headers { get; set; } = new();
+        public DateOnly DateFrom { get; set; }
+        public DateOnly DateTo { get; set; }
+        public List<object> ReportObjects { get; set; } = new();
     }
 }

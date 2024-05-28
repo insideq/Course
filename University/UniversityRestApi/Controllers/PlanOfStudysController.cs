@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UniversityContracts.BindingModels;
+using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.ViewModels;
@@ -13,10 +14,12 @@ namespace UniversityRestApi.Controllers
     {
         private readonly ILogger _logger;
         private readonly IPlanOfStudyLogic _logic;
-        public PlanOfStudysController(IPlanOfStudyLogic logic, ILogger<PlanOfStudysController> logger)
+        private readonly IReportLogic _reportLogic;
+        public PlanOfStudysController(IPlanOfStudyLogic logic, ILogger<PlanOfStudysController> logger, IReportLogic reportLogic)
         {
             _logic = logic;
             _logger = logger;
+            _reportLogic = reportLogic;
         }
         [HttpGet]
         public List<PlanOfStudyViewModel>? GetPlanOfStudys(int userId)
@@ -44,7 +47,20 @@ namespace UniversityRestApi.Controllers
 				throw;
 			}
 		}
-		[HttpPost]
+        [HttpGet]
+        public List<ReportPlanOfStudyViewModel>? GetPlanOfStudyAndDisciplines()
+        {
+            try
+            {
+                return _reportLogic.GetPlanOfStudyAndDisciplines();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка планов обучения");
+                throw;
+            }
+        }
+        [HttpPost]
         public void CreatePlanOfStudy(PlanOfStudyBindingModel model)
         {
             try
@@ -83,18 +99,5 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-		[HttpPost]
-		public void LinkTeacherToPlanOfStudy(int planOfStudyId, int teacherId)
-		{
-			try
-			{
-
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка при связывании преподавателя с планом обучения");
-				throw;
-			}
-		}
 	}
 }

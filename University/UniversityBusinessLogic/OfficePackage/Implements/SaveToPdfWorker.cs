@@ -39,7 +39,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
             style.Font.Bold = true;
         }
 
-        protected override void CreatePdf(PdfInfo info)
+        protected override void CreatePdf(PdfInfoWorker info)
         {
             _document = new Document();
             DefineStyles(_document);
@@ -101,7 +101,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
             }
         }
 
-        protected override void SavePdf(PdfInfo info)
+        protected override void SavePdf(PdfInfoWorker info)
         {
             var renderer = new PdfDocumentRenderer(true)
             {

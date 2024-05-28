@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using University.ViewModels;
 using UniversityContracts.BindingModels;
+using UniversityContracts.ViewModels;
 
 namespace UniversityContracts.BusinessLogicContracts
 {
@@ -17,10 +18,15 @@ namespace UniversityContracts.BusinessLogicContracts
         /// <returns></returns>
         List<ReportTeacherViewModel> GetTeachers();
         List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model);
-        void SaveTeachersToWord(ReportBindingModel option);
+        List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines();
+        List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model);
 
-        void SaveTeachersToExcel(ReportBindingModel option);
+		void SaveTeachersToWord(ReportBindingModel option);
+        void SavePlanOfStudyToWord(ReportBindingModel option);
+		void SaveTeachersToExcel(ReportBindingModel option);
+        void SavePlanOfStudyToExcel(ReportBindingModel option);
+		void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email);
+        public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email);
 
-        void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email);
-    }
+	}
 }

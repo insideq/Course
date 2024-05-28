@@ -1,6 +1,10 @@
 
 using Microsoft.OpenApi.Models;
 using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.OfficePackage;
+using UniversityBusinessLogic.OfficePackage.Implements;
+using UniversityBusinessLogics.BusinessLogics;
+using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.StorageContracts;
 using UniversityDatabaseImplement.Implements;
@@ -19,6 +23,10 @@ builder.Services.AddTransient<IAttestationStorage, AttestationStorage>();
 builder.Services.AddTransient<IStatementStorage, StatementStorage>();
 builder.Services.AddTransient<IStudentStorage, StudentStorage>();
 
+builder.Services.AddTransient<AbstractSaveToExcelWorker, SaveToExcelWorker>();
+builder.Services.AddTransient<AbstractSaveToWordWorker, SaveToWordWorker>();
+builder.Services.AddTransient<AbstractSaveToPdfWorker, SaveToPdfWorker>();
+builder.Services.AddTransient<IReportLogic, ReportLogic>();
 builder.Services.AddTransient<IUserLogic, UserLogic>();
 builder.Services.AddTransient<IDisciplineLogic, DisciplineLogic>();
 builder.Services.AddTransient<ITeacherLogic, TeacherLogic>();
