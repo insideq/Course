@@ -3,7 +3,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using UniversityBusinessLogic.OfficePackage.HelperModels;
 using UniversityBusinessLogic.OfficePackage;
-using UniversityBusinessLogics.OfficePackage.HelperEnums;
+using UniversityBusinessLogic.OfficePackage.HelperEnums;
 
 namespace UniversityBusinessLogic.OfficePackage.Implements
 {
