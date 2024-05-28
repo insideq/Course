@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.scrollable-list {
+    max-height: 200px; /* Высота скроллбара */
+    overflow-y: auto; /* Добавляем скроллбар */
+}
