@@ -5,6 +5,8 @@ using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;
 using UniversityContracts.StorageContracts;
 using UniversityContracts.ViewModels;
+using DocumentFormat.OpenXml.EMMA;
+using UniversityBusinessLogic.OfficePackage.HelperModels;
 
 namespace UniversityBusinessLogics.BusinessLogics;
 
@@ -28,7 +30,9 @@ public class ReportLogic : IReportLogic
     private readonly AbstractSaveToExcelWorker _saveToExcelWorker;
     private readonly AbstractSaveToWordWorker _saveToWordWorker;
     private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
-	public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
+
+    private readonly AbstractSaveToWordStorekeeper _saveToWordStorekeeper;
+    public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
         IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker,
        AbstractSaveToPdfWorker saveToPdfWorker)
@@ -216,7 +220,12 @@ public class ReportLogic : IReportLogic
 
     public void SaveTeachersToWord(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        _saveToWordStorekeeper.CreateDoc(new WordInfoStorekeeper
+        {
+            FileName = option.FileName,
+            Title = "Список пакетов документов",
+            TeacherInfo = GetTeachers()
+        });
     }
 
     public void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email)

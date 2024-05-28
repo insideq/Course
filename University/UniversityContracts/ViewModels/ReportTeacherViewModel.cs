@@ -8,7 +8,8 @@ namespace University.ViewModels
 {
     public class ReportTeacherViewModel
     {
+        public int TeacherId { get; set; }
         public string TeacherName { get; set; } = string.Empty;
-        public List<(string Student, string PhoneNumber)> Students { get; set; } = new();
+        public List<(string Name, string PhoneNumber)> Students { get; set; } = new();
     }
 }

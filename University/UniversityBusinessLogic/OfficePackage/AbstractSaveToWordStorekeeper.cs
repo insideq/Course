@@ -24,7 +24,7 @@ namespace UniversityBusinessLogic.OfficePackage
                 }
             });
 
-            foreach (var discipline in info.Disciplines)
+            foreach (var discipline in info.TeacherInfo)
             {
                 CreateParagraph(new WordParagraph
                 {
@@ -38,16 +38,15 @@ namespace UniversityBusinessLogic.OfficePackage
                         JustificationType = WordJustificationType.Both
                     }
                 });
-                foreach (var assembly in discipline.StudentDisciplines)
+                foreach (var student in discipline.Students)
                 {
-                    /*if (!string.IsNullOrEmpty(assembly.AssemblyName) && !string.IsNullOrEmpty(assembly.AssemblyCategory) && assembly.AssemblyPrice != 0)
+                    if (!string.IsNullOrEmpty(student.Name) && !string.IsNullOrEmpty(student.PhoneNumber))
                     {
                         CreateParagraph(new WordParagraph
                         {
                             Texts = new List<(string, WordTextProperties)> {
-						(assembly.AssemblyName + " - ", new WordTextProperties {  Size = "24" }),
-                        (assembly.AssemblyCategory + " - ", new WordTextProperties { Size = "24" }),
-                        (assembly.AssemblyPrice.ToString(), new WordTextProperties { Size = "24" })
+						(student.Name + " - ", new WordTextProperties {  Size = "24" }),
+                        (student.PhoneNumber + " - ", new WordTextProperties { Size = "24" })
                         },
                             TextProperties = new WordTextProperties
                             {
@@ -55,7 +54,7 @@ namespace UniversityBusinessLogic.OfficePackage
                                 JustificationType = WordJustificationType.Both
                             }
                         });
-                    }*/
+                    }
 
                 }
             }
