@@ -15,8 +15,8 @@ namespace UniversityBusinessLogic.OfficePackage
             CreateWord(info);
             CreateParagraph(new WordParagraph
             {
-                Texts = new List<(string, WordTextProperties)> { (info.Title, new
-WordTextProperties { Bold = true, Size = "24", }) },
+                Texts = new List<(string, WordTextProperties)> { (info.Title, new WordTextProperties 
+                { Bold = true, Size = "24", }) },
                 TextProperties = new WordTextProperties
                 {
                     Size = "24",
@@ -28,8 +28,8 @@ WordTextProperties { Bold = true, Size = "24", }) },
                 CreateParagraph(new WordParagraph
                 {
                     Texts = new List<(string, WordTextProperties)> {
-(work.WorkName + " - ", new WordTextProperties { Size = "24", Bold = true, }), 
-                        (work.Price.ToString(), new WordTextProperties { Size = "24", }) },
+                    (planOfStudys.PlanOfStudyName + " - ", new WordTextProperties { Size = "24", Bold = true, }), 
+                        (planOfStudys.FormOfStudy, new WordTextProperties { Size = "24", }) },
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",

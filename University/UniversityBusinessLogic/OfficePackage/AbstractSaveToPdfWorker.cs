@@ -1,7 +1,7 @@
-﻿using PlumbingRepairBusinessLogic.OfficePackage.HelperEnum;
-using PlumbingRepairBusinessLogic.OfficePackage.HelperModels;
+﻿using UniversityBusinessLogic.OfficePackage.HelperEnums;
+using UniversityBusinessLogic.OfficePackage.HelperModels;
 
-namespace PlumbingRepairBusinessLogic.OfficePackage
+namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToPdfWorker
     {

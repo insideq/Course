@@ -1,12 +1,12 @@
-﻿using PlumbingRepairBusinessLogic.OfficePackage.HelperEnum;
-using PlumbingRepairBusinessLogic.OfficePackage.HelperModels;
+﻿using UniversityBusinessLogic.OfficePackage.HelperEnums;
+using UniversityBusinessLogic.OfficePackage.HelperModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlumbingRepairBusinessLogic.OfficePackage
+namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToExcelWorker
     {

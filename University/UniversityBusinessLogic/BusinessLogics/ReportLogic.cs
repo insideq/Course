@@ -1,7 +1,5 @@
-﻿using PlumbingRepairBusinessLogic.OfficePackage;
-using System.Reflection;
+﻿using UniversityBusinessLogic.OfficePackage;
 using University.ViewModels;
-using UniversityBusinessLogic.OfficePackage;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;
@@ -160,6 +158,7 @@ public class ReportLogic : IReportLogic
             reportPlanOfStudyViewModels.Add(new ReportPlanOfStudyViewModel
             {
                 PlanOfStudyName = planOfStudy.Profile,
+				FormOfStudy = planOfStudy.FormOfStudy,
                 Disciplines = disciplines.Select(d => d.Name).ToList() // Получаем только имена дисциплин
             });
         }
