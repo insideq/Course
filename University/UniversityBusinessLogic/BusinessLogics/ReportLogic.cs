@@ -31,13 +31,13 @@ public class ReportLogic : IReportLogic
     private readonly AbstractSaveToWordWorker _saveToWordWorker;
     //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
 
-    private readonly AbstractSaveToExcelWorker _saveToExcelStorekeeper;
+    private readonly AbstractSaveToExcelStorekeeper _saveToExcelStorekeeper;
     //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
     private readonly AbstractSaveToWordStorekeeper _saveToWordStorekeeper;
     public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
         IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker
-       /* , AbstractSaveToPdfWorker saveToPdfWorker */, AbstractSaveToWordStorekeeper saveToWordStorekeeper)
+       /* , AbstractSaveToPdfWorker saveToPdfWorker */, AbstractSaveToWordStorekeeper saveToWordStorekeeper, AbstractSaveToExcelStorekeeper saveToExcelStorekeeper)
         {
 		_teacherStorage = teacherStorage;
 		_disciplineStorage = disciplineStorage;
@@ -49,7 +49,8 @@ public class ReportLogic : IReportLogic
         _saveToWordWorker = saveToWordWorker;
         // _saveToPdfWorker = saveToPdfWorker;
 
-        _saveToWordStorekeeper = saveToWordStorekeeper ;
+        _saveToWordStorekeeper = saveToWordStorekeeper;
+        _saveToExcelStorekeeper = saveToExcelStorekeeper;
         }
     public List<ReportTeacherViewModel> GetTeachers(int userId)
     {
@@ -215,7 +216,12 @@ public class ReportLogic : IReportLogic
 
     public void SaveTeachersToExcel(ReportBindingModel option)
     {
-        throw new NotImplementedException();
+        _saveToExcelStorekeeper.CreateReport(new ExcelInfoStorekeeper
+        {
+            FileName = option.FileName,
+            Title = "Список преподователей и студентов",
+            Teachers = GetTeachers(0)
+        });
     }
     public void SavePlanOfStudyToExcel(ReportBindingModel option)
     {
@@ -242,7 +248,7 @@ public class ReportLogic : IReportLogic
         _saveToWordStorekeeper.CreateDoc(new WordInfoStorekeeper
         {
             FileName = option.FileName,
-            Title = "Список преподавателей",
+            Title = "Список преподавателей и студентов",
             TeacherInfo = GetTeachers(0)
         });
     }

@@ -28,7 +28,7 @@ builder.Services.AddTransient<IStudentStorage, StudentStorage>();
 builder.Services.AddTransient<AbstractSaveToExcelWorker, SaveToExcelWorker>();
 builder.Services.AddTransient<AbstractSaveToWordWorker, SaveToWordWorker>();
 builder.Services.AddTransient<AbstractSaveToPdfWorker, SaveToPdfWorker>();
-// builder.Services.AddTransient<AbstractSaveToExcelStorekeeper, SaveToExcelStorekeeper>();
+builder.Services.AddTransient<AbstractSaveToExcelStorekeeper, SaveToExcelStorekeeper>();
 builder.Services.AddTransient<AbstractSaveToWordStorekeeper, SaveToWordStorekeeper>();
 // builder.Services.AddTransient<AbstractSaveToPdfStorekeeper, SaveToPdfStorekeeper>();
 builder.Services.AddTransient<IReportLogic, ReportLogic>();
