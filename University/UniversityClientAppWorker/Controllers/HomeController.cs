@@ -238,6 +238,19 @@ namespace UniversityClientAppWorker.Controllers
 			return;
 		}
         [HttpGet]
+        public IActionResult GetWordFile()
+        {
+            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.docx",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "Планы обучений по дисциплинам.docx");
+        }
+        public IActionResult GetExcelFile()
+        {
+            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Планы обучений по дисциплинам.xlsx");
+        }
+        [HttpGet]
         public IActionResult ReportPlanOfStudys()
         {
             if (APIClient.User == null)
@@ -247,7 +260,7 @@ namespace UniversityClientAppWorker.Controllers
             return View("ReportPlanOfStudys", APIClient.GetRequest<List<ReportPlanOfStudyViewModel>>($"api/planofstudys/getplanofstudyanddisciplines?userId={APIClient.User.Id}"));
         }
         [HttpPost]
-        public void ReportPlanOfStudys(string type)
+        public IActionResult ReportPlanOfStudys(string type)
         {
             if (APIClient.User == null)
             {
@@ -264,21 +277,20 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoword", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.docx"
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.docx"
                 });
-                Response.Redirect("Index");
-                return;
+                return GetWordFile();
             }
 
             if (type == "xlsx")
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoexcel", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.xlsx"
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.xlsx"
                 });
-                Response.Redirect("Index");
-                return;
+                return GetExcelFile();
             }
+            return Redirect("Index");
         }
         [HttpGet]
         public IActionResult ReportPlanOfStudyAndStudents()

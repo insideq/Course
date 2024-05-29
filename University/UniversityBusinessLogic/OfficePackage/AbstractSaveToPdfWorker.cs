@@ -19,7 +19,7 @@ namespace UniversityBusinessLogic.OfficePackage
                 ParagraphAlignment = PdfParagraphAlignmentType.Center
             });
 
-            foreach (var item in info.PlanOfStudyAndStudent)
+            /*foreach (var item in info.PlanOfStudyAndStudent)
             {
                 foreach (var studentName in item.StudentName)
                 {
@@ -33,6 +33,15 @@ namespace UniversityBusinessLogic.OfficePackage
                         });
                     }
                 }
+            }*/
+            foreach(var item in info.PlanOfStudyAndStudent)
+            {
+                CreateRow(new PdfRowParameters
+                {
+                    Texts = new List<string> { item.Id.ToString(), item.PlanOfStudyName },
+                    Style = "Normal",
+                    ParagraphAlignment = PdfParagraphAlignmentType.Left
+                });
             }
             SavePdf(info);
         }
