@@ -32,6 +32,19 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public AttestationViewModel? GetAttestation(int userId, int id)
+        {
+            try
+            {
+                return _logic.ReadElement(new AttestationSearchModel { UserId = userId, Id = id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения аттестаций пользователя id={Id}", userId);
+                throw;
+            }
+        }
         [HttpPost]
         public void CreateAttestation(AttestationBindingModel model)
         {
@@ -44,7 +57,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdateAttestation(AttestationBindingModel model)
         {
             try
@@ -57,7 +70,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeleteAttestation(AttestationBindingModel model)
         {
             try

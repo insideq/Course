@@ -67,7 +67,7 @@
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a asp-controller="Home" asp-action="" asp-route-id="@attestation.Id" class="btn btn-warning">Изменить</a>
+                        <a asp-controller="Home" asp-action="InfoAttestation" asp-route-id="@attestation.Id" class="btn btn-warning">Изменить</a>
                         <form asp-controller="Home" asp-action="DeleteAttestation" method="post">
                             <input type="hidden" name="id" value="@attestation.Id" />
                             <button type="submit" class="btn btn-danger">Удалить</button>

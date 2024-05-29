@@ -12,6 +12,7 @@ namespace UniversityContracts.BusinessLogicsContracts
     public interface IAttestationLogic
     {
         List<AttestationViewModel>? ReadList(AttestationSearchModel? model);
+        AttestationViewModel? ReadElement(AttestationSearchModel model);
         bool CreateAttestation(AttestationBindingModel model);
         bool DeleteAttestation(AttestationBindingModel model);
         bool UpdateAttestation(AttestationBindingModel model);

@@ -30,6 +30,19 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public StudentViewModel? GetStudent(int userId, int studentId)
+        {
+            try
+            {
+                return _logic.ReadElement(new StudentSearchModel { UserId = userId, Id = studentId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка студентов пользователя id={Id}", userId);
+                throw;
+            }
+        }
         [HttpPost]
         public void CreateStudent(StudentBindingModel model)
         {

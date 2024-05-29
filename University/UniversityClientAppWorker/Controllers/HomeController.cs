@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using PlumbingRepairClientApp;
 using System.Diagnostics;
@@ -149,14 +150,33 @@ namespace UniversityClientAppWorker.Controllers
             {
                 throw new Exception("Введите форму оценивания и выберите студента");
             }
+            var Student = APIClient.GetRequest<StudentViewModel>($"api/student/getstudent?userId={APIClient.User.Id}&studentId={student}");
+
+            if(Student == null)
+            {
+                throw new Exception("Студент не найден");
+            }
             APIClient.PostRequest("api/attestation/createattestation", new AttestationBindingModel
             {
                 UserId = APIClient.User.Id,
                 FormOfEvaluation = formOfEvaluation,
                 StudentId = student,
+                StudentName = Student.Name,
                 Score = score
             });
             Response.Redirect("Attestations");
+        }
+        [HttpGet]
+        public async Task<IActionResult> InfoAttestation(int id)
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Students = APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}");
+            ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
+            var obj = await APIClient.GetRequestAsync<AttestationViewModel>($"api/attestation/getattestation?userId={APIClient.User.Id}&id={id}");
+            return View(obj);
         }
         [HttpGet]
 		public async Task<IActionResult> Students()
