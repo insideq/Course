@@ -47,7 +47,7 @@ public class ReportLogic : IReportLogic
 
 		_saveToExcelWorker = saveToExcelWorker;
         _saveToWordWorker = saveToWordWorker;
-        // _saveToPdfWorker = saveToPdfWorker;
+        _saveToPdfWorker = saveToPdfWorker;
 
         _saveToWordStorekeeper = saveToWordStorekeeper;
         _saveToExcelStorekeeper = saveToExcelStorekeeper;
@@ -180,7 +180,7 @@ public class ReportLogic : IReportLogic
         return reportPlanOfStudyViewModels;
     }
 
-    public List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model)
+    public List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents()
     {
         var planOfStudies = _planOfStudyStorage.GetFullList();
         var reportPlanOfStudyAndStudentViewModels = new List<ReportPlanOfStudyAndStudentViewModel>();
@@ -190,24 +190,26 @@ public class ReportLogic : IReportLogic
             // Получаем список студентов для текущего плана обучения
             var students = _studentStorage.GetFilteredList(new StudentSearchModel { Id = planOfStudy.Id });
 
-            var studentsAndDisciplines = new List<(string Student, string Discipline)>();
+            // Создаем списки имен студентов и дисциплин
+            var studentNames = students.Select(student => student.Name).ToList();
+            var disciplineNames = new List<string>();
 
             foreach (var student in students)
             {
                 // Получаем список дисциплин для текущего студента
                 var disciplines = _disciplineStorage.GetFilteredList(new DisciplineSearchModel { Id = student.Id });
 
-                foreach (var discipline in disciplines)
-                {
-                    studentsAndDisciplines.Add((student.Name, discipline.Name));
-                }
+                // Добавляем имена дисциплин в общий список
+                disciplineNames.AddRange(disciplines.Select(discipline => discipline.Name));
             }
 
             // Создаем ReportPlanOfStudyAndStudentViewModel и добавляем его в список
             reportPlanOfStudyAndStudentViewModels.Add(new ReportPlanOfStudyAndStudentViewModel
             {
+                Id = planOfStudy.Id, // Добавляем идентификатор плана обучения
                 PlanOfStudyName = planOfStudy.Profile,
-                StudentsAndDisciplines = studentsAndDisciplines
+                StudentName = studentNames,
+                DisciplineName = disciplineNames
             });
         }
 
@@ -258,11 +260,13 @@ public class ReportLogic : IReportLogic
         throw new NotImplementedException();
     }
 
-    public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email)
+    public void SendPlanOfStudyToEmail(ReportBindingModel option)
     {
-        /*_saveToPdfWorker.CreateDoc(new PdfInfoWorker
+        _saveToPdfWorker.CreateDoc(new PdfInfoWorker
         {
-
-        });*/
+            FileName = option.FileName,
+            Title = "Отчёт по заказам за период",
+            PlanOfStudyAndStudent = GetPlanOfStudyAndStudents()
+        });
     }
 }

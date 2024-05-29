@@ -19,14 +19,13 @@ namespace UniversityContracts.BusinessLogicContracts
         List<ReportTeacherViewModel> GetTeachers(int userId);
         List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model);
         List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines(int userId);
-        List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model);
+        List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents();
 
 		void SaveTeachersToWord(ReportBindingModel option);
         void SavePlanOfStudyToWord(ReportBindingModel option);
 		void SaveTeachersToExcel(ReportBindingModel option);
         void SavePlanOfStudyToExcel(ReportBindingModel option);
 		void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email);
-        public void SendPlanOfStudyToEmail(ReportDateRangeBindingModel option, string email);
-
+        public void SendPlanOfStudyToEmail(ReportBindingModel option);
 	}
 }

@@ -9,25 +9,30 @@ namespace UniversityBusinessLogic.OfficePackage
         {
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle", ParagraphAlignment = PdfParagraphAlignmentType.Center });
-            CreateParagraph(new PdfParagraph { Text = $"с {info.DateFrom.ToShortDateString()} по {info.DateTo.ToShortDateString()}", Style = "Normal", ParagraphAlignment = PdfParagraphAlignmentType.Center });
 
             CreateTable(new List<string> { "2cm", "3cm", "6cm", "3cm", "4 cm" });
 
             CreateRow(new PdfRowParameters
             {
-                Texts = new List<string> { "Номер", "План обучения", "Студент - дисциплина" },
+                Texts = new List<string> { "Номер", "План обучения", "Студент", "Дисциплина" },
                 Style = "NormalTitle",
                 ParagraphAlignment = PdfParagraphAlignmentType.Center
             });
 
             foreach (var item in info.PlanOfStudyAndStudent)
             {
-                CreateRow(new PdfRowParameters
+                foreach (var studentName in item.StudentName)
                 {
-                    Texts = new List<string> { item.Id.ToString(), item.PlanOfStudyName, string.Join(", ", item.StudentsAndDisciplines.Select(sd => $"{sd.Student} - {sd.Discipline}")) },
-                    Style = "Normal",
-                    ParagraphAlignment = PdfParagraphAlignmentType.Left
-                });
+                    foreach (var disciplineName in item.DisciplineName)
+                    {
+                        CreateRow(new PdfRowParameters
+                        {
+                            Texts = new List<string> { item.Id.ToString(), item.PlanOfStudyName, studentName, disciplineName },
+                            Style = "Normal",
+                            ParagraphAlignment = PdfParagraphAlignmentType.Left
+                        });
+                    }
+                }
             }
             SavePdf(info);
         }

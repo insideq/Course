@@ -39,6 +39,7 @@ builder.Services.AddTransient<IPlanOfStudyLogic, PlanOfStudyLogic>();
 builder.Services.AddTransient<IAttestationLogic, AttestationLogic>();
 builder.Services.AddTransient<IStatementLogic, StatementLogic>();
 builder.Services.AddTransient<IStudentLogic, StudentLogic>();
+builder.Services.AddSingleton<AbstractMailWorker, MailKitWorker>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

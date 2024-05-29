@@ -6,6 +6,7 @@ using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
 using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UniversityClientAppWorker.Controllers
 {
@@ -278,6 +279,39 @@ namespace UniversityClientAppWorker.Controllers
                 Response.Redirect("Index");
                 return;
             }
+        }
+        [HttpGet]
+        public IActionResult ReportPlanOfStudyAndStudents()
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View("ReportPlanOfStudyAndStudents", APIClient.GetRequest<List<ReportPlanOfStudyAndStudentViewModel>>($"api/planofstudys/getplanofstudyandstudents"));
+        }
+        [HttpPost]
+        public void ReportPlanOfStudyAndStudents(string type)
+        {
+            if (APIClient.User == null)
+            {
+                Redirect("~/Home/Enter");
+                throw new Exception("Вход только авторизованным");
+            }
+            if (type == "pdf")
+            {
+                APIClient.PostRequest("api/planofstudys/createreporttopdffile", new ReportBindingModel
+                {
+                    FileName = "C:\\Users\\{Environment.UserName}\\Desktop\\Сведения по планам обучения.pdf"
+                });
+                APIClient.PostRequest("api/order/sendpdftomail", new MailSendInfoBindingModel
+                {
+                    MailAddress = APIClient.User.Email,
+                    Subject = "Отчет",
+                    Text = "Отчет по заказам"
+                });
+            }
+            Response.Redirect("Index");
+            return;
         }
     }
 }

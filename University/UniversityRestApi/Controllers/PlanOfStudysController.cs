@@ -63,6 +63,20 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public List<ReportPlanOfStudyAndStudentViewModel>? GetPlanOfStudyAndStudents()
+        {
+            try
+            {
+                var report = _reportLogic.GetPlanOfStudyAndStudents();
+                return report;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка планов обучения");
+                throw;
+            }
+        }
         [HttpPost]
         public void LoadReportToWord(ReportBindingModel model)
         {
@@ -82,6 +96,19 @@ namespace UniversityRestApi.Controllers
             try
             {
                 _reportLogic.SavePlanOfStudyToExcel(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания отчета");
+                throw;
+            }
+        }
+        [HttpPost]
+        public void CreateReportToPDFFile(ReportBindingModel model)
+        {
+            try
+            {
+                _reportLogic.SendPlanOfStudyToEmail(model);
             }
             catch (Exception ex)
             {

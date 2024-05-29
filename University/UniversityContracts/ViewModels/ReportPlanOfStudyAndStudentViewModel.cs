@@ -10,6 +10,7 @@ namespace UniversityContracts.ViewModels
     {
         public int Id { get; set; }
         public string PlanOfStudyName { get; set; } = string.Empty;
-        public List<(string Student, string Discipline)> StudentsAndDisciplines { get; set; } = new();
+        public List<string> StudentName { get; set; } = new();
+        public List<string> DisciplineName { get; set; } = new();
     }
 }
