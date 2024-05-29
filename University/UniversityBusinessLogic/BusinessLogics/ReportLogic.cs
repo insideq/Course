@@ -29,7 +29,7 @@ public class ReportLogic : IReportLogic
 
     private readonly AbstractSaveToExcelWorker _saveToExcelWorker;
     private readonly AbstractSaveToWordWorker _saveToWordWorker;
-    //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
+    private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
 
     private readonly AbstractSaveToExcelStorekeeper _saveToExcelStorekeeper;
     //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
@@ -37,7 +37,8 @@ public class ReportLogic : IReportLogic
     public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
         IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker
-       /* , AbstractSaveToPdfWorker saveToPdfWorker */, AbstractSaveToWordStorekeeper saveToWordStorekeeper, AbstractSaveToExcelStorekeeper saveToExcelStorekeeper)
+        ,AbstractSaveToPdfWorker saveToPdfWorker, AbstractSaveToWordStorekeeper saveToWordStorekeeper,
+        AbstractSaveToExcelStorekeeper saveToExcelStorekeeper)
         {
 		_teacherStorage = teacherStorage;
 		_disciplineStorage = disciplineStorage;
