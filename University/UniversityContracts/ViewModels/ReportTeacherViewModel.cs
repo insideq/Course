@@ -10,6 +10,6 @@ namespace UniversityContracts.ViewModels
     {
         public int TeacherId { get; set; }
         public string TeacherName { get; set; } = string.Empty;
-        public List<(string Name, string PhoneNumber)> Students { get; set; } = new();
+        public List<string> Students { get; set; } = new();
     }
 }

@@ -40,13 +40,12 @@ namespace UniversityBusinessLogic.OfficePackage
                 });
                 foreach (var student in discipline.Students)
                 {
-                    if (!string.IsNullOrEmpty(student.Name) && !string.IsNullOrEmpty(student.PhoneNumber))
+                    if (!string.IsNullOrEmpty(student))
                     {
                         CreateParagraph(new WordParagraph
                         {
                             Texts = new List<(string, WordTextProperties)> {
-						(student.Name + " - ", new WordTextProperties {  Size = "24" }),
-                        (student.PhoneNumber + " - ", new WordTextProperties { Size = "24" })
+						(student, new WordTextProperties {  Size = "24" })
                         },
                             TextProperties = new WordTextProperties
                             {

@@ -44,10 +44,9 @@
                         @item.TeacherName
                     </td>
                     <td>
-                        @foreach (var (Name, PhoneNumber) in item.Students)
+                        @foreach (var st in item.Students)
                         {
-                            <div>@Name</div>
-                            <div>@PhoneNumber</div>
+                            <div>@st</div>
                         }
                     </td>
                 </tr>

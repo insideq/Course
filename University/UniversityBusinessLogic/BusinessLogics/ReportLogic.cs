@@ -70,7 +70,7 @@ public class ReportLogic : IReportLogic
             });
 
             // Получаем список студентов, связанных с дисциплинами
-            var students = new List<(string Student, string PhoneNumber)>();
+            var students = new List<string>();
             foreach (var discipline in disciplines)
             {
                 var studentDisciplines = _disciplineStorage.GetStudentsForDiscipline(new DisciplineSearchModel
@@ -85,7 +85,7 @@ public class ReportLogic : IReportLogic
                         Id = studentDiscipline.Id,
                     });
                     foreach(var st in studentList){
-                        students.Add((st.Name, st.PhoneNumber));
+                        students.Add(st.Name + " " + st.PhoneNumber);
                     }
                 }
             }
