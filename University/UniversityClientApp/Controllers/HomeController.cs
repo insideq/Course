@@ -27,7 +27,6 @@ namespace UniversityClientApp.Controllers
 			{
 				return Redirect("~/Home/Enter");
 			}
-			//return View(APIStorekeeper.GetRequest<List<OrderViewModel>>($"api/main/getorders?clientId={APIClient.Client.Id}"));
 			return View();
 		}
 
@@ -154,7 +153,6 @@ namespace UniversityClientApp.Controllers
             {
                 return Redirect("~/Home/Enter");
             }
-            //ViewBag.Documents = APIStorekeeper.GetRequest<List<DisciplineViewModel>>("api/main/getdiscipline");
             return View(APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}"));
         }
         [HttpPost]
@@ -252,10 +250,6 @@ namespace UniversityClientApp.Controllers
                 return Redirect("~/Home/Enter");
             }
 
-
-            // Получаем данные от сервера
-            //var reportData = APIStorekeeper.GetRequest<List<ReportDisciplineViewModel>>($"api/disciplines/GetReportDisciplines?datefrom={dateFrom}&dateto={dateTo}");
-            
             // Передаем данные в частичное представление
             if (dateFrom == DateOnly.MinValue || dateTo == DateOnly.MaxValue)
             {
@@ -281,7 +275,60 @@ namespace UniversityClientApp.Controllers
 		}
 
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        // UDS
+
+
+        // Преподаватель
+
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIStorekeeper.PostRequest("api/teacher/deleteteacher", new TeacherBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Teachers");
+        }
+
+        [HttpGet]
+        public IActionResult InfoTeacher(int id)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            var obj = APIStorekeeper.GetRequest<TeacherViewModel>($"api/teacher/getteacher?userId={APIStorekeeper.Client.Id}&id={id}");
+            return View(obj);
+        }
+
+        [HttpPost]
+        public void UpdateTeacher(int id, string name, string academicdegree, string position)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(academicdegree) || string.IsNullOrEmpty(position))
+            {
+                throw new Exception("Введите форму оценивания и выберите студента");
+            }
+
+            APIStorekeeper.PostRequest("api/teacher/updateteacher", new TeacherBindingModel
+            {
+                Id = id,
+                Name = name,
+                AcademicDegree = academicdegree,
+                Position = position
+            });
+            Response.Redirect("Teachers");
+        }
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

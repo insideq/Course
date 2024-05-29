@@ -64,7 +64,6 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
-            UserId = model.UserId;
             Name = model.Name;
             AcademicDegree = model.AcademicDegree;
             Position = model.Position;

@@ -20,6 +20,21 @@ namespace UniversityRestApi.Controllers
             _logger = logger;
             _reportLogic = reportLogic;
         }
+
+        [HttpGet]
+        public TeacherViewModel? GetTeacher(int userId, int id)
+        {
+            try
+            {
+                return _logic.ReadElement(new TeacherSearchModel { UserId = userId, Id = id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения teacher user {Id}", userId);
+                throw;
+            }
+        }
+
         [HttpGet]
         public List<TeacherViewModel>? GetTeachers(int userId)
         {
@@ -59,7 +74,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdateTeacher(TeacherBindingModel model)
         {
             try
@@ -72,7 +87,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeleteTeacher(TeacherBindingModel model)
         {
             try
