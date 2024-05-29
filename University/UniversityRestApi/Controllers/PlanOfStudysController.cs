@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UniversityBusinessLogic.MailWorker;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
@@ -15,11 +16,13 @@ namespace UniversityRestApi.Controllers
         private readonly ILogger _logger;
         private readonly IPlanOfStudyLogic _logic;
         private readonly IReportLogic _reportLogic;
-        public PlanOfStudysController(IPlanOfStudyLogic logic, ILogger<PlanOfStudysController> logger, IReportLogic reportLogic)
+        private readonly AbstractMailWorker _mailWorker;
+        public PlanOfStudysController(IPlanOfStudyLogic logic, ILogger<PlanOfStudysController> logger, IReportLogic reportLogic, AbstractMailWorker mailWorker)
         {
             _logic = logic;
             _logger = logger;
             _reportLogic = reportLogic;
+            _mailWorker = mailWorker;
         }
         [HttpGet]
         public List<PlanOfStudyViewModel>? GetPlanOfStudys(int userId)
@@ -83,6 +86,19 @@ namespace UniversityRestApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка создания отчета");
+                throw;
+            }
+        }
+        [HttpPost]
+        public void SendPDFToMail(MailSendInfoBindingModel model)
+        {
+            try
+            {
+                _mailWorker.MailSendAsync(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка отправки письма");
                 throw;
             }
         }

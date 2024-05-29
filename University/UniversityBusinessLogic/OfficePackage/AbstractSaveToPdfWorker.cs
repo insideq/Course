@@ -5,7 +5,7 @@ namespace UniversityBusinessLogic.OfficePackage
 {
     public abstract class AbstractSaveToPdfWorker
     {
-        /*public void CreateDoc(PdfInfoWorker info)
+        public void CreateDoc(PdfInfoWorker info)
         {
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle", ParagraphAlignment = PdfParagraphAlignmentType.Center });
@@ -15,24 +15,22 @@ namespace UniversityBusinessLogic.OfficePackage
 
             CreateRow(new PdfRowParameters
             {
-                Texts = new List<string> { "Номер", "Дата заказа", "Работа", "Статус", "Сумма" },
+                Texts = new List<string> { "Номер", "План обучения", "Студент - дисциплина" },
                 Style = "NormalTitle",
                 ParagraphAlignment = PdfParagraphAlignmentType.Center
             });
 
-            foreach (var order in info.Orders)
+            foreach (var item in info.PlanOfStudyAndStudent)
             {
                 CreateRow(new PdfRowParameters
                 {
-                    Texts = new List<string> { order.Id.ToString(), order.DateCreate.ToShortDateString(), order.WorkName, order.OrderStatus.ToString(), order.Sum.ToString() },
+                    Texts = new List<string> { item.Id.ToString(), item.PlanOfStudyName, string.Join(", ", item.StudentsAndDisciplines.Select(sd => $"{sd.Student} - {sd.Discipline}")) },
                     Style = "Normal",
                     ParagraphAlignment = PdfParagraphAlignmentType.Left
                 });
             }
-            CreateParagraph(new PdfParagraph { Text = $"Итого: {info.Orders.Sum(x => x.Sum)}\t", Style = "Normal", ParagraphAlignment = PdfParagraphAlignmentType.Right });
-
             SavePdf(info);
-        }*/
+        }
 
         /// <summary>
 		/// Создание doc-файла

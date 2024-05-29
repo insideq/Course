@@ -43,7 +43,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
         {
             _document = new Document();
             DefineStyles(_document);
-
+            _document.DefaultPageSetup.Orientation = Orientation.Landscape;
             _section = _document.AddSection();
         }
 
@@ -107,6 +107,7 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
             {
                 Document = _document
             };
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             renderer.RenderDocument();
             renderer.PdfDocument.Save(info.FileName);
         }

@@ -1,9 +1,11 @@
 
 using Microsoft.OpenApi.Models;
 using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.MailWorker;
 using UniversityBusinessLogic.OfficePackage;
 using UniversityBusinessLogic.OfficePackage.Implements;
 using UniversityBusinessLogics.BusinessLogics;
+using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
 using UniversityContracts.StorageContracts;
@@ -51,6 +53,18 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+var mailSender = app.Services.GetService<AbstractMailWorker>();
+
+mailSender?.MailConfig(new MailConfigBindingModel
+{
+    MailLogin = builder.Configuration?.GetSection("MailLogin")?.Value?.ToString() ?? string.Empty,
+    MailPassword = builder.Configuration?.GetSection("MailPassword")?.Value?.ToString() ?? string.Empty,
+    SmtpClientHost = builder.Configuration?.GetSection("SmtpClientHost")?.Value?.ToString() ?? string.Empty,
+    SmtpClientPort = Convert.ToInt32(builder.Configuration?.GetSection("SmtpClientPort")?.Value?.ToString()),
+    PopHost = builder.Configuration?.GetSection("PopHost")?.Value?.ToString() ?? string.Empty,
+    PopPort = Convert.ToInt32(builder.Configuration?.GetSection("PopPort")?.Value?.ToString())
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
