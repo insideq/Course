@@ -277,7 +277,7 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoword", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Downloads\\ѕланы обучений по дисциплинам.docx"
+                    FileName = "C:\\¬ременныеќтчЄты\\ѕланы обучений по дисциплинам.docx"
                 });
                 return GetWordFile();
             }
@@ -286,7 +286,7 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoexcel", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Downloads\\ѕланы обучений по дисциплинам.xlsx"
+                    FileName = "C:\\¬ременныеќтчЄты\\ѕланы обучений по дисциплинам.xlsx"
                 });
                 return GetExcelFile();
             }
@@ -313,13 +313,13 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/createreporttopdffile", new ReportBindingModel
                 {
-                    FileName = "C:\\Users\\{Environment.UserName}\\Desktop\\—ведени€ по планам обучени€.pdf"
+                    FileName = "C:\\¬ременныеќтчЄты\\—ведени€ по планам обучени€.pdf"
                 });
-                APIClient.PostRequest("api/order/sendpdftomail", new MailSendInfoBindingModel
+                APIClient.PostRequest("api/planofstudys/sendpdftomail", new MailSendInfoBindingModel
                 {
                     MailAddress = APIClient.User.Email,
                     Subject = "ќтчет",
-                    Text = "ќтчет по заказам"
+                    Text = "—ведени€ по планам обучени€"
                 });
             }
             Response.Redirect("Index");

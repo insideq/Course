@@ -32,7 +32,7 @@ namespace UniversityBusinessLogic.MailWorker
                 objMailMessage.Body = info.Text;
                 objMailMessage.SubjectEncoding = Encoding.UTF8;
                 objMailMessage.BodyEncoding = Encoding.UTF8;
-                Attachment attachment = new Attachment($"C:\\Users\\{Environment.UserName}\\Desktop\\Сведения по планам обучения.pdf", new ContentType(MediaTypeNames.Application.Pdf));
+                Attachment attachment = new Attachment("C:\\ВременныеОтчёты\\Сведения по планам обучения.pdf", new ContentType(MediaTypeNames.Application.Pdf));
                 objMailMessage.Attachments.Add(attachment);
 
                 objSmtpClient.UseDefaultCredentials = false;
