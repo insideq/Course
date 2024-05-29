@@ -19,6 +19,7 @@ namespace UniversityDatabaseImplement.Models
         public int UserId { get; private set; }
         [Required]
         public int PlanOfStudyId { get; private set; }
+        public string PlanOfStudyProfile { get; private set; } = string.Empty;
         [Required]
         public string Name { get; set; } = string.Empty;
         [Required]
@@ -38,6 +39,7 @@ namespace UniversityDatabaseImplement.Models
                 User = context.Users.First(x => x.Id == model.UserId),
                 PlanOfStudyId = model.PlanOfStudyId,
                 PlanOfStudy = context.PlanOfStudys.First(x => x.Id == model.PlanOfStudyId),
+                PlanOfStudyProfile = model.PlanOfStudyProfile,
                 Name = model.Name,
                 PhoneNumber = model.PhoneNumber
             };
@@ -51,11 +53,13 @@ namespace UniversityDatabaseImplement.Models
             PhoneNumber = model.PhoneNumber;
             Name = model.Name;
             PlanOfStudyId = model.PlanOfStudyId;
+            PlanOfStudyProfile = model.PlanOfStudyProfile;
         }
         public StudentViewModel GetViewModel => new()
         {
             Id = Id,
             PlanOfStudyId = PlanOfStudyId,
+            PlanOfStudyProfile = PlanOfStudyProfile,
             UserId = UserId,
             Name = Name,
             PhoneNumber = PhoneNumber

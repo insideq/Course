@@ -4,7 +4,7 @@
 	ViewData["Title"] = "План обучения";
 }
 <div class="text-center">
-	<h2 class="display-4">@ViewData["Title"]</h2>
+	<h2 class="display-4">@ViewData["Title"] - @Model.Id</h2>
 </div>
 <form asp-action="UpdatePlanOfStudy" method="post">
 	<div class="row">
@@ -33,6 +33,9 @@
 	<div class="row">
 		<div class="col-8"></div>
 		<div class="col-4">
+			<form asp-action="Index">
+				<input type="submit" value="Отмена" class="btn btn-primary" />
+			</form>
 			<input type="hidden" name="id" value="@Model.Id" />
 			<input type="submit" value="Сохранить" class="btn btn-danger" />
 		</div>

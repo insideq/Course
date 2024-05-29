@@ -32,7 +32,7 @@ namespace UniversityDatabaseImplement.Implements
 
             var query = context.Attestations
             .Include(x => x.Student)
-            .ThenInclude(s => s.User) // Загружаем данные пользователя студента
+            .ThenInclude(s => s.User)
             .Include(x => x.User)
             .AsQueryable();
 

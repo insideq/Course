@@ -74,10 +74,6 @@ namespace UniversityDatabaseImplement.Implements
             {
                 query = query.Where(x => x.Id == model.Id.Value);
             }
-            if (model.DateFrom.HasValue && model.DateTo.HasValue)
-            {
-                query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
-            };
             return query.Select(x => x.GetViewModel).ToList();
         }
 

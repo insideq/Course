@@ -56,7 +56,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdateStudent(StudentBindingModel model)
         {
             try
@@ -69,7 +69,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeleteStudent(StudentBindingModel model)
         {
             try

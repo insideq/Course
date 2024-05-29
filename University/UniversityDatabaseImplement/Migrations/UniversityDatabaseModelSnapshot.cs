@@ -191,6 +191,10 @@ namespace UniversityDatabaseImplement.Migrations
                     b.Property<int>("PlanOfStudyId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PlanOfStudyProfile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
