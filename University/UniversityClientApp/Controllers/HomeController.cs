@@ -90,7 +90,7 @@ namespace UniversityClientApp.Controllers
             ViewBag.Students = APIStorekeeper.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIStorekeeper.Client.Id}");
 
             // Ожидаем завершения асинхронной операции
-            var disciplines = await APIStorekeeper.GetRequestDisciplineAsync<List<DisciplineViewModel>>($"api/discipline/getdisciplines?teacherId={0}");
+            var disciplines = await APIStorekeeper.GetRequestDisciplineAsync<List<DisciplineViewModel>>($"api/discipline/getdisciplines");
 
             // Теперь мы можем передать результат в представление
             return View(disciplines);
@@ -111,7 +111,6 @@ namespace UniversityClientApp.Controllers
                 Date = date,
                 TeacherId = teacher,
                 StudentDisciplines = studentIds.ToDictionary(id => id, id => (IStudentModel)null)
-                // не правильно
             };
 
             APIStorekeeper.PostRequest("api/discipline/creatediscipline", disciplineModel);

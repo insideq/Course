@@ -23,7 +23,7 @@ namespace UniversityRestApi.Controllers
             _reportLogic = reportLogic;
             _mailWorker = mailWorker;
         }
-        [HttpGet]
+        /*[HttpGet]
         public List<DisciplineViewModel>? GetDisciplines(int userId)
         {
             try
@@ -35,8 +35,21 @@ namespace UniversityRestApi.Controllers
                 _logger.LogError(ex, "Ошибка получения списка дисциплин");
                 throw;
             }
-        }
-        [HttpGet]
+        }*/
+		[HttpGet]
+		public List<DisciplineViewModel>? GetDisciplines()
+		{
+			try
+			{
+                return _logic.ReadList(null);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Ошибка получения списка дисциплин");
+				throw;
+			}
+		}
+		[HttpGet]
         public List<ReportDisciplineViewModel> GetReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
         {
             try

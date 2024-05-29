@@ -96,10 +96,10 @@ namespace UniversityDatabaseImplement.Implements
 
 
 
-            /*if (model.DateFrom.HasValue && model.DateTo.HasValue)
+            if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
                 query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
-            }*/
+            
 
             var x = query.Select(x => x.GetViewModel).ToList();
             var res = new List<DisciplineViewModel>();
@@ -110,9 +110,9 @@ namespace UniversityDatabaseImplement.Implements
                     res.Add(item);
                 }
             }
-
-            //return query.Select(x => x.GetViewModel).ToList();
             return res;
+            }
+            return query.Select(x => x.GetViewModel).ToList();
         }
 
 
@@ -122,7 +122,8 @@ namespace UniversityDatabaseImplement.Implements
             return context.Disciplines
             .Include(x => x.Students)
             .ThenInclude(x => x.Student)
-            .ToList()
+			.Include(x => x.Teacher)
+			.ToList()
             .Select(x => x.GetViewModel)
            .ToList();
         }
