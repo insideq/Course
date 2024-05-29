@@ -31,7 +31,6 @@
                 <th>Id</th>
                 <th>Teacher name</th>
                 <th>Student</th>
-                <th>Student</th>
             </tr>
         </thead>
         <tbody>
@@ -39,28 +38,18 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TeacherId)
+                        @item.TeacherId
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TeacherName)
+                        @item.TeacherName
                     </td>
                     <td>
-                        @foreach (var st in item.Students)
+                        @foreach (var (Name, PhoneNumber) in item.Students)
                         {
-                            <div>
-                                @Html.DisplayFor(modelItem => st)
-                            </div>
+                            <div>@Name</div>
+                            <div>@PhoneNumber</div>
                         }
                     </td>
-                        @foreach (var student in item.Students)
-                        {
-                        <td>
-                            @student.Name
-                        </td>
-                        <td>
-                            @student.PhoneNumber
-                        </td>
-                        }
                 </tr>
             }
         </tbody>
