@@ -183,7 +183,7 @@ namespace UniversityClientApp.Controllers
         }
 
         [HttpPost]
-        public void Report(string type)
+        public IActionResult Report(string type)
         {
             if (APIStorekeeper.Client == null)
             {
@@ -199,22 +199,21 @@ namespace UniversityClientApp.Controllers
             {
                 APIStorekeeper.PostRequest("api/teacher/loadreporttoword", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\TeachersAndStudents{Environment.TickCount}.docx"
-                });
-                Response.Redirect("Report");
-                return;
-            }
+					FileName = "C:\\¬ременныеќтчЄты\\TeachersAndStudents.docx"
+				});
+				return GetWordFile();
+			}
 
             if (type == "xlsx")
             {
                 APIStorekeeper.PostRequest("api/teacher/loadreporttoexcel", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\TeachersAndStudents{Environment.TickCount}.xlsx"
-                });
-                Response.Redirect("Report");
-                return;
-            }
-        }
+					FileName = "C:\\¬ременныеќтчЄты\\TeachersAndStudents.xlsx"
+				});
+				return GetExcelFile();
+			}
+			return Redirect("Report");
+		}
 
         [HttpPost]
         public void ReportDisciplines(string type, DateOnly dateFrom, DateOnly dateTo)
@@ -267,7 +266,22 @@ namespace UniversityClientApp.Controllers
             return View("ReportDisciplines", reportData);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+		public IActionResult GetWordFile()
+		{
+			return PhysicalFile($"C:\\¬ременныеќтчЄты\\TeachersAndStudents.xlsx",
+				"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+				"TeachersAndStudents.docx");
+		}
+		public IActionResult GetExcelFile()
+		{
+			return PhysicalFile($"C:\\¬ременныеќтчЄты\\TeachersAndStudents.xlsx",
+				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+				"TeachersAndStudents.xlsx");
+		}
+
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
