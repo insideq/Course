@@ -24,21 +24,28 @@ namespace UniversityDatabaseImplement.Implements
             return context.Statements.Include(x => x.Teacher).FirstOrDefault(x => (model.Id.HasValue && x.Id == model.Id))?.GetViewModel;
         }
 
-        public List<StatementViewModel> GetFilteredList(StatementSearchModel model)
-        {
-            if (!model.Id.HasValue && !model.Date.HasValue)
-            {
-                return new();
-            }
-            using var context = new UniversityDatabase();
-            return context.Statements
-            .Where(x => x.Id == model.Id || model.Date <= x.Date)
-            .Include(x => x.Teacher)
-            .Select(x => x.GetViewModel)
-            .ToList();
-        }
+		public List<StatementViewModel> GetFilteredList(StatementSearchModel model)
+		{
+			using var context = new UniversityDatabase();
 
-        public List<StatementViewModel> GetFullList()
+			// Фильтр по Id
+			IQueryable<Statement> query = context.Statements;
+			if (model.Id.HasValue)
+			{
+				query = query.Where(x => x.Id == model.Id.Value);
+			}
+
+			// Фильтр по Date
+			if (model.Date.HasValue)
+			{
+				query = query.Where(x => x.Date <= model.Date.Value);
+			}
+
+			// Загрузка связанных данных
+			return query.Include(x => x.Teacher).Select(x => x.GetViewModel).ToList();
+		}
+
+		public List<StatementViewModel> GetFullList()
         {
             using var context = new UniversityDatabase();
             return context.Statements.Include(x => x.Teacher).Select(x => x.GetViewModel).ToList();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using University.ViewModels;
 using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
 
@@ -17,7 +16,7 @@ namespace UniversityContracts.BusinessLogicContracts
         /// <param name="model"></param>
         /// <returns></returns>
         List<ReportTeacherViewModel> GetTeachers(int userId);
-        List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model);
+        List<ReportDisciplineViewModel> GetDisciplines(ReportDateRangeBindingModel model);
         List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines(int userId);
         List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents();
 

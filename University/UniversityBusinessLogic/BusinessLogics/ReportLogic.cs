@@ -1,5 +1,4 @@
 ﻿using UniversityBusinessLogic.OfficePackage;
-using University.ViewModels;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.SearchModels;
@@ -12,10 +11,6 @@ namespace UniversityBusinessLogics.BusinessLogics;
 
 public class ReportLogic : IReportLogic
 {
-    public List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model)
-    {
-        throw new NotImplementedException();
-    }
 
     /*private readonly AbstractSaveToWord _saveToWord;
     private readonly AbstractSaveToExcel _saveToExcel;
@@ -32,13 +27,13 @@ public class ReportLogic : IReportLogic
     private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
 
     private readonly AbstractSaveToExcelStorekeeper _saveToExcelStorekeeper;
-    //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
+    private readonly AbstractSaveToPdfStorekeeper _saveToPdfStorekeeper;
     private readonly AbstractSaveToWordStorekeeper _saveToWordStorekeeper;
     public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
         IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker
         ,AbstractSaveToPdfWorker saveToPdfWorker, AbstractSaveToWordStorekeeper saveToWordStorekeeper,
-        AbstractSaveToExcelStorekeeper saveToExcelStorekeeper)
+        AbstractSaveToExcelStorekeeper saveToExcelStorekeeper, AbstractSaveToPdfStorekeeper saveToPdfStorekeeper)
         {
 		_teacherStorage = teacherStorage;
 		_disciplineStorage = disciplineStorage;
@@ -52,6 +47,7 @@ public class ReportLogic : IReportLogic
 
         _saveToWordStorekeeper = saveToWordStorekeeper;
         _saveToExcelStorekeeper = saveToExcelStorekeeper;
+        _saveToPdfStorekeeper = saveToPdfStorekeeper;
         }
     public List<ReportTeacherViewModel> GetTeachers(int userId)
     {
@@ -106,7 +102,7 @@ public class ReportLogic : IReportLogic
 
     public List<ReportDisciplineViewModel> GetDisciplines(ReportDateRangeBindingModel model)
     {
-        var disciplines = _disciplineStorage.GetFullList();
+        var disciplines = _disciplineStorage.GetFilteredList(new DisciplineSearchModel { DateFrom = model.DateFrom, DateTo = model.DateTo});
 
         var reportDisciplineViewModels = new List<ReportDisciplineViewModel>();
 
@@ -258,7 +254,12 @@ public class ReportLogic : IReportLogic
 
     public void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email)
     {
-        throw new NotImplementedException();
+        _saveToPdfWorker.CreateDoc(new PdfInfoWorker
+        {
+            FileName = option.FileName,
+            Title = "Отчёт по дисциплинам",
+            PlanOfStudyAndStudent = GetPlanOfStudyAndStudents()
+        });
     }
 
     public void SendPlanOfStudyToEmail(ReportBindingModel option)

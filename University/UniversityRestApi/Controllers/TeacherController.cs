@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using University.ViewModels;
 using UniversityContracts.BindingModels;
 using UniversityContracts.BusinessLogicContracts;
 using UniversityContracts.BusinessLogicsContracts;
