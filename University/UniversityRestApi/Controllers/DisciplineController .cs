@@ -105,11 +105,13 @@ namespace UniversityRestApi.Controllers
 
 
         [HttpPost]
-        public void CreateReportToPDFFile(ReportDateRangeBindingModel model)
+        public void CreateReportToPDFFile(ReportDateRangeBindingModel model, DateOnly dateFrom, DateOnly dateTo)
         {
             try
             {
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                model.DateTo = dateTo;
+                model.DateFrom = dateFrom;
                 _reportLogic.SendDisciplinesToEmail(model);
             }
             catch (Exception ex)

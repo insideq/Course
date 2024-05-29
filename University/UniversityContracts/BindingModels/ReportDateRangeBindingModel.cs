@@ -10,7 +10,6 @@ namespace UniversityContracts.BindingModels
     {
         public string? FileName { get; set; }
         public Stream? Stream { get; set; }
-
         public DateOnly DateFrom { get; set; }
         public DateOnly DateTo { get; set; }
     }

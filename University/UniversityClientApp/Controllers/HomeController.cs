@@ -225,13 +225,15 @@ namespace UniversityClientApp.Controllers
                 Redirect("~/Home/Enter");
                 throw new Exception("¬ход только авторизованным");
             }
+            if (dateFrom == DateOnly.MinValue || dateTo == DateOnly.MaxValue)
+            {
+                throw new Exception();
+            }
             if (type == "pdf")
             {
-                APIStorekeeper.PostRequest("api/discipline/createreporttopdffile", new ReportDateRangeBindingModel
+                APIStorekeeper.PostRequest($"api/discipline/createreporttopdffile?dateFrom={dateFrom:yyyy-MM-dd}&dateTo={dateTo:yyyy-MM-dd}", new ReportDateRangeBindingModel
                 {
-                    FileName = "C:\\¬ременныеќтчЄты\\—ведени€ по планам обучени€.pdf",
-                    DateFrom = dateFrom,
-                    DateTo = dateTo
+                    FileName = "C:\\¬ременныеќтчЄты\\—ведени€ по планам обучени€.pdf"
                 });
                 APIStorekeeper.PostRequest("api/discipline/sendpdftomail", new MailSendInfoBindingModel
                 {

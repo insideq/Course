@@ -21,6 +21,14 @@
 
 
 <form method="post" action="/Home/ReportDisciplines">
+    <div class="form-group">
+        <label class="mb-3" for="dateFrom">Начало периода:</label>
+        <input type="date" placeholder="Выберите дату начала периода" id="dateFrom" name="dateFrom" />
+    </div>
+    <div class="form-group">
+        <label class="mb-3" for="dateTo">Окончание периода:</label>
+        <input type="date" placeholder="Выберите дату окончания периода" id="dateTo" name="dateTo" />
+    </div>
 	<input type="hidden" name="type" value="pdf" />
 	<input type="submit" value="Отправить в формате Pdf на почту" class="btn btn-primary" />
 </form>

@@ -10,7 +10,7 @@ namespace UniversityBusinessLogic.OfficePackage
             CreatePdf(info);
             CreateParagraph(new PdfParagraph { Text = info.Title, Style = "NormalTitle", ParagraphAlignment = PdfParagraphAlignmentType.Center });
 
-            CreateTable(new List<string> { "2cm", "3cm", "6cm", "3cm", "4 cm" });
+            CreateTable(new List<string> { "4cm", "5cm", "6cm", "5cm", "5 cm" });
 
             CreateRow(new PdfRowParameters
             {
