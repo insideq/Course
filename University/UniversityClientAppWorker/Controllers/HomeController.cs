@@ -167,7 +167,7 @@ namespace UniversityClientAppWorker.Controllers
             Response.Redirect("Attestations");
         }
         [HttpGet]
-        public async Task<IActionResult> InfoAttestation(int id)
+        public IActionResult InfoAttestation(int id)
         {
             if (APIClient.User == null)
             {
@@ -175,8 +175,48 @@ namespace UniversityClientAppWorker.Controllers
             }
             ViewBag.Students = APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}");
             ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
-            var obj = await APIClient.GetRequestAsync<AttestationViewModel>($"api/attestation/getattestation?userId={APIClient.User.Id}&id={id}");
+            var obj = APIClient.GetRequest<AttestationViewModel>($"api/attestation/getattestation?userId={APIClient.User.Id}&id={id}");
             return View(obj);
+        }
+        [HttpPost]
+        public void UpdateAttestation(int id, string formOfEvaluation, int student, AttestationScore score)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(formOfEvaluation) || student == 0)
+            {
+                throw new Exception("Введите форму оценивания и выберите студента");
+            }
+            var Student = APIClient.GetRequest<StudentViewModel>($"api/student/getstudent?userId={APIClient.User.Id}&studentId={student}");
+
+            if (Student == null)
+            {
+                throw new Exception("Студент не найден");
+            }
+            APIClient.PostRequest("api/attestation/updateattestation", new AttestationBindingModel
+            {
+                Id = id,
+                FormOfEvaluation = formOfEvaluation,
+                StudentId = student,
+                StudentName = Student.Name,
+                Score = score
+            });
+            Response.Redirect("Attestations");
+        }
+        [HttpPost]
+        public void DeleteAttestation(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIClient.PostRequest("api/attestation/deleteattestation", new PlanOfStudyBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Attestations");
         }
         [HttpGet]
 		public async Task<IActionResult> Students()
