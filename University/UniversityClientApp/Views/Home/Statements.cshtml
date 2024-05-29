@@ -1,7 +1,7 @@
 ﻿@using UniversityContracts.ViewModels
 @model List<StatementViewModel>
 @{
-    ViewData["Title"] = "Manage Statement Records";
+    ViewData["Title"] = "Управление ведомостями";
 }
 
 <div class="text-center">
@@ -12,19 +12,19 @@
 
 <form method="post">
     <div class="row">
-        <div class="col-4">Title:</div>
+        <div class="col-4">Название:</div>
         <div class="col-8">
             <input type="text" name="name" id="name" class="form-control" />
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Date:</div>
+        <div class="col-4">Дата:</div>
         <div class="col-8">
             <input type="datetime-local" name="date" id="date" class="form-control" />
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Teacher:</div>
+        <div class="col-4">Преподаватель:</div>
         <div class="col-8">
             <select id="teacher" name="teacher" class="form-control" asp-items="@(new SelectList(@ViewBag.Teachers,"Id", "Name"))"></select>
         </div>
@@ -41,9 +41,9 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Teacher</th>
+            <th>Название</th>
+            <th>Дата</th>
+            <th>Преподаватель</th>
         </tr>
     </thead>
     <tbody>@foreach (var item in Model)

@@ -4,7 +4,7 @@
     List<StudentViewModel> students = ViewBag.Students;
 }
 @{
-    ViewData["Title"] = "Manage Disciplines";
+    ViewData["Title"] = "Управление дисциплинами";
 }
 
 <div class="text-center">
@@ -14,26 +14,26 @@
 
 <form method="post">
     <div class="row">
-        <div class="col-4">Name:</div>
+        <div class="col-4">Название:</div>
         <div class="col-8">
             <input type="text" name="name" id="name" class="form-control" />
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Description:</div>
+        <div class="col-4">Описание:</div>
         <div class="col-8">
             <textarea name="description" id="description" class="form-control"></textarea>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-4">Date:</div>
+        <div class="col-4">Дата:</div>
         <div class="col-8">
             <input type="date" name="date" id="date" class="form-control" />
         </div>
     </div>
     <div class="row">
-        <div class="col-4">Teacher:</div>
+        <div class="col-4">Преподаватель:</div>
         <div class="col-8">
             <select id="teacher" name="teacher" class="form-control" asp-items="@(new SelectList(@ViewBag.Teachers,"Id", "Name"))"></select>
         </div>
@@ -41,7 +41,7 @@
 
 
     <div class="row">
-        <div class="col-4">Students:</div>
+        <div class="col-4">Студенты:</div>
         <div class="col-8">
             <div class="scrollable-list">
                 @foreach (var student in students)
@@ -69,11 +69,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Teacher Name</th>
-            <th>Actions</th>
+            <th>Имя</th>
+            <th>Описание</th>
+            <th>Дата</th>
+            <th>Имя учителя</th>
+            <th>Действие</th>
         </tr>
     </thead>
     <tbody>
