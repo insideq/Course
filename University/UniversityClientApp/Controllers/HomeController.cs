@@ -217,7 +217,7 @@ namespace UniversityClientApp.Controllers
             }
         }
 
-		[HttpGet]
+		/*[HttpGet]
 		public IActionResult ReportDisciplines()
 		{
 			if (APIStorekeeper.Client == null)
@@ -225,21 +225,28 @@ namespace UniversityClientApp.Controllers
 				return Redirect("~/Home/Enter");
 			}
 		    return View();
-        }
+        }*/
 
         [HttpGet]
-        public IActionResult GetReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
+        public IActionResult ReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
         {
             if (APIStorekeeper.Client == null)
             {
                 return Redirect("~/Home/Enter");
             }
 
+
             // Получаем данные от сервера
             //var reportData = APIStorekeeper.GetRequest<List<ReportDisciplineViewModel>>($"api/disciplines/GetReportDisciplines?datefrom={dateFrom}&dateto={dateTo}");
-            var reportData = APIStorekeeper.GetRequest<List<ReportDisciplineViewModel>>($"api/discipline/getreportdisciplines");
+            
             // Передаем данные в частичное представление
-            return PartialView("ReportDisciplines", reportData);
+            if (dateFrom == DateOnly.MinValue || dateTo == DateOnly.MaxValue)
+            {
+                return View("ReportDisciplines", null);
+            }
+            var reportData = APIStorekeeper.GetRequest<List<ReportDisciplineViewModel>>($"api/discipline/getreportdisciplines?datefrom={dateFrom:yyyy-MM-dd}&dateto={dateTo:yyyy-MM-dd}");
+
+            return View("ReportDisciplines", reportData);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

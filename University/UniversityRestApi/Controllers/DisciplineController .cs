@@ -33,21 +33,21 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-		/*[HttpPost]
-		public List<ReportDisciplineViewModel> GetReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
-		{
-			try
-			{
-				return _reportLogic.GetDisciplines(new ReportDateRangeBindingModel { DateFrom = dateFrom, DateTo = dateTo  });
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Ошибка получения списка дисциплин");
-				throw;
-			}
-		}*/
-
         [HttpGet]
+        public List<ReportDisciplineViewModel> GetReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
+        {
+            try
+            {
+                return _reportLogic.GetDisciplines(new ReportDateRangeBindingModel { DateFrom = dateFrom, DateTo = dateTo });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения списка дисциплин");
+                throw;
+            }
+        }
+
+        [HttpPost]
         public List<ReportDisciplineViewModel> GetReportDisciplines()
         {
             try

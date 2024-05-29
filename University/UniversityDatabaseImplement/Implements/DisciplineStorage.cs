@@ -94,11 +94,25 @@ namespace UniversityDatabaseImplement.Implements
                 query = query.Where(x => x.TeacherId == model.TeacherId.Value);
             }
 
-            if (model.DateFrom.HasValue && model.DateTo.HasValue)
+
+
+            /*if (model.DateFrom.HasValue && model.DateTo.HasValue)
             {
                 query = query.Where(x => model.DateFrom.Value <= x.Date && x.Date <= model.DateTo.Value);
+            }*/
+
+            var x = query.Select(x => x.GetViewModel).ToList();
+            var res = new List<DisciplineViewModel>();
+
+            foreach (var item in x) { 
+                if (item.Date > model.DateFrom && item.Date < model.DateTo)
+                {
+                    res.Add(item);
+                }
             }
-            return query.Select(x => x.GetViewModel).ToList();
+
+            //return query.Select(x => x.GetViewModel).ToList();
+            return res;
         }
 
 
