@@ -31,11 +31,13 @@ public class ReportLogic : IReportLogic
     private readonly AbstractSaveToWordWorker _saveToWordWorker;
     //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
 
+    private readonly AbstractSaveToExcelWorker _saveToExcelStorekeeper;
+    //private readonly AbstractSaveToPdfWorker _saveToPdfWorker;
     private readonly AbstractSaveToWordStorekeeper _saveToWordStorekeeper;
     public ReportLogic (ITeacherStorage teacherStorage, IDisciplineStorage
 	   disciplineStorage, IStudentStorage studentStorage, IStatementStorage statementStorage,
         IPlanOfStudyStorage planOfStudyStorage, AbstractSaveToExcelWorker saveToExcelWorker, AbstractSaveToWordWorker saveToWordWorker
-       /* , AbstractSaveToPdfWorker saveToPdfWorker */)
+       /* , AbstractSaveToPdfWorker saveToPdfWorker */, AbstractSaveToWordStorekeeper saveToWordStorekeeper)
         {
 		_teacherStorage = teacherStorage;
 		_disciplineStorage = disciplineStorage;
@@ -46,10 +48,15 @@ public class ReportLogic : IReportLogic
 		_saveToExcelWorker = saveToExcelWorker;
         _saveToWordWorker = saveToWordWorker;
         // _saveToPdfWorker = saveToPdfWorker;
+
+        _saveToWordStorekeeper = saveToWordStorekeeper ;
         }
-    public List<ReportTeacherViewModel> GetTeachers()
+    public List<ReportTeacherViewModel> GetTeachers(int userId)
     {
-        var teachers = _teacherStorage.GetFullList();
+        var teachers = _teacherStorage.GetFilteredList(new TeacherSearchModel
+        {
+            UserId = userId
+        });
 
         // Создаем список для результатов
         var result = new List<ReportTeacherViewModel>();
@@ -235,8 +242,8 @@ public class ReportLogic : IReportLogic
         _saveToWordStorekeeper.CreateDoc(new WordInfoStorekeeper
         {
             FileName = option.FileName,
-            Title = "Список пакетов документов",
-            TeacherInfo = GetTeachers()
+            Title = "Список преподавателей",
+            TeacherInfo = GetTeachers(0)
         });
     }
 

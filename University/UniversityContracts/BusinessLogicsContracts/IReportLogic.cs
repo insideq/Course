@@ -16,7 +16,7 @@ namespace UniversityContracts.BusinessLogicContracts
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        List<ReportTeacherViewModel> GetTeachers();
+        List<ReportTeacherViewModel> GetTeachers(int userId);
         List<ReportDisciplineViewModel> GetDisciplines(ReportBindingModel model);
         List<ReportPlanOfStudyViewModel> GetPlanOfStudyAndDisciplines(int userId);
         List<ReportPlanOfStudyAndStudentViewModel> GetPlanOfStudyAndStudents(ReportDateRangeBindingModel model);

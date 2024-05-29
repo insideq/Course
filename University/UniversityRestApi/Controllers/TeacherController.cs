@@ -88,15 +88,42 @@ namespace UniversityRestApi.Controllers
         }
 
         [HttpGet]
-        public List<ReportTeacherViewModel>? GetDisciplinesReport()
+        public List<ReportTeacherViewModel>? GetTeachersReport(int userId)
         {
             try
             {
-                return _reportLogic.GetTeachers();
+                return _reportLogic.GetTeachers(userId);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ошибка получения списка планов обучения");
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public void LoadReportToWord(ReportBindingModel model)
+        {
+            try
+            {
+                _reportLogic.SaveTeachersToWord(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания отчета");
+                throw;
+            }
+        }
+        [HttpPost]
+        public void LoadReportToExcel(ReportBindingModel model)
+        {
+            try
+            {
+                _reportLogic.SaveTeachersToExcel(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка создания отчета");
                 throw;
             }
         }

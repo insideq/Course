@@ -174,12 +174,50 @@ namespace UniversityClientApp.Controllers
             });
             Response.Redirect("Teachers");
         }
-
-        public IActionResult Report() { 
-            return View();
+        [HttpGet]
+        public IActionResult Report() {
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View("Report", APIStorekeeper.GetRequest<List<ReportTeacherViewModel>>($"api/teacher/getteachersreport?userId={APIStorekeeper.Client.Id}"));
         }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpPost]
+        public void Report(string type)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                Redirect("~/Home/Enter");
+            }
+
+            if (string.IsNullOrEmpty(type))
+            {
+                throw new Exception("Error, wrong type");
+            }
+
+            if (type == "docx")
+            {
+                APIStorekeeper.PostRequest("api/teacher/loadreporttoword", new ReportBindingModel
+                {
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\TeachersAndStudents{Environment.TickCount}.docx"
+                });
+                Response.Redirect("Report");
+                return;
+            }
+
+            if (type == "xlsx")
+            {
+                APIStorekeeper.PostRequest("api/teacher/loadreporttoexcel", new ReportBindingModel
+                {
+                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\TeachersAndStudents{Environment.TickCount}.xlsx"
+                });
+                Response.Redirect("Report");
+                return;
+            }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

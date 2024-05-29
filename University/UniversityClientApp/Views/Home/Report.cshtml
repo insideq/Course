@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Student List by Teacher";
+﻿@using UniversityContracts.ViewModels
+@model List<ReportTeacherViewModel>
+@{
+    ViewData["Title"] = "Report by teachers and students";
 }
 
 <div class="text-center">
@@ -8,33 +10,59 @@
 
 <form method="post">
     <div class="row">
-        <div class="col-4">Teachers:</div>
-        <div class="col-8">
-            <select id="teachers" name="teachers" class="form-control" multiple asp-items="ViewBag.Teachers"></select>
+        <div class="col-8 btn-group"></div>
+        <div class="col-4 mt-2">
+            <form method="post">
+                <input type="hidden" name="type" value="docx" />
+                <input type="submit" value="Save in Word" class="btn btn-primary" />
+            </form>
+
+            <form method="post">
+                <input type="hidden" name="type" value="xlsx" />
+                <input type="submit" value="Save in Excel" class="btn btn-success" />
+            </form>
+        </div>
+        <div class="col-4 mt-2">
         </div>
     </div>
-    <div class="row">
-        <div class="col-4">File Format:</div>
-        <div class="col-8">
-            <select id="fileFormat" name="fileFormat" class="form-control" asp-items="ViewBag.FileFormats"></select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">File Name:</div>
-        <div class="col-8">
-            <input type="text" name="fileName" id="fileName" class="form-control" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">File Location:</div>
-        <div class="col-8">
-            <input type="text" name="fileLocation" id="fileLocation" class="form-control" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4">
-            <input type="submit" value="Get Student List" class="btn btn-primary" />
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Teacher name</th>
+                <th>Student</th>
+                <th>Student</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @foreach (var st in item.Students)
+                        {
+                            <div>
+                                @Html.DisplayFor(modelItem => st)
+                            </div>
+                        }
+                    </td>
+                        @foreach (var student in item.Students)
+                        {
+                        <td>
+                            @student.Name
+                        </td>
+                        <td>
+                            @student.PhoneNumber
+                        </td>
+                        }
+                </tr>
+            }
+        </tbody>
+    </table>
 </form>
