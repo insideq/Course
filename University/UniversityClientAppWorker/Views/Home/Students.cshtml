@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-4">Номер телефона:</div>
         <div class="col-8">
-            <textarea id="phoneNumber" name="phoneNumber" class="form-control"></textarea>
+            <input id="phoneNumber" name="phoneNumber" class="form-control"></input>
         </div>
     </div>
     <div class="row">
@@ -56,15 +56,15 @@
                     @Html.DisplayFor(modelItem => student.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => student.PlanOfStudyId)
+                    @Html.DisplayFor(modelItem => student.PlanOfStudyProfile)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => student.PhoneNumber)
                 </td>
                 <td>
                     <div class="btn-group">
-                        <a asp-controller="Home" asp-action="" asp-route-id="@student.Id" class="btn btn-warning">Изменить</a>
-                        <form asp-controller="Home" asp-action="DeletePlanOfStudy" method="post">
+                        <a asp-controller="Home" asp-action="InfoStudent" asp-route-id="@student.Id" class="btn btn-warning">Изменить</a>
+                        <form asp-controller="Home" asp-action="DeleteStudent" method="post">
                             <input type="hidden" name="id" value="@student.Id" />
                             <button type="submit" class="btn btn-danger">Удалить</button>
                         </form>

@@ -49,6 +49,24 @@ namespace PlumbingRepairClientApp
             }
         }
 
+        public static async Task<T?> GetRequestStudentsAsync<T>(string requestUrl)
+        {
+            var response = await _client.GetAsync(requestUrl);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var settings = new JsonSerializerSettings
+                {
+                    Converters = new List<JsonConverter> { new TeacherConverter() }
+                };
+                return JsonConvert.DeserializeObject<T>(result, settings);
+            }
+            else
+            {
+                throw new Exception(result);
+            }
+        }
+
         public static async Task<T?> GetRequestAsync<T>(string requestUrl)
         {
             var response = await _client.GetAsync(requestUrl);

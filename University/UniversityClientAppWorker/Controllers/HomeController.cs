@@ -1,10 +1,12 @@
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using PlumbingRepairClientApp;
 using System.Diagnostics;
 using UniversityClientAppWorker.Models;
 using UniversityContracts.BindingModels;
 using UniversityContracts.ViewModels;
+using UniversityDatabaseImplement.Models;
 using UniversityDataModels.Enums;
 using UniversityDataModels.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -231,7 +233,7 @@ namespace UniversityClientAppWorker.Controllers
             return View(APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}"));
         }
         [HttpPost]
-        public void CreateStudent(string name, int planOfStudy, string phoneNumber)
+        public async Task<IActionResult> CreateStudent(string name, int planOfStudy, string phoneNumber)
         {
             if (APIClient.User == null)
             {
@@ -241,13 +243,83 @@ namespace UniversityClientAppWorker.Controllers
             {
                 throw new Exception("Введите ФИО, план обучения и телефон");
             }
+            var PlanOfStudy = await APIClient.GetRequestPlanOfStudyAsync<PlanOfStudyViewModel>($"api/planofstudys/getplanofstudy?id={planOfStudy}");
+            if(PlanOfStudy == null)
+            {
+                throw new Exception("План обучения не найден");
+            }
             APIClient.PostRequest("api/student/createstudent", new StudentBindingModel
             {
                 UserId = APIClient.User.Id,
                 Name = name,
                 PlanOfStudyId = planOfStudy,
+                PlanOfStudyProfile = PlanOfStudy.Profile,
                 PhoneNumber = phoneNumber,
                 
+            });
+            return Redirect("/Home/Students");
+        }
+        [HttpGet]
+        public async Task<IActionResult> InfoStudent(int id)
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            if(id == 0)
+            {
+                throw new Exception("id не может быть 0");
+            }
+            var planOfStudys = await APIClient.GetRequestPlanOfStudyAsync<List<PlanOfStudyViewModel>>
+                ($"api/planofstudys/getplanofstudys?userId={APIClient.User.Id}");
+            ViewBag.PlanOfStudys = planOfStudys;
+            var obj = APIClient.GetRequest<StudentViewModel>($"api/student/getstudent?userId={APIClient.User.Id}&studentId={id}");
+            return View(obj);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateStudent(int id, string name, int planOfStudy, string phoneNumber)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if(id == 0)
+            {
+                throw new Exception("id не может быть 0");
+            }
+            if (string.IsNullOrEmpty(name) || planOfStudy == 0 || string.IsNullOrEmpty(phoneNumber))
+            {
+                throw new Exception("Введите ФИО, план обучения и телефон");
+            }
+            var PlanOfStudy = await APIClient.GetRequestPlanOfStudyAsync<PlanOfStudyViewModel>($"api/planofstudys/getplanofstudy?id={planOfStudy}");
+            if (PlanOfStudy == null)
+            {
+                throw new Exception("План обучения не найден");
+            }
+            APIClient.PostRequest("api/student/updatestudent", new StudentBindingModel
+            {
+                Id = id,
+                Name = name,
+                PlanOfStudyId = planOfStudy,
+                PlanOfStudyProfile = PlanOfStudy.Profile,
+                PhoneNumber = phoneNumber,
+            });
+            return Redirect("/Home/Students");
+        }
+        [HttpPost]
+        public void DeleteStudent(int id)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (id == 0)
+            {
+                throw new Exception("id не может быть 0");
+            }
+            APIClient.PostRequest("api/student/deletestudent", new StudentBindingModel
+            {
+                Id = id
             });
             Response.Redirect("Students");
         }
