@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using PlumbingRepairClientApp;
 using System.Diagnostics;
@@ -149,12 +150,71 @@ namespace UniversityClientAppWorker.Controllers
             {
                 throw new Exception("Введите форму оценивания и выберите студента");
             }
+            var Student = APIClient.GetRequest<StudentViewModel>($"api/student/getstudent?userId={APIClient.User.Id}&studentId={student}");
+
+            if(Student == null)
+            {
+                throw new Exception("Студент не найден");
+            }
             APIClient.PostRequest("api/attestation/createattestation", new AttestationBindingModel
             {
                 UserId = APIClient.User.Id,
                 FormOfEvaluation = formOfEvaluation,
                 StudentId = student,
+                StudentName = Student.Name,
                 Score = score
+            });
+            Response.Redirect("Attestations");
+        }
+        [HttpGet]
+        public IActionResult InfoAttestation(int id)
+        {
+            if (APIClient.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Students = APIClient.GetRequest<List<StudentViewModel>>($"api/student/getstudents?userId={APIClient.User.Id}");
+            ViewBag.AttestationScore = Enum.GetValues(typeof(AttestationScore)).Cast<AttestationScore>();
+            var obj = APIClient.GetRequest<AttestationViewModel>($"api/attestation/getattestation?userId={APIClient.User.Id}&id={id}");
+            return View(obj);
+        }
+        [HttpPost]
+        public void UpdateAttestation(int id, string formOfEvaluation, int student, AttestationScore score)
+        {
+            if (APIClient.User == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(formOfEvaluation) || student == 0)
+            {
+                throw new Exception("Введите форму оценивания и выберите студента");
+            }
+            var Student = APIClient.GetRequest<StudentViewModel>($"api/student/getstudent?userId={APIClient.User.Id}&studentId={student}");
+
+            if (Student == null)
+            {
+                throw new Exception("Студент не найден");
+            }
+            APIClient.PostRequest("api/attestation/updateattestation", new AttestationBindingModel
+            {
+                Id = id,
+                FormOfEvaluation = formOfEvaluation,
+                StudentId = student,
+                StudentName = Student.Name,
+                Score = score
+            });
+            Response.Redirect("Attestations");
+        }
+        [HttpPost]
+        public void DeleteAttestation(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIClient.PostRequest("api/attestation/deleteattestation", new PlanOfStudyBindingModel
+            {
+                Id = id
             });
             Response.Redirect("Attestations");
         }
@@ -238,6 +298,19 @@ namespace UniversityClientAppWorker.Controllers
 			return;
 		}
         [HttpGet]
+        public IActionResult GetWordFile()
+        {
+            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.docx",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "Планы обучений по дисциплинам.docx");
+        }
+        public IActionResult GetExcelFile()
+        {
+            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\Планы обучений по дисциплинам.xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Планы обучений по дисциплинам.xlsx");
+        }
+        [HttpGet]
         public IActionResult ReportPlanOfStudys()
         {
             if (APIClient.User == null)
@@ -247,7 +320,7 @@ namespace UniversityClientAppWorker.Controllers
             return View("ReportPlanOfStudys", APIClient.GetRequest<List<ReportPlanOfStudyViewModel>>($"api/planofstudys/getplanofstudyanddisciplines?userId={APIClient.User.Id}"));
         }
         [HttpPost]
-        public void ReportPlanOfStudys(string type)
+        public IActionResult ReportPlanOfStudys(string type)
         {
             if (APIClient.User == null)
             {
@@ -264,21 +337,20 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoword", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.docx"
+                    FileName = "C:\\ВременныеОтчёты\\Планы обучений по дисциплинам.docx"
                 });
-                Response.Redirect("Index");
-                return;
+                return GetWordFile();
             }
 
             if (type == "xlsx")
             {
                 APIClient.PostRequest("api/planofstudys/loadreporttoexcel", new ReportBindingModel
                 {
-                    FileName = $"C:\\Users\\{Environment.UserName}\\Desktop\\Планы обучений по дисциплинам.xlsx"
+                    FileName = "C:\\ВременныеОтчёты\\Планы обучений по дисциплинам.xlsx"
                 });
-                Response.Redirect("Index");
-                return;
+                return GetExcelFile();
             }
+            return Redirect("Index");
         }
         [HttpGet]
         public IActionResult ReportPlanOfStudyAndStudents()
@@ -301,13 +373,13 @@ namespace UniversityClientAppWorker.Controllers
             {
                 APIClient.PostRequest("api/planofstudys/createreporttopdffile", new ReportBindingModel
                 {
-                    FileName = "C:\\Users\\{Environment.UserName}\\Desktop\\Сведения по планам обучения.pdf"
+                    FileName = "C:\\ВременныеОтчёты\\Сведения по планам обучения.pdf"
                 });
-                APIClient.PostRequest("api/order/sendpdftomail", new MailSendInfoBindingModel
+                APIClient.PostRequest("api/planofstudys/sendpdftomail", new MailSendInfoBindingModel
                 {
                     MailAddress = APIClient.User.Email,
                     Subject = "Отчет",
-                    Text = "Отчет по заказам"
+                    Text = "Сведения по планам обучения"
                 });
             }
             Response.Redirect("Index");

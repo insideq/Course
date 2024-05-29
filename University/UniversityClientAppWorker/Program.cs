@@ -1,9 +1,15 @@
 using PlumbingRepairClientApp;
+using UniversityBusinessLogic.OfficePackage;
+using UniversityBusinessLogic.OfficePackage.Implements;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<AbstractSaveToExcelWorker, SaveToExcelWorker>();
+builder.Services.AddTransient<AbstractSaveToWordWorker, SaveToWordWorker>();
+builder.Services.AddTransient<AbstractSaveToPdfWorker, SaveToPdfWorker>();
 
 var app = builder.Build();
 

@@ -103,13 +103,23 @@ namespace UniversityBusinessLogic.OfficePackage.Implements
 
         protected override void SavePdf(PdfInfoWorker info)
         {
+            if (_document == null)
+            {
+                throw new InvalidOperationException("Document is not initialized.");
+            }
             var renderer = new PdfDocumentRenderer(true)
             {
                 Document = _document
             };
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            renderer.RenderDocument();
-            renderer.PdfDocument.Save(info.FileName);
+            try
+            {
+                renderer.RenderDocument();
+                renderer.PdfDocument.Save(info.FileName);
+            }
+            catch (NullReferenceException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

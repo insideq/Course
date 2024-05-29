@@ -23,11 +23,28 @@ namespace UniversityBusinessLogic.OfficePackage
             {
                 foreach (var studentName in item.StudentName)
                 {
-                    foreach (var disciplineName in item.DisciplineName)
+                    var rowTexts = new List<string> { item.Id.ToString(), item.PlanOfStudyName, studentName };
+                    if (item.DisciplineName.Any())
                     {
+                        foreach (var disciplineName in item.DisciplineName)
+                        {
+                            rowTexts.Add(disciplineName);
+                            CreateRow(new PdfRowParameters
+                            {
+                                Texts = rowTexts,
+                                Style = "Normal",
+                                ParagraphAlignment = PdfParagraphAlignmentType.Left
+                            });
+                            rowTexts.RemoveAt(rowTexts.Count - 1);
+                        }
+                    }
+                    else
+                    {
+                        // Если нет дисциплин, добавляем пустую строку
+                        rowTexts.Add("");
                         CreateRow(new PdfRowParameters
                         {
-                            Texts = new List<string> { item.Id.ToString(), item.PlanOfStudyName, studentName, disciplineName },
+                            Texts = rowTexts,
                             Style = "Normal",
                             ParagraphAlignment = PdfParagraphAlignmentType.Left
                         });

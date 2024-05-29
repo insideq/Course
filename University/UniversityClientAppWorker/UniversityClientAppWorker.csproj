@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniversityBusinessLogic\UniversityBusinessLogic.csproj" />
     <ProjectReference Include="..\UniversityDatabaseImplement\UniversityDatabaseImplement.csproj" />
     <ProjectReference Include="..\UniversityDataModels\UniversityDataModels.csproj" />
   </ItemGroup>

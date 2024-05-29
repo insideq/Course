@@ -108,6 +108,7 @@ namespace UniversityRestApi.Controllers
         {
             try
             {
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
                 _reportLogic.SendPlanOfStudyToEmail(model);
             }
             catch (Exception ex)
