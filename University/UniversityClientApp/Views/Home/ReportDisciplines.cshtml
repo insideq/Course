@@ -16,6 +16,13 @@
     <div class="row">
         <div class="col-4"><input type="submit" value="Вывести здесь" class="btn btn-primary" /></div>
     </div>
+    
+</form>
+
+
+<form method="post" action="/Home/ReportDisciplines">
+	<input type="hidden" name="type" value="pdf" />
+	<input type="submit" value="Отправить в формате Pdf на почту" class="btn btn-primary" />
 </form>
 
 @if (Model != null && Model.Any())

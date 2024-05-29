@@ -24,7 +24,7 @@ namespace UniversityContracts.BusinessLogicContracts
         void SavePlanOfStudyToWord(ReportBindingModel option);
 		void SaveTeachersToExcel(ReportBindingModel option);
         void SavePlanOfStudyToExcel(ReportBindingModel option);
-		void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email);
+		void SendDisciplinesToEmail(ReportDateRangeBindingModel option);
         public void SendPlanOfStudyToEmail(ReportBindingModel option);
 	}
 }

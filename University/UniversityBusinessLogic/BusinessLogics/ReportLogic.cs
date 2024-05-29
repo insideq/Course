@@ -252,13 +252,13 @@ public class ReportLogic : IReportLogic
         });
     }
 
-    public void SendDisciplinesToEmail(ReportDateRangeBindingModel option, string email)
+    public void SendDisciplinesToEmail(ReportDateRangeBindingModel option)
     {
-        _saveToPdfWorker.CreateDoc(new PdfInfoWorker
+        _saveToPdfStorekeeper.CreateDoc(new PdfInfoStorekeeper
         {
             FileName = option.FileName,
             Title = "Отчёт по дисциплинам",
-            PlanOfStudyAndStudent = GetPlanOfStudyAndStudents()
+            Disciplines = GetDisciplines(option)
         });
     }
 

@@ -217,15 +217,32 @@ namespace UniversityClientApp.Controllers
             }
         }
 
-		/*[HttpGet]
-		public IActionResult ReportDisciplines()
-		{
-			if (APIStorekeeper.Client == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-		    return View();
-        }*/
+        [HttpPost]
+        public void ReportDisciplines(string type, DateOnly dateFrom, DateOnly dateTo)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                Redirect("~/Home/Enter");
+                throw new Exception("¬ход только авторизованным");
+            }
+            if (type == "pdf")
+            {
+                APIStorekeeper.PostRequest("api/discipline/createreporttopdffile", new ReportDateRangeBindingModel
+                {
+                    FileName = "C:\\¬ременныеќтчЄты\\—ведени€ по планам обучени€.pdf",
+                    DateFrom = dateFrom,
+                    DateTo = dateTo
+                });
+                APIStorekeeper.PostRequest("api/discipline/sendpdftomail", new MailSendInfoBindingModel
+                {
+                    MailAddress = APIStorekeeper.Client.Email,
+                    Subject = "ќтчет",
+                    Text = "—ведени€ по дисциплинам"
+                });
+            }
+            Response.Redirect("Index");
+            return;
+        }
 
         [HttpGet]
         public IActionResult ReportDisciplines(DateOnly dateFrom, DateOnly dateTo)
