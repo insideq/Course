@@ -38,6 +38,20 @@ namespace UniversityRestApi.Controllers
             }
         }
 
+        [HttpGet]
+        public StatementViewModel? GetStatement(int userId, int id)
+        {
+            try
+            {
+                return _logic.ReadElement(new StatementSearchModel { UserId = userId, Id = id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка получения ведомости id={Id}", userId);
+                throw;
+            }
+        }
+
         [HttpPost]
         public void CreateStatement(StatementBindingModel model)
         {
@@ -50,7 +64,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdateStatement(StatementBindingModel model)
         {
             try
@@ -63,7 +77,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeleteStatement(StatementBindingModel model)
         {
             try

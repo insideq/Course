@@ -58,8 +58,7 @@ namespace UniversityDatabaseImplement.Models
                 return;
             }
             Id = model.Id;
-            UserId = model.UserId;
-            TeacherId = model.Id;
+            //TeacherId = model.Id;
             Name = model.Name;
             Date = model.Date;
         }

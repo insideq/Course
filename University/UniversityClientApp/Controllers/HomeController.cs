@@ -314,7 +314,7 @@ namespace UniversityClientApp.Controllers
             }
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(academicdegree) || string.IsNullOrEmpty(position))
             {
-                throw new Exception("Введите форму оценивания и выберите студента");
+                throw new Exception("Введите");
             }
 
             APIStorekeeper.PostRequest("api/teacher/updateteacher", new TeacherBindingModel
@@ -327,6 +327,59 @@ namespace UniversityClientApp.Controllers
             Response.Redirect("Teachers");
         }
 
+
+        // Ведомость
+
+        [HttpPost]
+        public void DeleteStatement(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIStorekeeper.PostRequest("api/statement/deletestatement", new StatementBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Statements");
+        }
+
+        [HttpGet]
+        public IActionResult InfoStatement(int id)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Teachers = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
+            var obj = APIStorekeeper.GetRequest<StatementViewModel>($"api/statement/getstatement?userId={APIStorekeeper.Client.Id}&id={id}");
+            return View(obj);
+        }
+
+        [HttpPost]
+        public void UpdateStatement(int id, string name, DateTime date, int teacher)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                throw new Exception("Вход только авторизованным");
+            }
+            if (string.IsNullOrEmpty(name) || teacher == 0)
+            {
+                throw new Exception("Введите");
+            }
+
+            APIStorekeeper.PostRequest("api/statement/updatestatement", new StatementBindingModel
+            {
+                Id = id,
+                Name = name,
+                Date = date,
+                TeacherId = teacher
+            });
+            Response.Redirect("Statements");
+        }
+
+
+        // Дисциплина
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
