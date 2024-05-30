@@ -23,20 +23,22 @@ namespace UniversityRestApi.Controllers
             _reportLogic = reportLogic;
             _mailWorker = mailWorker;
         }
-        /*[HttpGet]
-        public List<DisciplineViewModel>? GetDisciplines(int userId)
+
+        [HttpGet]
+        public DisciplineViewModel? GetDiscipline(int id, int userId)
         {
             try
             {
-                return _logic.ReadList(new DisciplineSearchModel { UserId = userId });
+                return _logic.ReadElement(new DisciplineSearchModel { Id = id, UserId = userId });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка получения списка дисциплин");
+                _logger.LogError(ex, "Ошибка получения списка планов обучения");
                 throw;
             }
-        }*/
-		[HttpGet]
+        }
+
+        [HttpGet]
 		public List<DisciplineViewModel>? GetDisciplines()
 		{
 			try
@@ -89,7 +91,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         public void UpdateDiscipline(DisciplineBindingModel model)
         {
             try
@@ -102,7 +104,7 @@ namespace UniversityRestApi.Controllers
                 throw;
             }
         }
-        [HttpDelete]
+        [HttpPost]
         public void DeleteDiscipline(DisciplineBindingModel model)
         {
             try

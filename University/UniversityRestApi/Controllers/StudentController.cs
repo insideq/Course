@@ -31,6 +31,19 @@ namespace UniversityRestApi.Controllers
             }
         }
         [HttpGet]
+        public List<StudentViewModel>? GetAllStudents()
+        {
+            try
+            {
+                return _logic.ReadList(null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка ");
+                throw;
+            }
+        }
+        [HttpGet]
         public StudentViewModel? GetStudent(int userId, int studentId)
         {
             try

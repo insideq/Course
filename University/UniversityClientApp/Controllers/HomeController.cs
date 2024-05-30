@@ -381,6 +381,55 @@ namespace UniversityClientApp.Controllers
 
         // Дисциплина
 
+        [HttpGet]
+        public async Task<IActionResult> InfoDiscipline(int id)
+        {
+            if (APIStorekeeper.Client == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            var obj1 = APIStorekeeper.GetRequest<List<StudentViewModel>>($"api/student/getallstudents");
+            ViewBag.Students = obj1;
+            var obj2 = APIStorekeeper.GetRequest<List<TeacherViewModel>>($"api/teacher/getteachers?userId={APIStorekeeper.Client.Id}");
+            ViewBag.Teachers = obj2;
+            var obj = await APIStorekeeper.GetRequestDisciplineAsync<DisciplineViewModel>($"api/discipline/getdiscipline?id={id}&userId={APIStorekeeper.Client.Id}");
+            return View(obj);
+        }
+
+        [HttpPost]
+        public void DeleteDiscipline(int id)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            APIStorekeeper.PostRequest("api/discipline/deletediscipline", new DisciplineBindingModel
+            {
+                Id = id
+            });
+            Response.Redirect("Disciplines");
+        }
+        [HttpPost]
+        public void UpdateDiscipline(int id, string name, string description, int teacher, List<int> studentIds, DateOnly date)
+        {
+            if (id == 0)
+            {
+                throw new Exception("id не может быть равен 0");
+            }
+            var disciplineStudents = studentIds.ToDictionary(id => id, id => (IStudentModel)null);
+            APIStorekeeper.PostRequest("api/discipline/updatediscipline", new DisciplineBindingModel
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+                TeacherId = teacher,
+                StudentDisciplines = disciplineStudents,
+                Date = date
+            });
+            Response.Redirect("Disciplines");
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
