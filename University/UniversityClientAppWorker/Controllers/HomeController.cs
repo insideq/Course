@@ -372,13 +372,13 @@ namespace UniversityClientAppWorker.Controllers
         [HttpGet]
         public IActionResult GetWordFile()
         {
-            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\ѕланы обучений по дисциплинам.docx",
+            return PhysicalFile($"C:\\¬ременныеќтчЄты\\ѕланы обучений по дисциплинам.docx",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 "ѕланы обучений по дисциплинам.docx");
         }
         public IActionResult GetExcelFile()
         {
-            return PhysicalFile($"C:\\Users\\{Environment.UserName}\\Downloads\\ѕланы обучений по дисциплинам.xlsx",
+            return PhysicalFile($"C:\\¬ременныеќтчЄты\\ѕланы обучений по дисциплинам.xlsx",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 "ѕланы обучений по дисциплинам.xlsx");
         }

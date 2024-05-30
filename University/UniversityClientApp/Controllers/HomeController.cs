@@ -197,8 +197,8 @@ namespace UniversityClientApp.Controllers
             {
                 APIStorekeeper.PostRequest("api/teacher/loadreporttoword", new ReportBindingModel
                 {
-					FileName = "C:\\¬ременныеќтчЄты\\TeachersAndStudents.docx"
-				});
+                    FileName = $"C:\\¬ременныеќтчЄты\\TeachersAndStudents.docx"
+                });
 				return GetWordFile();
 			}
 
@@ -206,7 +206,7 @@ namespace UniversityClientApp.Controllers
             {
                 APIStorekeeper.PostRequest("api/teacher/loadreporttoexcel", new ReportBindingModel
                 {
-					FileName = "C:\\¬ременныеќтчЄты\\TeachersAndStudents.xlsx"
+					FileName = $"C:\\¬ременныеќтчЄты\\TeachersAndStudents.xlsx"
 				});
 				return GetExcelFile();
 			}
